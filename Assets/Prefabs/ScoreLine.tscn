@@ -1,0 +1,44 @@
+[gd_scene format=3 uid="uid://cscoreline001"]
+
+[ext_resource type="Script" path="res://Assets/Scripts/ScoreLine.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://bxy5s38vjjyb7" path="res://Assets/Sprites/Hotbar/SCORE_BIRD_GREEN.png" id="2_green"]
+[ext_resource type="Texture2D" uid="uid://3tk14n41m3lg" path="res://Assets/Sprites/Hotbar/SCORE_BIRD_RED.png" id="3_red"]
+
+[node name="ScoreLine" type="Control"]
+offset_right = 495.0
+offset_bottom = 22.0
+script = ExtResource("1_script")
+point_sprite_positive = ExtResource("2_green")
+point_sprite_negative = ExtResource("3_red")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.6901961, 0.25490198, 0.101960786, 1)
+
+[node name="Foreground" type="ColorRect" parent="."]
+layout_mode = 1
+anchor_right = 0.5
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.41960785, 0.5176471, 0.27058825, 1)
+
+[node name="Point" type="TextureRect" parent="Foreground"]
+layout_mode = 1
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -51.0
+offset_top = -37.0
+offset_right = 51.0
+offset_bottom = 37.0
+grow_horizontal = 0
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("2_green")
