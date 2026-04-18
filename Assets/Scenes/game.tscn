@@ -1,0 +1,2988 @@
+[gd_scene format=3 uid="uid://cxuu2uajmap7n"]
+
+[ext_resource type="Texture2D" uid="uid://bh18b1kmo8blk" path="res://Assets/Sprites/example.png" id="1_g77ca"]
+[ext_resource type="Texture2D" uid="uid://bu8dr8bohvsvn" path="res://Assets/Sprites/Background/Background.png" id="2_p7xq5"]
+[ext_resource type="Texture2D" uid="uid://d100yfoav47ci" path="res://Assets/Sprites/TopMenu/Rules.png" id="3_16r2i"]
+[ext_resource type="Texture2D" uid="uid://d3m7xirhjch60" path="res://Assets/Sprites/TopMenu/ABout.png" id="4_sqxpa"]
+[ext_resource type="Texture2D" uid="uid://cdec5qjamnwn0" path="res://Assets/Sprites/TopMenu/ESC.png" id="5_dri85"]
+[ext_resource type="Texture2D" uid="uid://l02qfx37tfx0" path="res://Assets/Sprites/Nickname_bar/NickAva_player.png" id="6_ui87a"]
+[ext_resource type="Texture2D" uid="uid://bxy5s38vjjyb7" path="res://Assets/Sprites/Hotbar/SCORE_BIRD_GREEN.png" id="7_gvrie"]
+[ext_resource type="Texture2D" uid="uid://djdbk5xgsjohw" path="res://Assets/Sprites/Nickname_bar/NickAva_enemy.png" id="8_ttsg4"]
+[ext_resource type="Texture2D" uid="uid://3tk14n41m3lg" path="res://Assets/Sprites/Hotbar/SCORE_BIRD_RED.png" id="9_kvw2h"]
+[ext_resource type="Texture2D" uid="uid://cm70jpujus14k" path="res://Assets/Sprites/Hotbar/HOTBAR.png" id="10_dm1m1"]
+[ext_resource type="FontFile" uid="uid://ccwwltsq0oe2h" path="res://Assets/Fonts/Original/Chicoree Em. Bold.otf" id="11_8lgte"]
+[ext_resource type="Texture2D" uid="uid://c0oc52tsx7a7" path="res://Assets/Sprites/Gems/Mini/Red_mini_0.png" id="12_cm1bx"]
+[ext_resource type="Texture2D" uid="uid://cmraypgaahspc" path="res://Assets/Sprites/Gems/Mini/Red_mini_1.png" id="13_1iytr"]
+[ext_resource type="Texture2D" uid="uid://dgjivoa3suxrx" path="res://Assets/Sprites/Gems/Mini/Green_mini_0.png" id="14_wh2ge"]
+[ext_resource type="Texture2D" uid="uid://dr20sug8pb2qk" path="res://Assets/Sprites/Gems/Mini/Green_mini_1.png" id="15_eca7d"]
+[ext_resource type="Texture2D" uid="uid://vkdn0oa364pa" path="res://Assets/Sprites/Hotbar/+SCORE.png" id="16_4cxsk"]
+[ext_resource type="Texture2D" uid="uid://c2ubop4yuc304" path="res://Assets/Sprites/Skills/Active_butt.png" id="17_8lgte"]
+[ext_resource type="Texture2D" uid="uid://b0monntq2ijma" path="res://Assets/Sprites/Skills/SkillIcons/Cube.png" id="18_cm1bx"]
+[ext_resource type="Texture2D" uid="uid://bt6hahpwfyy4f" path="res://Assets/Sprites/Skills/STAR.png" id="19_1iytr"]
+[ext_resource type="Texture2D" uid="uid://dgki6jwcxnta4" path="res://Assets/Sprites/Skills/Quantity.png" id="20_wh2ge"]
+[ext_resource type="Texture2D" uid="uid://1f6chxldo56n" path="res://Assets/Sprites/Skills/SkillIcons/Lube.png" id="21_eca7d"]
+[ext_resource type="Texture2D" uid="uid://dk1osimvxvc2i" path="res://Assets/Sprites/Skills/SkillIcons/Hand.png" id="22_4cxsk"]
+[ext_resource type="Texture2D" uid="uid://lrlmgag4xscw" path="res://Assets/Sprites/Skills/SkillIcons/Baloon.png" id="23_1umtg"]
+[ext_resource type="Texture2D" uid="uid://dik5gv8wn81uu" path="res://Assets/Sprites/Gems/Blue_bomb.png" id="24_mcygk"]
+[ext_resource type="Texture2D" uid="uid://cur5e5o0768fx" path="res://Assets/Sprites/Gems/Bomb_LeftRight.png" id="25_1v65n"]
+[ext_resource type="Texture2D" uid="uid://wxul8g6hsc2v" path="res://Assets/Sprites/Gems/Banana_base.png" id="26_qudcs"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1umtg"]
+corner_radius_top_left = 1000
+corner_radius_top_right = 1000
+corner_radius_bottom_right = 1000
+corner_radius_bottom_left = 1000
+
+[sub_resource type="Gradient" id="Gradient_mcygk"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0, 0.99759614)
+colors = PackedColorArray(5.4869056e-06, 0.5754701, 0.761221, 1, 0, 0.8596751, 0.40187055, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_1v65n"]
+gradient = SubResource("Gradient_mcygk")
+fill_from = Vector2(0.9427083, 0.9357639)
+fill_to = Vector2(0, 0)
+
+[sub_resource type="Gradient" id="Gradient_qudcs"]
+interpolation_mode = 2
+colors = PackedColorArray(0.9624755, 0, 0.42691815, 1, 0.16701901, 0.6551242, 0.6477776, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_xwg46"]
+gradient = SubResource("Gradient_qudcs")
+fill_from = Vector2(0.9427083, 0.9357639)
+fill_to = Vector2(0, 0)
+
+[node name="Game" type="Control" unique_id=1685284791]
+custom_minimum_size = Vector2(1080, 1920)
+layout_mode = 3
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="background" type="TextureRect" parent="." unique_id=1639237445]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -540.0
+offset_top = -960.0
+offset_right = 540.0
+offset_bottom = 960.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_g77ca")
+
+[node name="GameField" type="TextureRect" parent="." unique_id=154439486]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -540.0
+offset_top = -297.0
+offset_right = 540.0
+offset_bottom = 959.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_p7xq5")
+
+[node name="Gems" type="VBoxContainer" parent="GameField" unique_id=1552780601]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 136.0
+offset_right = 1064.0
+offset_bottom = 1180.0
+theme_override_constants/separation = 36
+alignment = 1
+
+[node name="GemsLine1" type="Control" parent="GameField/Gems" unique_id=1368711028]
+custom_minimum_size = Vector2(0, 110)
+layout_mode = 2
+
+[node name="GemCell" type="Control" parent="GameField/Gems/GemsLine1" unique_id=1588867600]
+custom_minimum_size = Vector2(110, 110)
+anchors_preset = 0
+offset_left = 29.0
+offset_right = 139.0
+offset_bottom = 110.0
+
+[node name="Gem" type="TextureRect" parent="GameField/Gems/GemsLine1/GemCell" unique_id=1476881918]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -52.5
+offset_top = -52.5
+offset_right = 52.5
+offset_bottom = 52.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("24_mcygk")
+
+[node name="GemModificator" type="TextureRect" parent="GameField/Gems/GemsLine1/GemCell" unique_id=1591465929]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -56.5
+offset_top = -27.5
+offset_right = 56.5
+offset_bottom = 27.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("25_1v65n")
+
+[node name="GemCell2" type="Control" parent="GameField/Gems/GemsLine1" unique_id=653611600]
+custom_minimum_size = Vector2(110, 110)
+anchors_preset = 0
+offset_left = 175.0
+offset_right = 285.0
+offset_bottom = 110.0
+
+[node name="Gem" type="TextureRect" parent="GameField/Gems/GemsLine1/GemCell2" unique_id=1286611737]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -52.5
+offset_top = -52.5
+offset_right = 52.5
+offset_bottom = 52.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("26_qudcs")
+
+[node name="GemModificator" type="TextureRect" parent="GameField/Gems/GemsLine1/GemCell2" unique_id=1998328812]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -56.5
+offset_top = -27.5
+offset_right = 56.5
+offset_bottom = 27.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("25_1v65n")
+
+[node name="GemCell3" type="Control" parent="GameField/Gems/GemsLine1" unique_id=427260173]
+custom_minimum_size = Vector2(110, 110)
+anchors_preset = 0
+offset_left = 321.0
+offset_right = 431.0
+offset_bottom = 110.0
+
+[node name="Gem" type="TextureRect" parent="GameField/Gems/GemsLine1/GemCell3" unique_id=679651322]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -52.5
+offset_top = -52.5
+offset_right = 52.5
+offset_bottom = 52.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("24_mcygk")
+
+[node name="GemModificator" type="TextureRect" parent="GameField/Gems/GemsLine1/GemCell3" unique_id=203893605]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -56.5
+offset_top = -27.5
+offset_right = 56.5
+offset_bottom = 27.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("25_1v65n")
+
+[node name="GemCell4" type="Control" parent="GameField/Gems/GemsLine1" unique_id=1726610314]
+custom_minimum_size = Vector2(110, 110)
+anchors_preset = 0
+offset_left = 467.0
+offset_right = 577.0
+offset_bottom = 110.0
+
+[node name="Gem" type="TextureRect" parent="GameField/Gems/GemsLine1/GemCell4" unique_id=285112553]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -52.5
+offset_top = -52.5
+offset_right = 52.5
+offset_bottom = 52.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("26_qudcs")
+
+[node name="GemModificator" type="TextureRect" parent="GameField/Gems/GemsLine1/GemCell4" unique_id=739692902]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -56.5
+offset_top = -27.5
+offset_right = 56.5
+offset_bottom = 27.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("25_1v65n")
+
+[node name="GemCell5" type="Control" parent="GameField/Gems/GemsLine1" unique_id=843404815]
+custom_minimum_size = Vector2(110, 110)
+anchors_preset = 0
+offset_left = 613.0
+offset_right = 723.0
+offset_bottom = 110.0
+
+[node name="Gem" type="TextureRect" parent="GameField/Gems/GemsLine1/GemCell5" unique_id=868817854]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -52.5
+offset_top = -52.5
+offset_right = 52.5
+offset_bottom = 52.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("24_mcygk")
+
+[node name="GemModificator" type="TextureRect" parent="GameField/Gems/GemsLine1/GemCell5" unique_id=1442652620]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -56.5
+offset_top = -27.5
+offset_right = 56.5
+offset_bottom = 27.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("25_1v65n")
+
+[node name="GemCell6" type="Control" parent="GameField/Gems/GemsLine1" unique_id=975653708]
+custom_minimum_size = Vector2(110, 110)
+anchors_preset = 0
+offset_left = 759.0
+offset_right = 869.0
+offset_bottom = 110.0
+
+[node name="Gem" type="TextureRect" parent="GameField/Gems/GemsLine1/GemCell6" unique_id=1652513934]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -52.5
+offset_top = -52.5
+offset_right = 52.5
+offset_bottom = 52.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("26_qudcs")
+
+[node name="GemModificator" type="TextureRect" parent="GameField/Gems/GemsLine1/GemCell6" unique_id=1659580504]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -56.5
+offset_top = -27.5
+offset_right = 56.5
+offset_bottom = 27.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("25_1v65n")
+
+[node name="GemCell7" type="Control" parent="GameField/Gems/GemsLine1" unique_id=1801550838]
+custom_minimum_size = Vector2(110, 110)
+anchors_preset = 0
+offset_left = 905.0
+offset_right = 1015.0
+offset_bottom = 110.0
+
+[node name="Gem" type="TextureRect" parent="GameField/Gems/GemsLine1/GemCell7" unique_id=851186330]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -52.5
+offset_top = -52.5
+offset_right = 52.5
+offset_bottom = 52.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("26_qudcs")
+
+[node name="GemModificator" type="TextureRect" parent="GameField/Gems/GemsLine1/GemCell7" unique_id=953546590]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -56.5
+offset_top = -27.5
+offset_right = 56.5
+offset_bottom = 27.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("25_1v65n")
+
+[node name="GemsLine2" type="Control" parent="GameField/Gems" unique_id=1218029862]
+custom_minimum_size = Vector2(0, 110)
+layout_mode = 2
+
+[node name="GemCell" type="Control" parent="GameField/Gems/GemsLine2" unique_id=505874177]
+custom_minimum_size = Vector2(110, 110)
+anchors_preset = 0
+offset_left = 29.0
+offset_right = 139.0
+offset_bottom = 110.0
+
+[node name="Gem" type="TextureRect" parent="GameField/Gems/GemsLine2/GemCell" unique_id=1792138473]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -52.5
+offset_top = -52.5
+offset_right = 52.5
+offset_bottom = 52.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("24_mcygk")
+
+[node name="GemModificator" type="TextureRect" parent="GameField/Gems/GemsLine2/GemCell" unique_id=1686542020]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -56.5
+offset_top = -27.5
+offset_right = 56.5
+offset_bottom = 27.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("25_1v65n")
+
+[node name="GemCell2" type="Control" parent="GameField/Gems/GemsLine2" unique_id=350139931]
+custom_minimum_size = Vector2(110, 110)
+anchors_preset = 0
+offset_left = 175.0
+offset_right = 285.0
+offset_bottom = 110.0
+
+[node name="Gem" type="TextureRect" parent="GameField/Gems/GemsLine2/GemCell2" unique_id=282662150]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -52.5
+offset_top = -52.5
+offset_right = 52.5
+offset_bottom = 52.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("26_qudcs")
+
+[node name="GemModificator" type="TextureRect" parent="GameField/Gems/GemsLine2/GemCell2" unique_id=597827769]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -56.5
+offset_top = -27.5
+offset_right = 56.5
+offset_bottom = 27.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("25_1v65n")
+
+[node name="GemCell3" type="Control" parent="GameField/Gems/GemsLine2" unique_id=2140124293]
+custom_minimum_size = Vector2(110, 110)
+anchors_preset = 0
+offset_left = 321.0
+offset_right = 431.0
+offset_bottom = 110.0
+
+[node name="Gem" type="TextureRect" parent="GameField/Gems/GemsLine2/GemCell3" unique_id=815055808]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -52.5
+offset_top = -52.5
+offset_right = 52.5
+offset_bottom = 52.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("24_mcygk")
+
+[node name="GemModificator" type="TextureRect" parent="GameField/Gems/GemsLine2/GemCell3" unique_id=846905794]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -56.5
+offset_top = -27.5
+offset_right = 56.5
+offset_bottom = 27.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("25_1v65n")
+
+[node name="GemCell4" type="Control" parent="GameField/Gems/GemsLine2" unique_id=1195680289]
+custom_minimum_size = Vector2(110, 110)
+anchors_preset = 0
+offset_left = 467.0
+offset_right = 577.0
+offset_bottom = 110.0
+
+[node name="Gem" type="TextureRect" parent="GameField/Gems/GemsLine2/GemCell4" unique_id=1386946480]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -52.5
+offset_top = -52.5
+offset_right = 52.5
+offset_bottom = 52.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("26_qudcs")
+
+[node name="GemModificator" type="TextureRect" parent="GameField/Gems/GemsLine2/GemCell4" unique_id=1332665478]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -56.5
+offset_top = -27.5
+offset_right = 56.5
+offset_bottom = 27.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("25_1v65n")
+
+[node name="GemCell5" type="Control" parent="GameField/Gems/GemsLine2" unique_id=469501112]
+custom_minimum_size = Vector2(110, 110)
+anchors_preset = 0
+offset_left = 613.0
+offset_right = 723.0
+offset_bottom = 110.0
+
+[node name="Gem" type="TextureRect" parent="GameField/Gems/GemsLine2/GemCell5" unique_id=26423891]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -52.5
+offset_top = -52.5
+offset_right = 52.5
+offset_bottom = 52.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("24_mcygk")
+
+[node name="GemModificator" type="TextureRect" parent="GameField/Gems/GemsLine2/GemCell5" unique_id=2032463777]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -56.5
+offset_top = -27.5
+offset_right = 56.5
+offset_bottom = 27.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("25_1v65n")
+
+[node name="GemCell6" type="Control" parent="GameField/Gems/GemsLine2" unique_id=1110051656]
+custom_minimum_size = Vector2(110, 110)
+anchors_preset = 0
+offset_left = 759.0
+offset_right = 869.0
+offset_bottom = 110.0
+
+[node name="Gem" type="TextureRect" parent="GameField/Gems/GemsLine2/GemCell6" unique_id=1102826701]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -52.5
+offset_top = -52.5
+offset_right = 52.5
+offset_bottom = 52.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("26_qudcs")
+
+[node name="GemModificator" type="TextureRect" parent="GameField/Gems/GemsLine2/GemCell6" unique_id=1622911946]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -56.5
+offset_top = -27.5
+offset_right = 56.5
+offset_bottom = 27.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("25_1v65n")
+
+[node name="GemCell7" type="Control" parent="GameField/Gems/GemsLine2" unique_id=1048035597]
+custom_minimum_size = Vector2(110, 110)
+anchors_preset = 0
+offset_left = 905.0
+offset_right = 1015.0
+offset_bottom = 110.0
+
+[node name="Gem" type="TextureRect" parent="GameField/Gems/GemsLine2/GemCell7" unique_id=639080938]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -52.5
+offset_top = -52.5
+offset_right = 52.5
+offset_bottom = 52.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("26_qudcs")
+
+[node name="GemModificator" type="TextureRect" parent="GameField/Gems/GemsLine2/GemCell7" unique_id=1782777727]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -56.5
+offset_top = -27.5
+offset_right = 56.5
+offset_bottom = 27.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("25_1v65n")
+
+[node name="GemsLine3" type="Control" parent="GameField/Gems" unique_id=727302670]
+custom_minimum_size = Vector2(0, 110)
+layout_mode = 2
+
+[node name="GemCell" type="Control" parent="GameField/Gems/GemsLine3" unique_id=874302591]
+custom_minimum_size = Vector2(110, 110)
+anchors_preset = 0
+offset_left = 29.0
+offset_right = 139.0
+offset_bottom = 110.0
+
+[node name="Gem" type="TextureRect" parent="GameField/Gems/GemsLine3/GemCell" unique_id=1141107418]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -52.5
+offset_top = -52.5
+offset_right = 52.5
+offset_bottom = 52.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("24_mcygk")
+
+[node name="GemModificator" type="TextureRect" parent="GameField/Gems/GemsLine3/GemCell" unique_id=157787272]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -56.5
+offset_top = -27.5
+offset_right = 56.5
+offset_bottom = 27.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("25_1v65n")
+
+[node name="GemCell2" type="Control" parent="GameField/Gems/GemsLine3" unique_id=991266117]
+custom_minimum_size = Vector2(110, 110)
+anchors_preset = 0
+offset_left = 175.0
+offset_right = 285.0
+offset_bottom = 110.0
+
+[node name="Gem" type="TextureRect" parent="GameField/Gems/GemsLine3/GemCell2" unique_id=1230299761]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -52.5
+offset_top = -52.5
+offset_right = 52.5
+offset_bottom = 52.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("26_qudcs")
+
+[node name="GemModificator" type="TextureRect" parent="GameField/Gems/GemsLine3/GemCell2" unique_id=937115692]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -56.5
+offset_top = -27.5
+offset_right = 56.5
+offset_bottom = 27.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("25_1v65n")
+
+[node name="GemCell3" type="Control" parent="GameField/Gems/GemsLine3" unique_id=507937793]
+custom_minimum_size = Vector2(110, 110)
+anchors_preset = 0
+offset_left = 321.0
+offset_right = 431.0
+offset_bottom = 110.0
+
+[node name="Gem" type="TextureRect" parent="GameField/Gems/GemsLine3/GemCell3" unique_id=1793308929]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -52.5
+offset_top = -52.5
+offset_right = 52.5
+offset_bottom = 52.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("24_mcygk")
+
+[node name="GemModificator" type="TextureRect" parent="GameField/Gems/GemsLine3/GemCell3" unique_id=1886419369]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -56.5
+offset_top = -27.5
+offset_right = 56.5
+offset_bottom = 27.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("25_1v65n")
+
+[node name="GemCell4" type="Control" parent="GameField/Gems/GemsLine3" unique_id=1306542605]
+custom_minimum_size = Vector2(110, 110)
+anchors_preset = 0
+offset_left = 467.0
+offset_right = 577.0
+offset_bottom = 110.0
+
+[node name="Gem" type="TextureRect" parent="GameField/Gems/GemsLine3/GemCell4" unique_id=932302812]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -52.5
+offset_top = -52.5
+offset_right = 52.5
+offset_bottom = 52.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("26_qudcs")
+
+[node name="GemModificator" type="TextureRect" parent="GameField/Gems/GemsLine3/GemCell4" unique_id=2114217780]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -56.5
+offset_top = -27.5
+offset_right = 56.5
+offset_bottom = 27.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("25_1v65n")
+
+[node name="GemCell5" type="Control" parent="GameField/Gems/GemsLine3" unique_id=1220251847]
+custom_minimum_size = Vector2(110, 110)
+anchors_preset = 0
+offset_left = 613.0
+offset_right = 723.0
+offset_bottom = 110.0
+
+[node name="Gem" type="TextureRect" parent="GameField/Gems/GemsLine3/GemCell5" unique_id=135927182]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -52.5
+offset_top = -52.5
+offset_right = 52.5
+offset_bottom = 52.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("24_mcygk")
+
+[node name="GemModificator" type="TextureRect" parent="GameField/Gems/GemsLine3/GemCell5" unique_id=1107124674]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -56.5
+offset_top = -27.5
+offset_right = 56.5
+offset_bottom = 27.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("25_1v65n")
+
+[node name="GemCell6" type="Control" parent="GameField/Gems/GemsLine3" unique_id=374576127]
+custom_minimum_size = Vector2(110, 110)
+anchors_preset = 0
+offset_left = 759.0
+offset_right = 869.0
+offset_bottom = 110.0
+
+[node name="Gem" type="TextureRect" parent="GameField/Gems/GemsLine3/GemCell6" unique_id=1425668188]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -52.5
+offset_top = -52.5
+offset_right = 52.5
+offset_bottom = 52.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("26_qudcs")
+
+[node name="GemModificator" type="TextureRect" parent="GameField/Gems/GemsLine3/GemCell6" unique_id=146183033]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -56.5
+offset_top = -27.5
+offset_right = 56.5
+offset_bottom = 27.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("25_1v65n")
+
+[node name="GemCell7" type="Control" parent="GameField/Gems/GemsLine3" unique_id=2079558357]
+custom_minimum_size = Vector2(110, 110)
+anchors_preset = 0
+offset_left = 905.0
+offset_right = 1015.0
+offset_bottom = 110.0
+
+[node name="Gem" type="TextureRect" parent="GameField/Gems/GemsLine3/GemCell7" unique_id=520381300]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -52.5
+offset_top = -52.5
+offset_right = 52.5
+offset_bottom = 52.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("26_qudcs")
+
+[node name="GemModificator" type="TextureRect" parent="GameField/Gems/GemsLine3/GemCell7" unique_id=1429337545]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -56.5
+offset_top = -27.5
+offset_right = 56.5
+offset_bottom = 27.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("25_1v65n")
+
+[node name="GemsLine4" type="Control" parent="GameField/Gems" unique_id=134901062]
+custom_minimum_size = Vector2(0, 110)
+layout_mode = 2
+
+[node name="GemCell" type="Control" parent="GameField/Gems/GemsLine4" unique_id=1142251722]
+custom_minimum_size = Vector2(110, 110)
+anchors_preset = 0
+offset_left = 29.0
+offset_right = 139.0
+offset_bottom = 110.0
+
+[node name="Gem" type="TextureRect" parent="GameField/Gems/GemsLine4/GemCell" unique_id=1239638104]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -52.5
+offset_top = -52.5
+offset_right = 52.5
+offset_bottom = 52.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("24_mcygk")
+
+[node name="GemModificator" type="TextureRect" parent="GameField/Gems/GemsLine4/GemCell" unique_id=709180326]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -56.5
+offset_top = -27.5
+offset_right = 56.5
+offset_bottom = 27.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("25_1v65n")
+
+[node name="GemCell2" type="Control" parent="GameField/Gems/GemsLine4" unique_id=2063746172]
+custom_minimum_size = Vector2(110, 110)
+anchors_preset = 0
+offset_left = 175.0
+offset_right = 285.0
+offset_bottom = 110.0
+
+[node name="Gem" type="TextureRect" parent="GameField/Gems/GemsLine4/GemCell2" unique_id=199706901]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -52.5
+offset_top = -52.5
+offset_right = 52.5
+offset_bottom = 52.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("26_qudcs")
+
+[node name="GemModificator" type="TextureRect" parent="GameField/Gems/GemsLine4/GemCell2" unique_id=950585987]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -56.5
+offset_top = -27.5
+offset_right = 56.5
+offset_bottom = 27.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("25_1v65n")
+
+[node name="GemCell3" type="Control" parent="GameField/Gems/GemsLine4" unique_id=940862430]
+custom_minimum_size = Vector2(110, 110)
+anchors_preset = 0
+offset_left = 321.0
+offset_right = 431.0
+offset_bottom = 110.0
+
+[node name="Gem" type="TextureRect" parent="GameField/Gems/GemsLine4/GemCell3" unique_id=1107880687]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -52.5
+offset_top = -52.5
+offset_right = 52.5
+offset_bottom = 52.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("24_mcygk")
+
+[node name="GemModificator" type="TextureRect" parent="GameField/Gems/GemsLine4/GemCell3" unique_id=389173883]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -56.5
+offset_top = -27.5
+offset_right = 56.5
+offset_bottom = 27.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("25_1v65n")
+
+[node name="GemCell4" type="Control" parent="GameField/Gems/GemsLine4" unique_id=877063817]
+custom_minimum_size = Vector2(110, 110)
+anchors_preset = 0
+offset_left = 467.0
+offset_right = 577.0
+offset_bottom = 110.0
+
+[node name="Gem" type="TextureRect" parent="GameField/Gems/GemsLine4/GemCell4" unique_id=251309925]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -52.5
+offset_top = -52.5
+offset_right = 52.5
+offset_bottom = 52.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("26_qudcs")
+
+[node name="GemModificator" type="TextureRect" parent="GameField/Gems/GemsLine4/GemCell4" unique_id=790767072]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -56.5
+offset_top = -27.5
+offset_right = 56.5
+offset_bottom = 27.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("25_1v65n")
+
+[node name="GemCell5" type="Control" parent="GameField/Gems/GemsLine4" unique_id=1824442931]
+custom_minimum_size = Vector2(110, 110)
+anchors_preset = 0
+offset_left = 613.0
+offset_right = 723.0
+offset_bottom = 110.0
+
+[node name="Gem" type="TextureRect" parent="GameField/Gems/GemsLine4/GemCell5" unique_id=153136829]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -52.5
+offset_top = -52.5
+offset_right = 52.5
+offset_bottom = 52.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("24_mcygk")
+
+[node name="GemModificator" type="TextureRect" parent="GameField/Gems/GemsLine4/GemCell5" unique_id=257725534]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -56.5
+offset_top = -27.5
+offset_right = 56.5
+offset_bottom = 27.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("25_1v65n")
+
+[node name="GemCell6" type="Control" parent="GameField/Gems/GemsLine4" unique_id=76553101]
+custom_minimum_size = Vector2(110, 110)
+anchors_preset = 0
+offset_left = 759.0
+offset_right = 869.0
+offset_bottom = 110.0
+
+[node name="Gem" type="TextureRect" parent="GameField/Gems/GemsLine4/GemCell6" unique_id=1844725831]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -52.5
+offset_top = -52.5
+offset_right = 52.5
+offset_bottom = 52.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("26_qudcs")
+
+[node name="GemModificator" type="TextureRect" parent="GameField/Gems/GemsLine4/GemCell6" unique_id=408172903]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -56.5
+offset_top = -27.5
+offset_right = 56.5
+offset_bottom = 27.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("25_1v65n")
+
+[node name="GemCell7" type="Control" parent="GameField/Gems/GemsLine4" unique_id=229511497]
+custom_minimum_size = Vector2(110, 110)
+anchors_preset = 0
+offset_left = 905.0
+offset_right = 1015.0
+offset_bottom = 110.0
+
+[node name="Gem" type="TextureRect" parent="GameField/Gems/GemsLine4/GemCell7" unique_id=319665489]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -52.5
+offset_top = -52.5
+offset_right = 52.5
+offset_bottom = 52.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("26_qudcs")
+
+[node name="GemModificator" type="TextureRect" parent="GameField/Gems/GemsLine4/GemCell7" unique_id=235129346]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -56.5
+offset_top = -27.5
+offset_right = 56.5
+offset_bottom = 27.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("25_1v65n")
+
+[node name="GemsLine5" type="Control" parent="GameField/Gems" unique_id=107388307]
+custom_minimum_size = Vector2(0, 110)
+layout_mode = 2
+
+[node name="GemCell" type="Control" parent="GameField/Gems/GemsLine5" unique_id=1490031499]
+custom_minimum_size = Vector2(110, 110)
+anchors_preset = 0
+offset_left = 29.0
+offset_right = 139.0
+offset_bottom = 110.0
+
+[node name="Gem" type="TextureRect" parent="GameField/Gems/GemsLine5/GemCell" unique_id=749443503]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -52.5
+offset_top = -52.5
+offset_right = 52.5
+offset_bottom = 52.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("24_mcygk")
+
+[node name="GemModificator" type="TextureRect" parent="GameField/Gems/GemsLine5/GemCell" unique_id=1353603001]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -56.5
+offset_top = -27.5
+offset_right = 56.5
+offset_bottom = 27.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("25_1v65n")
+
+[node name="GemCell2" type="Control" parent="GameField/Gems/GemsLine5" unique_id=1217193862]
+custom_minimum_size = Vector2(110, 110)
+anchors_preset = 0
+offset_left = 175.0
+offset_right = 285.0
+offset_bottom = 110.0
+
+[node name="Gem" type="TextureRect" parent="GameField/Gems/GemsLine5/GemCell2" unique_id=850503363]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -52.5
+offset_top = -52.5
+offset_right = 52.5
+offset_bottom = 52.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("26_qudcs")
+
+[node name="GemModificator" type="TextureRect" parent="GameField/Gems/GemsLine5/GemCell2" unique_id=771856888]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -56.5
+offset_top = -27.5
+offset_right = 56.5
+offset_bottom = 27.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("25_1v65n")
+
+[node name="GemCell3" type="Control" parent="GameField/Gems/GemsLine5" unique_id=1673245046]
+custom_minimum_size = Vector2(110, 110)
+anchors_preset = 0
+offset_left = 321.0
+offset_right = 431.0
+offset_bottom = 110.0
+
+[node name="Gem" type="TextureRect" parent="GameField/Gems/GemsLine5/GemCell3" unique_id=1068770385]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -52.5
+offset_top = -52.5
+offset_right = 52.5
+offset_bottom = 52.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("24_mcygk")
+
+[node name="GemModificator" type="TextureRect" parent="GameField/Gems/GemsLine5/GemCell3" unique_id=1816506562]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -56.5
+offset_top = -27.5
+offset_right = 56.5
+offset_bottom = 27.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("25_1v65n")
+
+[node name="GemCell4" type="Control" parent="GameField/Gems/GemsLine5" unique_id=1522476797]
+custom_minimum_size = Vector2(110, 110)
+anchors_preset = 0
+offset_left = 467.0
+offset_right = 577.0
+offset_bottom = 110.0
+
+[node name="Gem" type="TextureRect" parent="GameField/Gems/GemsLine5/GemCell4" unique_id=934217177]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -52.5
+offset_top = -52.5
+offset_right = 52.5
+offset_bottom = 52.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("26_qudcs")
+
+[node name="GemModificator" type="TextureRect" parent="GameField/Gems/GemsLine5/GemCell4" unique_id=1259912417]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -56.5
+offset_top = -27.5
+offset_right = 56.5
+offset_bottom = 27.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("25_1v65n")
+
+[node name="GemCell5" type="Control" parent="GameField/Gems/GemsLine5" unique_id=751937430]
+custom_minimum_size = Vector2(110, 110)
+anchors_preset = 0
+offset_left = 613.0
+offset_right = 723.0
+offset_bottom = 110.0
+
+[node name="Gem" type="TextureRect" parent="GameField/Gems/GemsLine5/GemCell5" unique_id=491901829]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -52.5
+offset_top = -52.5
+offset_right = 52.5
+offset_bottom = 52.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("24_mcygk")
+
+[node name="GemModificator" type="TextureRect" parent="GameField/Gems/GemsLine5/GemCell5" unique_id=1398297688]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -56.5
+offset_top = -27.5
+offset_right = 56.5
+offset_bottom = 27.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("25_1v65n")
+
+[node name="GemCell6" type="Control" parent="GameField/Gems/GemsLine5" unique_id=125685694]
+custom_minimum_size = Vector2(110, 110)
+anchors_preset = 0
+offset_left = 759.0
+offset_right = 869.0
+offset_bottom = 110.0
+
+[node name="Gem" type="TextureRect" parent="GameField/Gems/GemsLine5/GemCell6" unique_id=945504851]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -52.5
+offset_top = -52.5
+offset_right = 52.5
+offset_bottom = 52.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("26_qudcs")
+
+[node name="GemModificator" type="TextureRect" parent="GameField/Gems/GemsLine5/GemCell6" unique_id=1462306246]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -56.5
+offset_top = -27.5
+offset_right = 56.5
+offset_bottom = 27.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("25_1v65n")
+
+[node name="GemCell7" type="Control" parent="GameField/Gems/GemsLine5" unique_id=2050437723]
+custom_minimum_size = Vector2(110, 110)
+anchors_preset = 0
+offset_left = 905.0
+offset_right = 1015.0
+offset_bottom = 110.0
+
+[node name="Gem" type="TextureRect" parent="GameField/Gems/GemsLine5/GemCell7" unique_id=90706520]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -52.5
+offset_top = -52.5
+offset_right = 52.5
+offset_bottom = 52.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("26_qudcs")
+
+[node name="GemModificator" type="TextureRect" parent="GameField/Gems/GemsLine5/GemCell7" unique_id=823580642]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -56.5
+offset_top = -27.5
+offset_right = 56.5
+offset_bottom = 27.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("25_1v65n")
+
+[node name="GemsLine6" type="Control" parent="GameField/Gems" unique_id=206470696]
+custom_minimum_size = Vector2(0, 110)
+layout_mode = 2
+
+[node name="GemCell" type="Control" parent="GameField/Gems/GemsLine6" unique_id=1809033325]
+custom_minimum_size = Vector2(110, 110)
+anchors_preset = 0
+offset_left = 29.0
+offset_right = 139.0
+offset_bottom = 110.0
+
+[node name="Gem" type="TextureRect" parent="GameField/Gems/GemsLine6/GemCell" unique_id=407410713]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -52.5
+offset_top = -52.5
+offset_right = 52.5
+offset_bottom = 52.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("24_mcygk")
+
+[node name="GemModificator" type="TextureRect" parent="GameField/Gems/GemsLine6/GemCell" unique_id=2105238553]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -56.5
+offset_top = -27.5
+offset_right = 56.5
+offset_bottom = 27.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("25_1v65n")
+
+[node name="GemCell2" type="Control" parent="GameField/Gems/GemsLine6" unique_id=907328175]
+custom_minimum_size = Vector2(110, 110)
+anchors_preset = 0
+offset_left = 175.0
+offset_right = 285.0
+offset_bottom = 110.0
+
+[node name="Gem" type="TextureRect" parent="GameField/Gems/GemsLine6/GemCell2" unique_id=857101500]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -52.5
+offset_top = -52.5
+offset_right = 52.5
+offset_bottom = 52.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("26_qudcs")
+
+[node name="GemModificator" type="TextureRect" parent="GameField/Gems/GemsLine6/GemCell2" unique_id=2109785987]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -56.5
+offset_top = -27.5
+offset_right = 56.5
+offset_bottom = 27.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("25_1v65n")
+
+[node name="GemCell3" type="Control" parent="GameField/Gems/GemsLine6" unique_id=1572132114]
+custom_minimum_size = Vector2(110, 110)
+anchors_preset = 0
+offset_left = 321.0
+offset_right = 431.0
+offset_bottom = 110.0
+
+[node name="Gem" type="TextureRect" parent="GameField/Gems/GemsLine6/GemCell3" unique_id=1954728011]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -52.5
+offset_top = -52.5
+offset_right = 52.5
+offset_bottom = 52.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("24_mcygk")
+
+[node name="GemModificator" type="TextureRect" parent="GameField/Gems/GemsLine6/GemCell3" unique_id=1587016460]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -56.5
+offset_top = -27.5
+offset_right = 56.5
+offset_bottom = 27.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("25_1v65n")
+
+[node name="GemCell4" type="Control" parent="GameField/Gems/GemsLine6" unique_id=1097924091]
+custom_minimum_size = Vector2(110, 110)
+anchors_preset = 0
+offset_left = 467.0
+offset_right = 577.0
+offset_bottom = 110.0
+
+[node name="Gem" type="TextureRect" parent="GameField/Gems/GemsLine6/GemCell4" unique_id=391574961]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -52.5
+offset_top = -52.5
+offset_right = 52.5
+offset_bottom = 52.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("26_qudcs")
+
+[node name="GemModificator" type="TextureRect" parent="GameField/Gems/GemsLine6/GemCell4" unique_id=124812032]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -56.5
+offset_top = -27.5
+offset_right = 56.5
+offset_bottom = 27.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("25_1v65n")
+
+[node name="GemCell5" type="Control" parent="GameField/Gems/GemsLine6" unique_id=1105113268]
+custom_minimum_size = Vector2(110, 110)
+anchors_preset = 0
+offset_left = 613.0
+offset_right = 723.0
+offset_bottom = 110.0
+
+[node name="Gem" type="TextureRect" parent="GameField/Gems/GemsLine6/GemCell5" unique_id=2016786031]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -52.5
+offset_top = -52.5
+offset_right = 52.5
+offset_bottom = 52.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("24_mcygk")
+
+[node name="GemModificator" type="TextureRect" parent="GameField/Gems/GemsLine6/GemCell5" unique_id=1739994118]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -56.5
+offset_top = -27.5
+offset_right = 56.5
+offset_bottom = 27.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("25_1v65n")
+
+[node name="GemCell6" type="Control" parent="GameField/Gems/GemsLine6" unique_id=1656676668]
+custom_minimum_size = Vector2(110, 110)
+anchors_preset = 0
+offset_left = 759.0
+offset_right = 869.0
+offset_bottom = 110.0
+
+[node name="Gem" type="TextureRect" parent="GameField/Gems/GemsLine6/GemCell6" unique_id=1477409071]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -52.5
+offset_top = -52.5
+offset_right = 52.5
+offset_bottom = 52.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("26_qudcs")
+
+[node name="GemModificator" type="TextureRect" parent="GameField/Gems/GemsLine6/GemCell6" unique_id=1406683547]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -56.5
+offset_top = -27.5
+offset_right = 56.5
+offset_bottom = 27.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("25_1v65n")
+
+[node name="GemCell7" type="Control" parent="GameField/Gems/GemsLine6" unique_id=909476740]
+custom_minimum_size = Vector2(110, 110)
+anchors_preset = 0
+offset_left = 905.0
+offset_right = 1015.0
+offset_bottom = 110.0
+
+[node name="Gem" type="TextureRect" parent="GameField/Gems/GemsLine6/GemCell7" unique_id=587139803]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -52.5
+offset_top = -52.5
+offset_right = 52.5
+offset_bottom = 52.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("26_qudcs")
+
+[node name="GemModificator" type="TextureRect" parent="GameField/Gems/GemsLine6/GemCell7" unique_id=1979712396]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -56.5
+offset_top = -27.5
+offset_right = 56.5
+offset_bottom = 27.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("25_1v65n")
+
+[node name="GemsLine7" type="Control" parent="GameField/Gems" unique_id=691291423]
+custom_minimum_size = Vector2(0, 110)
+layout_mode = 2
+
+[node name="GemCell" type="Control" parent="GameField/Gems/GemsLine7" unique_id=818668530]
+custom_minimum_size = Vector2(110, 110)
+anchors_preset = 0
+offset_left = 29.0
+offset_right = 139.0
+offset_bottom = 110.0
+
+[node name="Gem" type="TextureRect" parent="GameField/Gems/GemsLine7/GemCell" unique_id=404783838]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -52.5
+offset_top = -52.5
+offset_right = 52.5
+offset_bottom = 52.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("24_mcygk")
+
+[node name="GemModificator" type="TextureRect" parent="GameField/Gems/GemsLine7/GemCell" unique_id=1114208025]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -56.5
+offset_top = -27.5
+offset_right = 56.5
+offset_bottom = 27.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("25_1v65n")
+
+[node name="GemCell2" type="Control" parent="GameField/Gems/GemsLine7" unique_id=1015209437]
+custom_minimum_size = Vector2(110, 110)
+anchors_preset = 0
+offset_left = 175.0
+offset_right = 285.0
+offset_bottom = 110.0
+
+[node name="Gem" type="TextureRect" parent="GameField/Gems/GemsLine7/GemCell2" unique_id=245600073]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -52.5
+offset_top = -52.5
+offset_right = 52.5
+offset_bottom = 52.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("26_qudcs")
+
+[node name="GemModificator" type="TextureRect" parent="GameField/Gems/GemsLine7/GemCell2" unique_id=521480819]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -56.5
+offset_top = -27.5
+offset_right = 56.5
+offset_bottom = 27.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("25_1v65n")
+
+[node name="GemCell3" type="Control" parent="GameField/Gems/GemsLine7" unique_id=884245503]
+custom_minimum_size = Vector2(110, 110)
+anchors_preset = 0
+offset_left = 321.0
+offset_right = 431.0
+offset_bottom = 110.0
+
+[node name="Gem" type="TextureRect" parent="GameField/Gems/GemsLine7/GemCell3" unique_id=34478197]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -52.5
+offset_top = -52.5
+offset_right = 52.5
+offset_bottom = 52.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("24_mcygk")
+
+[node name="GemModificator" type="TextureRect" parent="GameField/Gems/GemsLine7/GemCell3" unique_id=282519010]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -56.5
+offset_top = -27.5
+offset_right = 56.5
+offset_bottom = 27.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("25_1v65n")
+
+[node name="GemCell4" type="Control" parent="GameField/Gems/GemsLine7" unique_id=893823442]
+custom_minimum_size = Vector2(110, 110)
+anchors_preset = 0
+offset_left = 467.0
+offset_right = 577.0
+offset_bottom = 110.0
+
+[node name="Gem" type="TextureRect" parent="GameField/Gems/GemsLine7/GemCell4" unique_id=822353601]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -52.5
+offset_top = -52.5
+offset_right = 52.5
+offset_bottom = 52.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("26_qudcs")
+
+[node name="GemModificator" type="TextureRect" parent="GameField/Gems/GemsLine7/GemCell4" unique_id=548302361]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -56.5
+offset_top = -27.5
+offset_right = 56.5
+offset_bottom = 27.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("25_1v65n")
+
+[node name="GemCell5" type="Control" parent="GameField/Gems/GemsLine7" unique_id=1776417257]
+custom_minimum_size = Vector2(110, 110)
+anchors_preset = 0
+offset_left = 613.0
+offset_right = 723.0
+offset_bottom = 110.0
+
+[node name="Gem" type="TextureRect" parent="GameField/Gems/GemsLine7/GemCell5" unique_id=297648496]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -52.5
+offset_top = -52.5
+offset_right = 52.5
+offset_bottom = 52.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("24_mcygk")
+
+[node name="GemModificator" type="TextureRect" parent="GameField/Gems/GemsLine7/GemCell5" unique_id=1768898377]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -56.5
+offset_top = -27.5
+offset_right = 56.5
+offset_bottom = 27.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("25_1v65n")
+
+[node name="GemCell6" type="Control" parent="GameField/Gems/GemsLine7" unique_id=953000484]
+custom_minimum_size = Vector2(110, 110)
+anchors_preset = 0
+offset_left = 759.0
+offset_right = 869.0
+offset_bottom = 110.0
+
+[node name="Gem" type="TextureRect" parent="GameField/Gems/GemsLine7/GemCell6" unique_id=659597789]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -52.5
+offset_top = -52.5
+offset_right = 52.5
+offset_bottom = 52.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("26_qudcs")
+
+[node name="GemModificator" type="TextureRect" parent="GameField/Gems/GemsLine7/GemCell6" unique_id=364471641]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -56.5
+offset_top = -27.5
+offset_right = 56.5
+offset_bottom = 27.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("25_1v65n")
+
+[node name="GemCell7" type="Control" parent="GameField/Gems/GemsLine7" unique_id=1236116266]
+custom_minimum_size = Vector2(110, 110)
+anchors_preset = 0
+offset_left = 905.0
+offset_right = 1015.0
+offset_bottom = 110.0
+
+[node name="Gem" type="TextureRect" parent="GameField/Gems/GemsLine7/GemCell7" unique_id=992724960]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -52.5
+offset_top = -52.5
+offset_right = 52.5
+offset_bottom = 52.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("26_qudcs")
+
+[node name="GemModificator" type="TextureRect" parent="GameField/Gems/GemsLine7/GemCell7" unique_id=1816606208]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -56.5
+offset_top = -27.5
+offset_right = 56.5
+offset_bottom = 27.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("25_1v65n")
+
+[node name="TopMenu" type="Control" parent="." unique_id=1172136226]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -540.0
+offset_right = 540.0
+offset_bottom = 238.0
+grow_horizontal = 2
+
+[node name="RulesButton" type="TextureButton" parent="TopMenu" unique_id=1969329365]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -360.0
+offset_top = 19.0
+offset_right = -108.0
+offset_bottom = 67.0
+grow_horizontal = 0
+texture_normal = ExtResource("3_16r2i")
+
+[node name="Text" type="Label" parent="TopMenu/RulesButton" unique_id=964276918]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -193.0
+offset_top = -23.0
+offset_bottom = 19.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.9411765, 0.9098039, 0.85490197, 1)
+theme_override_font_sizes/font_size = 30
+text = "Правила"
+vertical_alignment = 1
+
+[node name="AboutButton" type="TextureButton" parent="TopMenu" unique_id=405883784]
+layout_mode = 0
+offset_left = 30.0
+offset_top = 19.0
+offset_right = 312.0
+offset_bottom = 79.0
+texture_normal = ExtResource("4_sqxpa")
+
+[node name="Text" type="Label" parent="TopMenu/AboutButton" unique_id=1237721459]
+layout_mode = 0
+offset_right = 225.0
+offset_bottom = 44.0
+theme_override_colors/font_color = Color(0.9411765, 0.9098039, 0.85490197, 1)
+theme_override_font_sizes/font_size = 30
+text = "Подробности"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Exit" type="TextureButton" parent="TopMenu" unique_id=1109369118]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -96.0
+offset_top = 15.0
+offset_right = -37.0
+offset_bottom = 71.0
+grow_horizontal = 0
+texture_normal = ExtResource("5_dri85")
+
+[node name="L_Badge" type="TextureRect" parent="TopMenu" unique_id=473003408]
+layout_mode = 1
+offset_left = 2.0
+offset_top = 72.0
+offset_right = 395.0
+offset_bottom = 216.0
+texture = ExtResource("6_ui87a")
+
+[node name="Nickname" type="Label" parent="TopMenu/L_Badge" unique_id=1042800549]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -258.0
+offset_top = 21.0
+offset_right = -22.0
+offset_bottom = 65.0
+grow_horizontal = 0
+theme_override_font_sizes/font_size = 29
+text = "nagibator228"
+horizontal_alignment = 1
+vertical_alignment = 1
+text_overrun_behavior = 5
+
+[node name="AvatarContainer" type="PanelContainer" parent="TopMenu/L_Badge" unique_id=1280061137]
+clip_children = 1
+layout_mode = 1
+offset_left = 17.0
+offset_top = 19.0
+offset_right = 133.0
+offset_bottom = 135.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_1umtg")
+
+[node name="Avatar" type="TextureRect" parent="TopMenu/L_Badge/AvatarContainer" unique_id=1604637540]
+layout_mode = 2
+texture = SubResource("GradientTexture2D_1v65n")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="TempBird" type="TextureRect" parent="TopMenu/L_Badge/AvatarContainer" unique_id=307560938]
+layout_mode = 2
+texture = ExtResource("7_gvrie")
+stretch_mode = 3
+
+[node name="R_Badge" type="TextureRect" parent="TopMenu" unique_id=221044201]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -396.0
+offset_top = 73.0
+offset_right = -3.0
+offset_bottom = 217.0
+grow_horizontal = 0
+texture = ExtResource("8_ttsg4")
+
+[node name="Nickname" type="Label" parent="TopMenu/R_Badge" unique_id=1123038687]
+layout_mode = 1
+offset_left = 22.0
+offset_top = 20.0
+offset_right = 258.0
+offset_bottom = 64.0
+theme_override_font_sizes/font_size = 29
+text = "eboboT3000kjdddd"
+horizontal_alignment = 1
+vertical_alignment = 1
+text_overrun_behavior = 5
+
+[node name="AvatarContainer" type="PanelContainer" parent="TopMenu/R_Badge" unique_id=758934215]
+clip_children = 1
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -132.0
+offset_top = 19.0
+offset_right = -16.0
+offset_bottom = 135.0
+grow_horizontal = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_1umtg")
+
+[node name="Avatar" type="TextureRect" parent="TopMenu/R_Badge/AvatarContainer" unique_id=1081477028]
+layout_mode = 2
+texture = SubResource("GradientTexture2D_xwg46")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="TempBird" type="TextureRect" parent="TopMenu/R_Badge/AvatarContainer" unique_id=88753108]
+layout_mode = 2
+texture = ExtResource("9_kvw2h")
+stretch_mode = 3
+
+[node name="HotBar" type="Control" parent="." unique_id=654440453]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -540.0
+offset_top = -567.0
+offset_right = 540.0
+offset_bottom = -86.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="TextureRect" parent="HotBar" unique_id=2074245262]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.544
+anchor_right = 0.5
+anchor_bottom = 0.544
+offset_left = -540.0
+offset_top = -147.164
+offset_right = 540.0
+offset_bottom = 146.836
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("10_dm1m1")
+
+[node name="L_Turns" type="Label" parent="HotBar" unique_id=1365366291]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.38900003
+anchor_top = 0.55600005
+anchor_right = 0.38900003
+anchor_bottom = 0.55600005
+offset_left = -31.120026
+offset_top = -43.436035
+offset_right = 30.879974
+offset_bottom = 43.063965
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0.8117647, 0.41568628, 1)
+theme_override_colors/font_outline_color = Color(0.20392157, 0.23921569, 0.09411765, 1)
+theme_override_constants/outline_size = 24
+theme_override_fonts/font = ExtResource("11_8lgte")
+theme_override_font_sizes/font_size = 60
+text = "2"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="R_Turns" type="Label" parent="HotBar" unique_id=1882618877]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.611
+anchor_top = 0.55600005
+anchor_right = 0.611
+anchor_bottom = 0.55600005
+offset_left = -30.880005
+offset_top = -43.436035
+offset_right = 31.119995
+offset_bottom = 43.063965
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0.8117647, 0.41568628, 1)
+theme_override_colors/font_outline_color = Color(0.3372549, 0.1254902, 0.03529412, 1)
+theme_override_constants/outline_size = 24
+theme_override_fonts/font = ExtResource("11_8lgte")
+theme_override_font_sizes/font_size = 60
+text = "2"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="L_Score" type="Label" parent="HotBar" unique_id=2062710071]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.15
+anchor_top = 0.32700002
+anchor_right = 0.15
+anchor_bottom = 0.32700002
+offset_left = -123.0
+offset_top = -44.537018
+offset_right = 122.0
+offset_bottom = 44.462982
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 24
+theme_override_fonts/font = ExtResource("11_8lgte")
+theme_override_font_sizes/font_size = 64
+text = "9999"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="R_Score" type="Label" parent="HotBar" unique_id=432791059]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.85300004
+anchor_top = 0.32700002
+anchor_right = 0.85300004
+anchor_bottom = 0.32700002
+offset_left = -122.24005
+offset_top = -43.287018
+offset_right = 122.75995
+offset_bottom = 43.212982
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 24
+theme_override_fonts/font = ExtResource("11_8lgte")
+theme_override_font_sizes/font_size = 64
+text = "9999"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Turn" type="Label" parent="HotBar" unique_id=1203145098]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.72200006
+anchor_right = 0.5
+anchor_bottom = 0.72200006
+offset_left = -105.0
+offset_top = -28.282043
+offset_right = 105.0
+offset_bottom = 28.717957
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.12941177, 0.09411765, 0.05490196, 1)
+theme_override_font_sizes/font_size = 41
+text = "Round 3/4"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="L_PassiveStack" type="HBoxContainer" parent="HotBar" unique_id=358736036]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.24800001
+anchor_top = 0.76100004
+anchor_right = 0.24800001
+anchor_bottom = 0.76100004
+offset_left = -139.84003
+offset_top = -26.041016
+offset_right = 140.15997
+offset_bottom = 25.958984
+grow_vertical = 0
+theme_override_constants/separation = -19
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="HotBar/L_PassiveStack" unique_id=1771323577]
+layout_mode = 2
+texture = ExtResource("12_cm1bx")
+stretch_mode = 2
+
+[node name="TextureRect2" type="TextureRect" parent="HotBar/L_PassiveStack" unique_id=415765049]
+layout_mode = 2
+texture = ExtResource("12_cm1bx")
+stretch_mode = 2
+
+[node name="TextureRect3" type="TextureRect" parent="HotBar/L_PassiveStack" unique_id=777322691]
+layout_mode = 2
+texture = ExtResource("12_cm1bx")
+stretch_mode = 2
+
+[node name="TextureRect4" type="TextureRect" parent="HotBar/L_PassiveStack" unique_id=1744336066]
+layout_mode = 2
+texture = ExtResource("12_cm1bx")
+stretch_mode = 2
+
+[node name="TextureRect5" type="TextureRect" parent="HotBar/L_PassiveStack" unique_id=1575223587]
+layout_mode = 2
+texture = ExtResource("13_1iytr")
+stretch_mode = 2
+
+[node name="TextureRect6" type="TextureRect" parent="HotBar/L_PassiveStack" unique_id=1518731724]
+layout_mode = 2
+texture = ExtResource("13_1iytr")
+stretch_mode = 2
+
+[node name="TextureRect7" type="TextureRect" parent="HotBar/L_PassiveStack" unique_id=409190712]
+layout_mode = 2
+texture = ExtResource("13_1iytr")
+stretch_mode = 2
+
+[node name="R_PassiveStack" type="HBoxContainer" parent="HotBar" unique_id=544212965]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.75100005
+anchor_top = 0.76100004
+anchor_right = 0.75100005
+anchor_bottom = 0.76100004
+offset_left = -140.08008
+offset_top = -26.041016
+offset_right = 139.91992
+offset_bottom = 25.958984
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/separation = -19
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="HotBar/R_PassiveStack" unique_id=399629161]
+layout_mode = 2
+texture = ExtResource("14_wh2ge")
+stretch_mode = 2
+
+[node name="TextureRect2" type="TextureRect" parent="HotBar/R_PassiveStack" unique_id=1956462556]
+layout_mode = 2
+texture = ExtResource("14_wh2ge")
+stretch_mode = 2
+
+[node name="TextureRect3" type="TextureRect" parent="HotBar/R_PassiveStack" unique_id=929339892]
+layout_mode = 2
+texture = ExtResource("15_eca7d")
+stretch_mode = 2
+
+[node name="TextureRect4" type="TextureRect" parent="HotBar/R_PassiveStack" unique_id=1079044737]
+layout_mode = 2
+texture = ExtResource("15_eca7d")
+stretch_mode = 2
+
+[node name="TextureRect5" type="TextureRect" parent="HotBar/R_PassiveStack" unique_id=256425552]
+layout_mode = 2
+texture = ExtResource("15_eca7d")
+stretch_mode = 2
+
+[node name="TextureRect6" type="TextureRect" parent="HotBar/R_PassiveStack" unique_id=383735186]
+layout_mode = 2
+texture = ExtResource("15_eca7d")
+stretch_mode = 2
+
+[node name="TextureRect7" type="TextureRect" parent="HotBar/R_PassiveStack" unique_id=1823706173]
+layout_mode = 2
+texture = ExtResource("15_eca7d")
+stretch_mode = 2
+
+[node name="L_AddScore" type="TextureRect" parent="HotBar" unique_id=272467169]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.11100001
+anchor_top = 0.18800001
+anchor_right = 0.11100001
+anchor_bottom = 0.18800001
+offset_left = -72.88001
+offset_top = -40.428
+offset_right = 73.11999
+offset_bottom = 40.572
+pivot_offset = Vector2(-34, -4)
+pivot_offset_ratio = Vector2(1, 1)
+texture = ExtResource("16_4cxsk")
+
+[node name="Count" type="Label" parent="HotBar/L_AddScore" unique_id=2034103402]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.15
+anchor_top = 0.32700002
+anchor_right = 0.15
+anchor_bottom = 0.32700002
+offset_left = -71.9
+offset_top = -55.487
+offset_right = 173.1
+offset_bottom = 33.513
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 0.06981317
+pivot_offset_ratio = Vector2(0.5, 0.5)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 24
+theme_override_fonts/font = ExtResource("11_8lgte")
+theme_override_font_sizes/font_size = 37
+text = "+999"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="R_AddScore" type="TextureRect" parent="HotBar" unique_id=23473445]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.88900006
+anchor_top = 0.18800001
+anchor_right = 0.88900006
+anchor_bottom = 0.18800001
+offset_left = -73.120056
+offset_top = -40.428
+offset_right = 72.879944
+offset_bottom = 40.572
+pivot_offset = Vector2(34, -4)
+pivot_offset_ratio = Vector2(0, 1)
+texture = ExtResource("16_4cxsk")
+flip_h = true
+
+[node name="Count" type="Label" parent="HotBar/R_AddScore" unique_id=537234811]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.15
+anchor_top = 0.32700002
+anchor_right = 0.15
+anchor_bottom = 0.32700002
+offset_left = -71.9
+offset_top = -55.487
+offset_right = 173.1
+offset_bottom = 33.513
+grow_horizontal = 2
+grow_vertical = 2
+rotation = -0.06981317
+pivot_offset_ratio = Vector2(0.5, 0.5)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 24
+theme_override_fonts/font = ExtResource("11_8lgte")
+theme_override_font_sizes/font_size = 37
+text = "+999"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ScoreLine" type="Control" parent="HotBar" unique_id=1683750984]
+layout_mode = 1
+anchor_left = 0.5
+anchor_top = 0.38900003
+anchor_right = 0.5
+anchor_bottom = 0.38900003
+offset_left = -248.0
+offset_top = -11.109009
+offset_right = 247.0
+offset_bottom = 10.890991
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="ColorRect" parent="HotBar/ScoreLine" unique_id=1453583845]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.6901961, 0.25490198, 0.101960786, 1)
+
+[node name="Foreground" type="ColorRect" parent="HotBar/ScoreLine" unique_id=1750473687]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.41960785, 0.5176471, 0.27058825, 1)
+
+[node name="Point" type="TextureRect" parent="HotBar/ScoreLine/Foreground" unique_id=1109206188]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -51.0
+offset_top = -37.0
+offset_right = 51.0
+offset_bottom = 37.0
+grow_horizontal = 0
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("7_gvrie")
+
+[node name="L_ActiveSkillSlots" type="Control" parent="HotBar" unique_id=1380575174]
+layout_mode = 1
+anchor_left = 0.15
+anchor_top = 0.55300003
+anchor_right = 0.15
+anchor_bottom = 0.55300003
+offset_left = -114.0
+offset_top = -53.99301
+offset_right = 114.0
+offset_bottom = 56.00699
+pivot_offset_ratio = Vector2(0.5, 0.5)
+
+[node name="Slot1" type="Control" parent="HotBar/L_ActiveSkillSlots" unique_id=246119150]
+anchors_preset = 0
+offset_left = 1.0
+offset_right = 111.0
+offset_bottom = 110.0
+pivot_offset_ratio = Vector2(0.5, 0.5)
+
+[node name="ActiveSkillBase" type="TextureButton" parent="HotBar/L_ActiveSkillSlots/Slot1" unique_id=140328652]
+layout_mode = 0
+offset_right = 110.0
+offset_bottom = 110.0
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture_normal = ExtResource("17_8lgte")
+
+[node name="Icon" type="TextureRect" parent="HotBar/L_ActiveSkillSlots/Slot1/ActiveSkillBase" unique_id=308461662]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -36.0
+offset_top = -33.5
+offset_right = 36.0
+offset_bottom = 33.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("18_cm1bx")
+
+[node name="Rank" type="HBoxContainer" parent="HotBar/L_ActiveSkillSlots/Slot1/ActiveSkillBase" unique_id=977546747]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = 15.5
+offset_right = 20.0
+offset_bottom = 55.5
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Star1" type="TextureRect" parent="HotBar/L_ActiveSkillSlots/Slot1/ActiveSkillBase/Rank" unique_id=3066270]
+layout_mode = 2
+texture = ExtResource("19_1iytr")
+
+[node name="Star2" type="TextureRect" parent="HotBar/L_ActiveSkillSlots/Slot1/ActiveSkillBase/Rank" unique_id=236738853]
+layout_mode = 2
+texture = ExtResource("19_1iytr")
+
+[node name="Star3" type="TextureRect" parent="HotBar/L_ActiveSkillSlots/Slot1/ActiveSkillBase/Rank" unique_id=1171304023]
+visible = false
+layout_mode = 2
+texture = ExtResource("19_1iytr")
+
+[node name="Count" type="TextureRect" parent="HotBar/L_ActiveSkillSlots/Slot1/ActiveSkillBase" unique_id=1038657894]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 9.0
+offset_top = -53.0
+offset_right = 53.0
+offset_bottom = -9.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("20_wh2ge")
+
+[node name="Text" type="Label" parent="HotBar/L_ActiveSkillSlots/Slot1/ActiveSkillBase/Count" unique_id=1481384258]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -19.0
+offset_top = -27.0
+offset_right = 19.0
+offset_bottom = 23.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.18431373, 0.17254902, 0.16862746, 1)
+theme_override_fonts/font = ExtResource("11_8lgte")
+theme_override_font_sizes/font_size = 36
+text = "2"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Slot2" type="Control" parent="HotBar/L_ActiveSkillSlots" unique_id=1333813652]
+anchors_preset = 0
+offset_left = 118.0
+offset_right = 228.0
+offset_bottom = 110.0
+pivot_offset_ratio = Vector2(0.5, 0.5)
+
+[node name="ActiveSkillBase" type="TextureButton" parent="HotBar/L_ActiveSkillSlots/Slot2" unique_id=951951080]
+layout_mode = 0
+offset_right = 110.0
+offset_bottom = 110.0
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture_normal = ExtResource("17_8lgte")
+
+[node name="Icon" type="TextureRect" parent="HotBar/L_ActiveSkillSlots/Slot2/ActiveSkillBase" unique_id=933678159]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -36.0
+offset_top = -33.5
+offset_right = 36.0
+offset_bottom = 33.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("21_eca7d")
+
+[node name="Rank" type="HBoxContainer" parent="HotBar/L_ActiveSkillSlots/Slot2/ActiveSkillBase" unique_id=313175389]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = 15.5
+offset_right = 20.0
+offset_bottom = 55.5
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Star1" type="TextureRect" parent="HotBar/L_ActiveSkillSlots/Slot2/ActiveSkillBase/Rank" unique_id=706716976]
+layout_mode = 2
+texture = ExtResource("19_1iytr")
+
+[node name="Star2" type="TextureRect" parent="HotBar/L_ActiveSkillSlots/Slot2/ActiveSkillBase/Rank" unique_id=1950765566]
+visible = false
+layout_mode = 2
+texture = ExtResource("19_1iytr")
+
+[node name="Star3" type="TextureRect" parent="HotBar/L_ActiveSkillSlots/Slot2/ActiveSkillBase/Rank" unique_id=1054772232]
+visible = false
+layout_mode = 2
+texture = ExtResource("19_1iytr")
+
+[node name="Count" type="TextureRect" parent="HotBar/L_ActiveSkillSlots/Slot2/ActiveSkillBase" unique_id=112156093]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 9.0
+offset_top = -53.0
+offset_right = 53.0
+offset_bottom = -9.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("20_wh2ge")
+
+[node name="Text" type="Label" parent="HotBar/L_ActiveSkillSlots/Slot2/ActiveSkillBase/Count" unique_id=354575794]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -19.0
+offset_top = -27.0
+offset_right = 19.0
+offset_bottom = 23.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.18431373, 0.17254902, 0.16862746, 1)
+theme_override_fonts/font = ExtResource("11_8lgte")
+theme_override_font_sizes/font_size = 36
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="R_ActiveSkillSlots" type="Control" parent="HotBar" unique_id=654686569]
+layout_mode = 1
+anchor_left = 0.84537035
+anchor_top = 0.55300003
+anchor_right = 0.84537035
+anchor_bottom = 0.55300003
+offset_left = -114.0
+offset_top = -54.99301
+offset_right = 114.0
+offset_bottom = 55.00699
+pivot_offset_ratio = Vector2(0.5, 0.5)
+metadata/_edit_use_anchors_ = true
+
+[node name="Slot1" type="Control" parent="HotBar/R_ActiveSkillSlots" unique_id=407366434]
+anchors_preset = 0
+offset_left = 118.0
+offset_right = 228.0
+offset_bottom = 110.0
+pivot_offset_ratio = Vector2(0.5, 0.5)
+
+[node name="ActiveSkillBase" type="TextureButton" parent="HotBar/R_ActiveSkillSlots/Slot1" unique_id=1548753841]
+layout_mode = 0
+offset_right = 110.0
+offset_bottom = 110.0
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture_normal = ExtResource("17_8lgte")
+
+[node name="Icon" type="TextureRect" parent="HotBar/R_ActiveSkillSlots/Slot1/ActiveSkillBase" unique_id=884035731]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -36.0
+offset_top = -33.5
+offset_right = 36.0
+offset_bottom = 33.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("22_4cxsk")
+
+[node name="Rank" type="HBoxContainer" parent="HotBar/R_ActiveSkillSlots/Slot1/ActiveSkillBase" unique_id=782132435]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = 15.5
+offset_right = 20.0
+offset_bottom = 55.5
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Star1" type="TextureRect" parent="HotBar/R_ActiveSkillSlots/Slot1/ActiveSkillBase/Rank" unique_id=626176422]
+layout_mode = 2
+texture = ExtResource("19_1iytr")
+
+[node name="Star2" type="TextureRect" parent="HotBar/R_ActiveSkillSlots/Slot1/ActiveSkillBase/Rank" unique_id=1903054798]
+layout_mode = 2
+texture = ExtResource("19_1iytr")
+
+[node name="Star3" type="TextureRect" parent="HotBar/R_ActiveSkillSlots/Slot1/ActiveSkillBase/Rank" unique_id=1786677684]
+visible = false
+layout_mode = 2
+texture = ExtResource("19_1iytr")
+
+[node name="Count" type="TextureRect" parent="HotBar/R_ActiveSkillSlots/Slot1/ActiveSkillBase" unique_id=348792688]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 9.0
+offset_top = -53.0
+offset_right = 53.0
+offset_bottom = -9.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("20_wh2ge")
+
+[node name="Text" type="Label" parent="HotBar/R_ActiveSkillSlots/Slot1/ActiveSkillBase/Count" unique_id=218401254]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -19.0
+offset_top = -27.0
+offset_right = 19.0
+offset_bottom = 23.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.18431373, 0.17254902, 0.16862746, 1)
+theme_override_fonts/font = ExtResource("11_8lgte")
+theme_override_font_sizes/font_size = 36
+text = "7"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Slot2" type="Control" parent="HotBar/R_ActiveSkillSlots" unique_id=788304366]
+anchors_preset = 0
+offset_right = 110.0
+offset_bottom = 110.0
+pivot_offset_ratio = Vector2(0.5, 0.5)
+
+[node name="ActiveSkillBase" type="TextureButton" parent="HotBar/R_ActiveSkillSlots/Slot2" unique_id=2067955641]
+layout_mode = 0
+offset_right = 110.0
+offset_bottom = 110.0
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture_normal = ExtResource("17_8lgte")
+
+[node name="Icon" type="TextureRect" parent="HotBar/R_ActiveSkillSlots/Slot2/ActiveSkillBase" unique_id=1217468517]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -36.0
+offset_top = -33.5
+offset_right = 36.0
+offset_bottom = 33.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("23_1umtg")
+
+[node name="Rank" type="HBoxContainer" parent="HotBar/R_ActiveSkillSlots/Slot2/ActiveSkillBase" unique_id=952105101]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = 15.5
+offset_right = 20.0
+offset_bottom = 55.5
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Star1" type="TextureRect" parent="HotBar/R_ActiveSkillSlots/Slot2/ActiveSkillBase/Rank" unique_id=1538100698]
+layout_mode = 2
+texture = ExtResource("19_1iytr")
+
+[node name="Star2" type="TextureRect" parent="HotBar/R_ActiveSkillSlots/Slot2/ActiveSkillBase/Rank" unique_id=867565211]
+layout_mode = 2
+texture = ExtResource("19_1iytr")
+
+[node name="Star3" type="TextureRect" parent="HotBar/R_ActiveSkillSlots/Slot2/ActiveSkillBase/Rank" unique_id=542428658]
+layout_mode = 2
+texture = ExtResource("19_1iytr")
+
+[node name="Count" type="TextureRect" parent="HotBar/R_ActiveSkillSlots/Slot2/ActiveSkillBase" unique_id=586344166]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 9.0
+offset_top = -53.0
+offset_right = 53.0
+offset_bottom = -9.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("20_wh2ge")
+
+[node name="Text" type="Label" parent="HotBar/R_ActiveSkillSlots/Slot2/ActiveSkillBase/Count" unique_id=800785040]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -19.0
+offset_top = -27.0
+offset_right = 19.0
+offset_bottom = 23.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.18431373, 0.17254902, 0.16862746, 1)
+theme_override_fonts/font = ExtResource("11_8lgte")
+theme_override_font_sizes/font_size = 36
+text = "6"
+horizontal_alignment = 1
+vertical_alignment = 1
