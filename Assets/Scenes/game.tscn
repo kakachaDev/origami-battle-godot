@@ -26,6 +26,7 @@
 [ext_resource type="Texture2D" uid="uid://dik5gv8wn81uu" path="res://Assets/Sprites/Gems/Blue_bomb.png" id="24_mcygk"]
 [ext_resource type="Texture2D" uid="uid://cur5e5o0768fx" path="res://Assets/Sprites/Gems/Bomb_LeftRight.png" id="25_1v65n"]
 [ext_resource type="Texture2D" uid="uid://wxul8g6hsc2v" path="res://Assets/Sprites/Gems/Banana_base.png" id="26_qudcs"]
+[ext_resource type="PackedScene" uid="uid://cactivskbase1" path="res://Assets/Prefabs/ActiveSkillBase.tscn" id="27_absk1"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1umtg"]
 corner_radius_top_left = 1000
@@ -2614,90 +2615,13 @@ offset_right = 111.0
 offset_bottom = 110.0
 pivot_offset_ratio = Vector2(0.5, 0.5)
 
-[node name="ActiveSkillBase" type="TextureButton" parent="HotBar/L_ActiveSkillSlots/Slot1" unique_id=140328652]
+[node name="ActiveSkillBase" parent="HotBar/L_ActiveSkillSlots/Slot1" instance=ExtResource("27_absk1")]
 layout_mode = 0
 offset_right = 110.0
 offset_bottom = 110.0
 pivot_offset_ratio = Vector2(0.5, 0.5)
-texture_normal = ExtResource("17_8lgte")
-
-[node name="Icon" type="TextureRect" parent="HotBar/L_ActiveSkillSlots/Slot1/ActiveSkillBase" unique_id=308461662]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -36.0
-offset_top = -33.5
-offset_right = 36.0
-offset_bottom = 33.5
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("18_cm1bx")
-
-[node name="Rank" type="HBoxContainer" parent="HotBar/L_ActiveSkillSlots/Slot1/ActiveSkillBase" unique_id=977546747]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = 15.5
-offset_right = 20.0
-offset_bottom = 55.5
-grow_horizontal = 2
-grow_vertical = 2
-alignment = 1
-
-[node name="Star1" type="TextureRect" parent="HotBar/L_ActiveSkillSlots/Slot1/ActiveSkillBase/Rank" unique_id=3066270]
-layout_mode = 2
-texture = ExtResource("19_1iytr")
-
-[node name="Star2" type="TextureRect" parent="HotBar/L_ActiveSkillSlots/Slot1/ActiveSkillBase/Rank" unique_id=236738853]
-layout_mode = 2
-texture = ExtResource("19_1iytr")
-
-[node name="Star3" type="TextureRect" parent="HotBar/L_ActiveSkillSlots/Slot1/ActiveSkillBase/Rank" unique_id=1171304023]
-visible = false
-layout_mode = 2
-texture = ExtResource("19_1iytr")
-
-[node name="Count" type="TextureRect" parent="HotBar/L_ActiveSkillSlots/Slot1/ActiveSkillBase" unique_id=1038657894]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 9.0
-offset_top = -53.0
-offset_right = 53.0
-offset_bottom = -9.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("20_wh2ge")
-
-[node name="Text" type="Label" parent="HotBar/L_ActiveSkillSlots/Slot1/ActiveSkillBase/Count" unique_id=1481384258]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -19.0
-offset_top = -27.0
-offset_right = 19.0
-offset_bottom = 23.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/font_color = Color(0.18431373, 0.17254902, 0.16862746, 1)
-theme_override_fonts/font = ExtResource("11_8lgte")
-theme_override_font_sizes/font_size = 36
-text = "2"
-horizontal_alignment = 1
-vertical_alignment = 1
+rank = 2
+count = 2
 
 [node name="Slot2" type="Control" parent="HotBar/L_ActiveSkillSlots" unique_id=1333813652]
 anchors_preset = 0
@@ -2706,91 +2630,13 @@ offset_right = 228.0
 offset_bottom = 110.0
 pivot_offset_ratio = Vector2(0.5, 0.5)
 
-[node name="ActiveSkillBase" type="TextureButton" parent="HotBar/L_ActiveSkillSlots/Slot2" unique_id=951951080]
+[node name="ActiveSkillBase" parent="HotBar/L_ActiveSkillSlots/Slot2" instance=ExtResource("27_absk1")]
 layout_mode = 0
 offset_right = 110.0
 offset_bottom = 110.0
 pivot_offset_ratio = Vector2(0.5, 0.5)
-texture_normal = ExtResource("17_8lgte")
-
-[node name="Icon" type="TextureRect" parent="HotBar/L_ActiveSkillSlots/Slot2/ActiveSkillBase" unique_id=933678159]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -36.0
-offset_top = -33.5
-offset_right = 36.0
-offset_bottom = 33.5
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("21_eca7d")
-
-[node name="Rank" type="HBoxContainer" parent="HotBar/L_ActiveSkillSlots/Slot2/ActiveSkillBase" unique_id=313175389]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = 15.5
-offset_right = 20.0
-offset_bottom = 55.5
-grow_horizontal = 2
-grow_vertical = 2
-alignment = 1
-
-[node name="Star1" type="TextureRect" parent="HotBar/L_ActiveSkillSlots/Slot2/ActiveSkillBase/Rank" unique_id=706716976]
-layout_mode = 2
-texture = ExtResource("19_1iytr")
-
-[node name="Star2" type="TextureRect" parent="HotBar/L_ActiveSkillSlots/Slot2/ActiveSkillBase/Rank" unique_id=1950765566]
-visible = false
-layout_mode = 2
-texture = ExtResource("19_1iytr")
-
-[node name="Star3" type="TextureRect" parent="HotBar/L_ActiveSkillSlots/Slot2/ActiveSkillBase/Rank" unique_id=1054772232]
-visible = false
-layout_mode = 2
-texture = ExtResource("19_1iytr")
-
-[node name="Count" type="TextureRect" parent="HotBar/L_ActiveSkillSlots/Slot2/ActiveSkillBase" unique_id=112156093]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 9.0
-offset_top = -53.0
-offset_right = 53.0
-offset_bottom = -9.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("20_wh2ge")
-
-[node name="Text" type="Label" parent="HotBar/L_ActiveSkillSlots/Slot2/ActiveSkillBase/Count" unique_id=354575794]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -19.0
-offset_top = -27.0
-offset_right = 19.0
-offset_bottom = 23.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/font_color = Color(0.18431373, 0.17254902, 0.16862746, 1)
-theme_override_fonts/font = ExtResource("11_8lgte")
-theme_override_font_sizes/font_size = 36
-text = "0"
-horizontal_alignment = 1
-vertical_alignment = 1
+rank = 1
+count = 0
 
 [node name="R_ActiveSkillSlots" type="Control" parent="HotBar" unique_id=654686569]
 layout_mode = 1
@@ -2812,90 +2658,13 @@ offset_right = 228.0
 offset_bottom = 110.0
 pivot_offset_ratio = Vector2(0.5, 0.5)
 
-[node name="ActiveSkillBase" type="TextureButton" parent="HotBar/R_ActiveSkillSlots/Slot1" unique_id=1548753841]
+[node name="ActiveSkillBase" parent="HotBar/R_ActiveSkillSlots/Slot1" instance=ExtResource("27_absk1")]
 layout_mode = 0
 offset_right = 110.0
 offset_bottom = 110.0
 pivot_offset_ratio = Vector2(0.5, 0.5)
-texture_normal = ExtResource("17_8lgte")
-
-[node name="Icon" type="TextureRect" parent="HotBar/R_ActiveSkillSlots/Slot1/ActiveSkillBase" unique_id=884035731]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -36.0
-offset_top = -33.5
-offset_right = 36.0
-offset_bottom = 33.5
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("22_4cxsk")
-
-[node name="Rank" type="HBoxContainer" parent="HotBar/R_ActiveSkillSlots/Slot1/ActiveSkillBase" unique_id=782132435]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = 15.5
-offset_right = 20.0
-offset_bottom = 55.5
-grow_horizontal = 2
-grow_vertical = 2
-alignment = 1
-
-[node name="Star1" type="TextureRect" parent="HotBar/R_ActiveSkillSlots/Slot1/ActiveSkillBase/Rank" unique_id=626176422]
-layout_mode = 2
-texture = ExtResource("19_1iytr")
-
-[node name="Star2" type="TextureRect" parent="HotBar/R_ActiveSkillSlots/Slot1/ActiveSkillBase/Rank" unique_id=1903054798]
-layout_mode = 2
-texture = ExtResource("19_1iytr")
-
-[node name="Star3" type="TextureRect" parent="HotBar/R_ActiveSkillSlots/Slot1/ActiveSkillBase/Rank" unique_id=1786677684]
-visible = false
-layout_mode = 2
-texture = ExtResource("19_1iytr")
-
-[node name="Count" type="TextureRect" parent="HotBar/R_ActiveSkillSlots/Slot1/ActiveSkillBase" unique_id=348792688]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 9.0
-offset_top = -53.0
-offset_right = 53.0
-offset_bottom = -9.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("20_wh2ge")
-
-[node name="Text" type="Label" parent="HotBar/R_ActiveSkillSlots/Slot1/ActiveSkillBase/Count" unique_id=218401254]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -19.0
-offset_top = -27.0
-offset_right = 19.0
-offset_bottom = 23.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/font_color = Color(0.18431373, 0.17254902, 0.16862746, 1)
-theme_override_fonts/font = ExtResource("11_8lgte")
-theme_override_font_sizes/font_size = 36
-text = "7"
-horizontal_alignment = 1
-vertical_alignment = 1
+rank = 2
+count = 7
 
 [node name="Slot2" type="Control" parent="HotBar/R_ActiveSkillSlots" unique_id=788304366]
 anchors_preset = 0
@@ -2903,86 +2672,10 @@ offset_right = 110.0
 offset_bottom = 110.0
 pivot_offset_ratio = Vector2(0.5, 0.5)
 
-[node name="ActiveSkillBase" type="TextureButton" parent="HotBar/R_ActiveSkillSlots/Slot2" unique_id=2067955641]
+[node name="ActiveSkillBase" parent="HotBar/R_ActiveSkillSlots/Slot2" instance=ExtResource("27_absk1")]
 layout_mode = 0
 offset_right = 110.0
 offset_bottom = 110.0
 pivot_offset_ratio = Vector2(0.5, 0.5)
-texture_normal = ExtResource("17_8lgte")
-
-[node name="Icon" type="TextureRect" parent="HotBar/R_ActiveSkillSlots/Slot2/ActiveSkillBase" unique_id=1217468517]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -36.0
-offset_top = -33.5
-offset_right = 36.0
-offset_bottom = 33.5
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("23_1umtg")
-
-[node name="Rank" type="HBoxContainer" parent="HotBar/R_ActiveSkillSlots/Slot2/ActiveSkillBase" unique_id=952105101]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = 15.5
-offset_right = 20.0
-offset_bottom = 55.5
-grow_horizontal = 2
-grow_vertical = 2
-alignment = 1
-
-[node name="Star1" type="TextureRect" parent="HotBar/R_ActiveSkillSlots/Slot2/ActiveSkillBase/Rank" unique_id=1538100698]
-layout_mode = 2
-texture = ExtResource("19_1iytr")
-
-[node name="Star2" type="TextureRect" parent="HotBar/R_ActiveSkillSlots/Slot2/ActiveSkillBase/Rank" unique_id=867565211]
-layout_mode = 2
-texture = ExtResource("19_1iytr")
-
-[node name="Star3" type="TextureRect" parent="HotBar/R_ActiveSkillSlots/Slot2/ActiveSkillBase/Rank" unique_id=542428658]
-layout_mode = 2
-texture = ExtResource("19_1iytr")
-
-[node name="Count" type="TextureRect" parent="HotBar/R_ActiveSkillSlots/Slot2/ActiveSkillBase" unique_id=586344166]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 9.0
-offset_top = -53.0
-offset_right = 53.0
-offset_bottom = -9.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("20_wh2ge")
-
-[node name="Text" type="Label" parent="HotBar/R_ActiveSkillSlots/Slot2/ActiveSkillBase/Count" unique_id=800785040]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -19.0
-offset_top = -27.0
-offset_right = 19.0
-offset_bottom = 23.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/font_color = Color(0.18431373, 0.17254902, 0.16862746, 1)
-theme_override_fonts/font = ExtResource("11_8lgte")
-theme_override_font_sizes/font_size = 36
-text = "6"
-horizontal_alignment = 1
-vertical_alignment = 1
+rank = 3
+count = 6
