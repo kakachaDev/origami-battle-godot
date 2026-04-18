@@ -11,10 +11,9 @@
 [ext_resource type="Texture2D" uid="uid://3tk14n41m3lg" path="res://Assets/Sprites/Hotbar/SCORE_BIRD_RED.png" id="9_kvw2h"]
 [ext_resource type="Texture2D" uid="uid://cm70jpujus14k" path="res://Assets/Sprites/Hotbar/HOTBAR.png" id="10_dm1m1"]
 [ext_resource type="FontFile" uid="uid://ccwwltsq0oe2h" path="res://Assets/Fonts/Original/Chicoree Em. Bold.otf" id="11_8lgte"]
-[ext_resource type="Texture2D" uid="uid://c0oc52tsx7a7" path="res://Assets/Sprites/Gems/Mini/Red_mini_0.png" id="12_cm1bx"]
-[ext_resource type="Texture2D" uid="uid://cmraypgaahspc" path="res://Assets/Sprites/Gems/Mini/Red_mini_1.png" id="13_1iytr"]
-[ext_resource type="Texture2D" uid="uid://dgjivoa3suxrx" path="res://Assets/Sprites/Gems/Mini/Green_mini_0.png" id="14_wh2ge"]
-[ext_resource type="Texture2D" uid="uid://dr20sug8pb2qk" path="res://Assets/Sprites/Gems/Mini/Green_mini_1.png" id="15_eca7d"]
+[ext_resource type="PackedScene" uid="uid://cpassstack01a" path="res://Assets/Prefabs/PassiveStack.tscn" id="12_pssv1"]
+[ext_resource type="Resource" uid="uid://dpassred0001a" path="res://Assets/Resources/PassiveStacks/Red.tres" id="13_red01"]
+[ext_resource type="Resource" uid="uid://dpassgreen01a" path="res://Assets/Resources/PassiveStacks/Green.tres" id="14_grn01"]
 [ext_resource type="Texture2D" uid="uid://vkdn0oa364pa" path="res://Assets/Sprites/Hotbar/+SCORE.png" id="16_4cxsk"]
 [ext_resource type="Texture2D" uid="uid://c2ubop4yuc304" path="res://Assets/Sprites/Skills/Active_butt.png" id="17_8lgte"]
 [ext_resource type="Texture2D" uid="uid://b0monntq2ijma" path="res://Assets/Sprites/Skills/SkillIcons/Cube.png" id="18_cm1bx"]
@@ -2370,9 +2369,8 @@ text = "Round 3/4"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="L_PassiveStack" type="HBoxContainer" parent="HotBar" unique_id=358736036]
+[node name="L_PassiveStack" parent="HotBar" instance=ExtResource("12_pssv1")]
 layout_mode = 1
-anchors_preset = -1
 anchor_left = 0.24800001
 anchor_top = 0.76100004
 anchor_right = 0.24800001
@@ -2382,47 +2380,12 @@ offset_top = -26.041016
 offset_right = 140.15997
 offset_bottom = 25.958984
 grow_vertical = 0
-theme_override_constants/separation = -19
-alignment = 1
+stack_data = ExtResource("13_red01")
+max_count = 7
+current_count = 3
 
-[node name="TextureRect" type="TextureRect" parent="HotBar/L_PassiveStack" unique_id=1771323577]
-layout_mode = 2
-texture = ExtResource("12_cm1bx")
-stretch_mode = 2
-
-[node name="TextureRect2" type="TextureRect" parent="HotBar/L_PassiveStack" unique_id=415765049]
-layout_mode = 2
-texture = ExtResource("12_cm1bx")
-stretch_mode = 2
-
-[node name="TextureRect3" type="TextureRect" parent="HotBar/L_PassiveStack" unique_id=777322691]
-layout_mode = 2
-texture = ExtResource("12_cm1bx")
-stretch_mode = 2
-
-[node name="TextureRect4" type="TextureRect" parent="HotBar/L_PassiveStack" unique_id=1744336066]
-layout_mode = 2
-texture = ExtResource("12_cm1bx")
-stretch_mode = 2
-
-[node name="TextureRect5" type="TextureRect" parent="HotBar/L_PassiveStack" unique_id=1575223587]
-layout_mode = 2
-texture = ExtResource("13_1iytr")
-stretch_mode = 2
-
-[node name="TextureRect6" type="TextureRect" parent="HotBar/L_PassiveStack" unique_id=1518731724]
-layout_mode = 2
-texture = ExtResource("13_1iytr")
-stretch_mode = 2
-
-[node name="TextureRect7" type="TextureRect" parent="HotBar/L_PassiveStack" unique_id=409190712]
-layout_mode = 2
-texture = ExtResource("13_1iytr")
-stretch_mode = 2
-
-[node name="R_PassiveStack" type="HBoxContainer" parent="HotBar" unique_id=544212965]
+[node name="R_PassiveStack" parent="HotBar" instance=ExtResource("12_pssv1")]
 layout_mode = 1
-anchors_preset = -1
 anchor_left = 0.75100005
 anchor_top = 0.76100004
 anchor_right = 0.75100005
@@ -2433,43 +2396,9 @@ offset_right = 139.91992
 offset_bottom = 25.958984
 grow_horizontal = 0
 grow_vertical = 0
-theme_override_constants/separation = -19
-alignment = 1
-
-[node name="TextureRect" type="TextureRect" parent="HotBar/R_PassiveStack" unique_id=399629161]
-layout_mode = 2
-texture = ExtResource("14_wh2ge")
-stretch_mode = 2
-
-[node name="TextureRect2" type="TextureRect" parent="HotBar/R_PassiveStack" unique_id=1956462556]
-layout_mode = 2
-texture = ExtResource("14_wh2ge")
-stretch_mode = 2
-
-[node name="TextureRect3" type="TextureRect" parent="HotBar/R_PassiveStack" unique_id=929339892]
-layout_mode = 2
-texture = ExtResource("15_eca7d")
-stretch_mode = 2
-
-[node name="TextureRect4" type="TextureRect" parent="HotBar/R_PassiveStack" unique_id=1079044737]
-layout_mode = 2
-texture = ExtResource("15_eca7d")
-stretch_mode = 2
-
-[node name="TextureRect5" type="TextureRect" parent="HotBar/R_PassiveStack" unique_id=256425552]
-layout_mode = 2
-texture = ExtResource("15_eca7d")
-stretch_mode = 2
-
-[node name="TextureRect6" type="TextureRect" parent="HotBar/R_PassiveStack" unique_id=383735186]
-layout_mode = 2
-texture = ExtResource("15_eca7d")
-stretch_mode = 2
-
-[node name="TextureRect7" type="TextureRect" parent="HotBar/R_PassiveStack" unique_id=1823706173]
-layout_mode = 2
-texture = ExtResource("15_eca7d")
-stretch_mode = 2
+stack_data = ExtResource("14_grn01")
+max_count = 7
+current_count = 5
 
 [node name="L_AddScore" type="TextureRect" parent="HotBar" unique_id=272467169]
 layout_mode = 1
