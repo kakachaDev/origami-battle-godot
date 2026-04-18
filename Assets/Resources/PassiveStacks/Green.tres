@@ -1,0 +1,10 @@
+[gd_resource type="PassiveStackData" load_steps=3 format=3 uid="uid://dpassgreen01a"]
+
+[ext_resource type="Script" path="res://Assets/Scripts/PassiveStackData.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://dgjivoa3suxrx" path="res://Assets/Sprites/Gems/Mini/Green_mini_0.png" id="2_disabled"]
+[ext_resource type="Texture2D" uid="uid://dr20sug8pb2qk" path="res://Assets/Sprites/Gems/Mini/Green_mini_1.png" id="3_active"]
+
+[resource]
+script = ExtResource("1_script")
+sprite_disabled = ExtResource("2_disabled")
+sprite_active = ExtResource("3_active")

@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://cpassstack01a"]
+
+[ext_resource type="Script" path="res://Assets/Scripts/PassiveStack.gd" id="1_script"]
+
+[node name="PassiveStack" type="Control"]
+offset_right = 280.0
+offset_bottom = 52.0
+script = ExtResource("1_script")
