@@ -25,6 +25,7 @@ func _update_visuals() -> void:
 		return
 	_update_icon()
 	_update_rank()
+	_update_count()
 
 func _update_icon() -> void:
 	var icon_node := get_node_or_null("Icon") as TextureRect
@@ -43,7 +44,12 @@ func _update_rank() -> void:
 		(stars[i] as TextureRect).visible = i < rank
 
 func _update_count() -> void:
+	if not is_node_ready():
+		return
 	var text_node := get_node_or_null("Count/Text") as Label
 	if text_node == null:
 		return
 	text_node.text = str(count)
+	var empty := count == 0
+	disabled = empty
+	modulate = Color("#7b7b7b") if empty else Color.WHITE

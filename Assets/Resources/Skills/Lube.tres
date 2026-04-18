@@ -1,0 +1,10 @@
+[gd_resource type="SkillData" load_steps=3 format=3 uid="uid://dskilllube01a"]
+
+[ext_resource type="Script" path="res://Assets/Scripts/SkillData.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://1f6chxldo56n" path="res://Assets/Sprites/Skills/SkillIcons/Lube.png" id="2_icon"]
+
+[resource]
+script = ExtResource("1_script")
+skill_name = "Lube"
+description = ""
+icon = ExtResource("2_icon")

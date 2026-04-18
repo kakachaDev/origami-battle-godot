@@ -1,0 +1,10 @@
+[gd_resource type="SkillData" load_steps=3 format=3 uid="uid://dskilhamm401a"]
+
+[ext_resource type="Script" path="res://Assets/Scripts/SkillData.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://b7p0hng2wx8uw" path="res://Assets/Sprites/Skills/SkillIcons/Hammer40k.png" id="2_icon"]
+
+[resource]
+script = ExtResource("1_script")
+skill_name = "Hammer40k"
+description = ""
+icon = ExtResource("2_icon")
