@@ -27,6 +27,7 @@
 [ext_resource type="Texture2D" uid="uid://cur5e5o0768fx" path="res://Assets/Sprites/Gems/Bomb_LeftRight.png" id="25_1v65n"]
 [ext_resource type="Texture2D" uid="uid://wxul8g6hsc2v" path="res://Assets/Sprites/Gems/Banana_base.png" id="26_qudcs"]
 [ext_resource type="PackedScene" uid="uid://cactivskbase1" path="res://Assets/Prefabs/ActiveSkillBase.tscn" id="27_absk1"]
+[ext_resource type="PackedScene" uid="uid://cscoreline001" path="res://Assets/Prefabs/ScoreLine.tscn" id="28_scln1"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1umtg"]
 corner_radius_top_left = 1000
@@ -2549,7 +2550,7 @@ text = "+999"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ScoreLine" type="Control" parent="HotBar" unique_id=1683750984]
+[node name="ScoreLine" parent="HotBar" instance=ExtResource("28_scln1")]
 layout_mode = 1
 anchor_left = 0.5
 anchor_top = 0.38900003
@@ -2561,40 +2562,6 @@ offset_right = 247.0
 offset_bottom = 10.890991
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="Background" type="ColorRect" parent="HotBar/ScoreLine" unique_id=1453583845]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.6901961, 0.25490198, 0.101960786, 1)
-
-[node name="Foreground" type="ColorRect" parent="HotBar/ScoreLine" unique_id=1750473687]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.41960785, 0.5176471, 0.27058825, 1)
-
-[node name="Point" type="TextureRect" parent="HotBar/ScoreLine/Foreground" unique_id=1109206188]
-layout_mode = 1
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -51.0
-offset_top = -37.0
-offset_right = 51.0
-offset_bottom = 37.0
-grow_horizontal = 0
-grow_vertical = 2
-pivot_offset_ratio = Vector2(0.5, 0.5)
-texture = ExtResource("7_gvrie")
 
 [node name="L_ActiveSkillSlots" type="Control" parent="HotBar" unique_id=1380575174]
 layout_mode = 1
