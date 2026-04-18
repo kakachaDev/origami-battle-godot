@@ -1,8 +1,14 @@
-[gd_scene format=3 uid="uid://cpassstack01a"]
+[gd_scene format=3 uid="uid://d1s64dis7nal5"]
 
-[ext_resource type="Script" path="res://Assets/Scripts/PassiveStack.gd" id="1_script"]
+[ext_resource type="Script" uid="uid://cibcs8a3g4h8i" path="res://Assets/Scripts/PassiveStack.gd" id="1_script"]
 
-[node name="PassiveStack" type="Control"]
+[node name="PassiveStack" type="Control" unique_id=2062779345]
+layout_mode = 3
+anchors_preset = 0
 offset_right = 280.0
 offset_bottom = 52.0
 script = ExtResource("1_script")
+max_count = 8
+current_count = 2
+icon_size = 51.0
+max_spacing = 35.0

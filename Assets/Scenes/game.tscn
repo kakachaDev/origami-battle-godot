@@ -11,21 +11,14 @@
 [ext_resource type="Texture2D" uid="uid://3tk14n41m3lg" path="res://Assets/Sprites/Hotbar/SCORE_BIRD_RED.png" id="9_kvw2h"]
 [ext_resource type="Texture2D" uid="uid://cm70jpujus14k" path="res://Assets/Sprites/Hotbar/HOTBAR.png" id="10_dm1m1"]
 [ext_resource type="FontFile" uid="uid://ccwwltsq0oe2h" path="res://Assets/Fonts/Original/Chicoree Em. Bold.otf" id="11_8lgte"]
-[ext_resource type="PackedScene" uid="uid://cpassstack01a" path="res://Assets/Prefabs/PassiveStack.tscn" id="12_pssv1"]
-[ext_resource type="Resource" uid="uid://dpassred0001a" path="res://Assets/Resources/PassiveStacks/Red.tres" id="13_red01"]
-[ext_resource type="Resource" uid="uid://dpassgreen01a" path="res://Assets/Resources/PassiveStacks/Green.tres" id="14_grn01"]
+[ext_resource type="PackedScene" uid="uid://d1s64dis7nal5" path="res://Assets/Prefabs/PassiveStack.tscn" id="12_pssv1"]
 [ext_resource type="Texture2D" uid="uid://vkdn0oa364pa" path="res://Assets/Sprites/Hotbar/+SCORE.png" id="16_4cxsk"]
-[ext_resource type="Texture2D" uid="uid://c2ubop4yuc304" path="res://Assets/Sprites/Skills/Active_butt.png" id="17_8lgte"]
-[ext_resource type="Texture2D" uid="uid://b0monntq2ijma" path="res://Assets/Sprites/Skills/SkillIcons/Cube.png" id="18_cm1bx"]
-[ext_resource type="Texture2D" uid="uid://bt6hahpwfyy4f" path="res://Assets/Sprites/Skills/STAR.png" id="19_1iytr"]
-[ext_resource type="Texture2D" uid="uid://dgki6jwcxnta4" path="res://Assets/Sprites/Skills/Quantity.png" id="20_wh2ge"]
-[ext_resource type="Texture2D" uid="uid://1f6chxldo56n" path="res://Assets/Sprites/Skills/SkillIcons/Lube.png" id="21_eca7d"]
-[ext_resource type="Texture2D" uid="uid://dk1osimvxvc2i" path="res://Assets/Sprites/Skills/SkillIcons/Hand.png" id="22_4cxsk"]
-[ext_resource type="Texture2D" uid="uid://lrlmgag4xscw" path="res://Assets/Sprites/Skills/SkillIcons/Baloon.png" id="23_1umtg"]
+[ext_resource type="Texture2D" uid="uid://c32opqsx2gnv6" path="res://Assets/Sprites/Skills/SkillIcons/Botle.png" id="19_dri85"]
+[ext_resource type="Script" uid="uid://b8245uf57ffhp" path="res://Assets/Scripts/SkillData.gd" id="20_ui87a"]
 [ext_resource type="Texture2D" uid="uid://dik5gv8wn81uu" path="res://Assets/Sprites/Gems/Blue_bomb.png" id="24_mcygk"]
 [ext_resource type="Texture2D" uid="uid://cur5e5o0768fx" path="res://Assets/Sprites/Gems/Bomb_LeftRight.png" id="25_1v65n"]
 [ext_resource type="Texture2D" uid="uid://wxul8g6hsc2v" path="res://Assets/Sprites/Gems/Banana_base.png" id="26_qudcs"]
-[ext_resource type="PackedScene" uid="uid://cactivskbase1" path="res://Assets/Prefabs/ActiveSkillBase.tscn" id="27_absk1"]
+[ext_resource type="PackedScene" uid="uid://8nhbmbocunoe" path="res://Assets/Prefabs/ActiveSkillBase.tscn" id="27_absk1"]
 [ext_resource type="PackedScene" uid="uid://cscoreline001" path="res://Assets/Prefabs/ScoreLine.tscn" id="28_scln1"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1umtg"]
@@ -52,6 +45,13 @@ colors = PackedColorArray(0.9624755, 0, 0.42691815, 1, 0.16701901, 0.6551242, 0.
 gradient = SubResource("Gradient_qudcs")
 fill_from = Vector2(0.9427083, 0.9357639)
 fill_to = Vector2(0, 0)
+
+[sub_resource type="Resource" id="Resource_gvrie"]
+script = ExtResource("20_ui87a")
+skill_name = "asdasd"
+description = "sada"
+icon = ExtResource("19_dri85")
+metadata/_custom_type_script = "uid://b8245uf57ffhp"
 
 [node name="Game" type="Control" unique_id=1685284791]
 custom_minimum_size = Vector2(1080, 1920)
@@ -2369,35 +2369,35 @@ text = "Round 3/4"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="L_PassiveStack" parent="HotBar" instance=ExtResource("12_pssv1")]
+[node name="L_PassiveStack" parent="HotBar" unique_id=1057296643 instance=ExtResource("12_pssv1")]
 layout_mode = 1
+anchors_preset = -1
 anchor_left = 0.24800001
 anchor_top = 0.76100004
 anchor_right = 0.24800001
 anchor_bottom = 0.76100004
-offset_left = -139.84003
+offset_left = -127.84003
 offset_top = -26.041016
-offset_right = 140.15997
+offset_right = 128.15997
 offset_bottom = 25.958984
 grow_vertical = 0
-stack_data = ExtResource("13_red01")
-max_count = 7
+max_count = 3
 current_count = 3
+max_spacing = 16.0
 
-[node name="R_PassiveStack" parent="HotBar" instance=ExtResource("12_pssv1")]
+[node name="R_PassiveStack" parent="HotBar" unique_id=21262380 instance=ExtResource("12_pssv1")]
 layout_mode = 1
+anchors_preset = -1
 anchor_left = 0.75100005
 anchor_top = 0.76100004
 anchor_right = 0.75100005
 anchor_bottom = 0.76100004
-offset_left = -140.08008
+offset_left = -122.08008
 offset_top = -26.041016
-offset_right = 139.91992
+offset_right = 121.91992
 offset_bottom = 25.958984
 grow_horizontal = 0
 grow_vertical = 0
-stack_data = ExtResource("14_grn01")
-max_count = 7
 current_count = 5
 
 [node name="L_AddScore" type="TextureRect" parent="HotBar" unique_id=272467169]
@@ -2479,7 +2479,7 @@ text = "+999"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ScoreLine" parent="HotBar" instance=ExtResource("28_scln1")]
+[node name="ScoreLine" parent="HotBar" unique_id=1055300626 instance=ExtResource("28_scln1")]
 layout_mode = 1
 anchor_left = 0.5
 anchor_top = 0.38900003
@@ -2511,13 +2511,13 @@ offset_right = 111.0
 offset_bottom = 110.0
 pivot_offset_ratio = Vector2(0.5, 0.5)
 
-[node name="ActiveSkillBase" parent="HotBar/L_ActiveSkillSlots/Slot1" instance=ExtResource("27_absk1")]
+[node name="ActiveSkillBase" parent="HotBar/L_ActiveSkillSlots/Slot1" unique_id=693602546 instance=ExtResource("27_absk1")]
+modulate = Color(1, 1, 1, 1)
 layout_mode = 0
-offset_right = 110.0
-offset_bottom = 110.0
-pivot_offset_ratio = Vector2(0.5, 0.5)
+disabled = false
+skill_data = SubResource("Resource_gvrie")
 rank = 2
-count = 2
+count = 3
 
 [node name="Slot2" type="Control" parent="HotBar/L_ActiveSkillSlots" unique_id=1333813652]
 anchors_preset = 0
@@ -2526,13 +2526,8 @@ offset_right = 228.0
 offset_bottom = 110.0
 pivot_offset_ratio = Vector2(0.5, 0.5)
 
-[node name="ActiveSkillBase" parent="HotBar/L_ActiveSkillSlots/Slot2" instance=ExtResource("27_absk1")]
+[node name="ActiveSkillBase" parent="HotBar/L_ActiveSkillSlots/Slot2" unique_id=1081464258 instance=ExtResource("27_absk1")]
 layout_mode = 0
-offset_right = 110.0
-offset_bottom = 110.0
-pivot_offset_ratio = Vector2(0.5, 0.5)
-rank = 1
-count = 0
 
 [node name="R_ActiveSkillSlots" type="Control" parent="HotBar" unique_id=654686569]
 layout_mode = 1
@@ -2554,11 +2549,10 @@ offset_right = 228.0
 offset_bottom = 110.0
 pivot_offset_ratio = Vector2(0.5, 0.5)
 
-[node name="ActiveSkillBase" parent="HotBar/R_ActiveSkillSlots/Slot1" instance=ExtResource("27_absk1")]
+[node name="ActiveSkillBase" parent="HotBar/R_ActiveSkillSlots/Slot1" unique_id=821074160 instance=ExtResource("27_absk1")]
+modulate = Color(1, 1, 1, 1)
 layout_mode = 0
-offset_right = 110.0
-offset_bottom = 110.0
-pivot_offset_ratio = Vector2(0.5, 0.5)
+disabled = false
 rank = 2
 count = 7
 
@@ -2568,10 +2562,9 @@ offset_right = 110.0
 offset_bottom = 110.0
 pivot_offset_ratio = Vector2(0.5, 0.5)
 
-[node name="ActiveSkillBase" parent="HotBar/R_ActiveSkillSlots/Slot2" instance=ExtResource("27_absk1")]
+[node name="ActiveSkillBase" parent="HotBar/R_ActiveSkillSlots/Slot2" unique_id=2037937837 instance=ExtResource("27_absk1")]
+modulate = Color(1, 1, 1, 1)
 layout_mode = 0
-offset_right = 110.0
-offset_bottom = 110.0
-pivot_offset_ratio = Vector2(0.5, 0.5)
+disabled = false
 rank = 3
 count = 6
