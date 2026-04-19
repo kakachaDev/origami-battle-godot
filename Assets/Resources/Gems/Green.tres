@@ -1,0 +1,11 @@
+[gd_resource type="GemData" load_steps=3 format=3 uid="uid://dgemgreen001a"]
+
+[ext_resource type="Script" path="res://Assets/Scripts/GemData.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://c474xrgo0h7tr" path="res://Assets/Sprites/Gems/Green_base.png" id="2_base"]
+[ext_resource type="Texture2D" uid="uid://cw6addky70250" path="res://Assets/Sprites/Gems/Green_modified.png" id="3_modified"]
+
+[resource]
+script = ExtResource("1_script")
+gem_name = "Green"
+sprite_base = ExtResource("2_base")
+sprite_modified = ExtResource("3_modified")

@@ -1,0 +1,11 @@
+[gd_resource type="GemData" load_steps=3 format=3 uid="uid://dgempink0001a"]
+
+[ext_resource type="Script" path="res://Assets/Scripts/GemData.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://b6kr7w7n1sxai" path="res://Assets/Sprites/Gems/Pink_base.png" id="2_base"]
+[ext_resource type="Texture2D" uid="uid://bya7n4tboj2ta" path="res://Assets/Sprites/Gems/Pink_modified.png" id="3_modified"]
+
+[resource]
+script = ExtResource("1_script")
+gem_name = "Pink"
+sprite_base = ExtResource("2_base")
+sprite_modified = ExtResource("3_modified")

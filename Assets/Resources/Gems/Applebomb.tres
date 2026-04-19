@@ -1,0 +1,10 @@
+[gd_resource type="GemData" load_steps=2 format=3 uid="uid://dgemapplb001a"]
+
+[ext_resource type="Script" path="res://Assets/Scripts/GemData.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://dcf532u24ecti" path="res://Assets/Sprites/Gems/Applebomb_base.png" id="2_base"]
+
+[resource]
+script = ExtResource("1_script")
+gem_name = "Applebomb"
+sprite_base = ExtResource("2_base")
+is_multicolor = true
