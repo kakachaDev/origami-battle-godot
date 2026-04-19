@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://bh18b1kmo8blk" path="res://Assets/Sprites/example.png" id="1_g77ca"]
 [ext_resource type="Texture2D" uid="uid://bu8dr8bohvsvn" path="res://Assets/Sprites/Background/Background.png" id="2_p7xq5"]
 [ext_resource type="Texture2D" uid="uid://d100yfoav47ci" path="res://Assets/Sprites/TopMenu/Rules.png" id="3_16r2i"]
+[ext_resource type="Script" path="res://Assets/Scripts/GemData.gd" id="4_gvrie"]
 [ext_resource type="Texture2D" uid="uid://d3m7xirhjch60" path="res://Assets/Sprites/TopMenu/ABout.png" id="4_sqxpa"]
 [ext_resource type="Texture2D" uid="uid://cdec5qjamnwn0" path="res://Assets/Sprites/TopMenu/ESC.png" id="5_dri85"]
 [ext_resource type="Texture2D" uid="uid://l02qfx37tfx0" path="res://Assets/Sprites/Nickname_bar/NickAva_player.png" id="6_ui87a"]
@@ -13,15 +14,17 @@
 [ext_resource type="FontFile" uid="uid://ccwwltsq0oe2h" path="res://Assets/Fonts/Original/Chicoree Em. Bold.otf" id="11_8lgte"]
 [ext_resource type="PackedScene" uid="uid://d1s64dis7nal5" path="res://Assets/Prefabs/PassiveStack.tscn" id="12_pssv1"]
 [ext_resource type="Texture2D" uid="uid://vkdn0oa364pa" path="res://Assets/Sprites/Hotbar/+SCORE.png" id="16_4cxsk"]
-[ext_resource type="Script" path="res://Assets/Scripts/GameBoard.gd" id="30_gboard"]
+[ext_resource type="PackedScene" uid="uid://8nhbmbocunoe" path="res://Assets/Prefabs/ActiveSkillBase.tscn" id="27_absk1"]
+[ext_resource type="PackedScene" uid="uid://cscoreline001" path="res://Assets/Prefabs/ScoreLine.tscn" id="28_scln1"]
+[ext_resource type="Script" uid="uid://cgameboard01a" path="res://Assets/Scripts/GameBoard.gd" id="30_gboard"]
 [ext_resource type="Resource" uid="uid://dgemred00001a" path="res://Assets/Resources/Gems/Red.tres" id="31_gemred"]
 [ext_resource type="Resource" uid="uid://dgemblue0001a" path="res://Assets/Resources/Gems/Blue.tres" id="32_gemblue"]
 [ext_resource type="Resource" uid="uid://dgemgreen001a" path="res://Assets/Resources/Gems/Green.tres" id="33_gemgreen"]
 [ext_resource type="Resource" uid="uid://dgempink0001a" path="res://Assets/Resources/Gems/Pink.tres" id="34_gempink"]
 [ext_resource type="Resource" uid="uid://dgembnana001a" path="res://Assets/Resources/Gems/Banana.tres" id="35_gembanana"]
 
-[ext_resource type="PackedScene" uid="uid://8nhbmbocunoe" path="res://Assets/Prefabs/ActiveSkillBase.tscn" id="27_absk1"]
-[ext_resource type="PackedScene" uid="uid://cscoreline001" path="res://Assets/Prefabs/ScoreLine.tscn" id="28_scln1"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ttsg4"]
+bg_color = Color(1, 1, 1, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1umtg"]
 corner_radius_top_left = 1000
@@ -91,15 +94,16 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("2_p7xq5")
 
-[node name="Gems" type="Control" parent="GameField" unique_id=1552780601]
+[node name="Gems" type="Panel" parent="GameField" unique_id=2039575431]
 clip_children = 1
 layout_mode = 0
 offset_left = 20.0
 offset_top = 136.0
 offset_right = 1064.0
 offset_bottom = 1180.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_ttsg4")
 script = ExtResource("30_gboard")
-gem_resources = [ExtResource("31_gemred"), ExtResource("32_gemblue"), ExtResource("33_gemgreen"), ExtResource("34_gempink"), ExtResource("35_gembanana")]
+gem_resources = Array[ExtResource("4_gvrie")]([ExtResource("31_gemred"), ExtResource("32_gemblue"), ExtResource("33_gemgreen"), ExtResource("34_gempink"), ExtResource("35_gembanana")])
 
 [node name="TopMenu" type="Control" parent="." unique_id=1172136226]
 layout_mode = 1
@@ -608,7 +612,6 @@ offset_right = 110.0
 offset_bottom = 113.0
 grow_horizontal = 1
 grow_vertical = 1
-disabled = true
 
 [node name="Slot2" type="Control" parent="HotBar/R_ActiveSkillSlots" unique_id=788304366]
 anchors_preset = 0
@@ -629,4 +632,3 @@ offset_right = 110.0
 offset_bottom = 113.0
 grow_horizontal = 1
 grow_vertical = 1
-disabled = true

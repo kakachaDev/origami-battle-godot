@@ -11,9 +11,8 @@ config_version=5
 [application]
 
 config/name="Origami Battle"
+run/main_scene="uid://cxuu2uajmap7n"
 config/features=PackedStringArray("4.6", "GL Compatibility")
-boot_splash/bg_color=Color(0.20159997, 0.1624, 0.28, 1)
-boot_splash/image="uid://wxul8g6hsc2v"
 config/icon="uid://wxul8g6hsc2v"
 
 [display]

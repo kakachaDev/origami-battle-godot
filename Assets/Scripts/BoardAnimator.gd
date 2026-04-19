@@ -37,7 +37,7 @@ func animate_fall(entries: Array) -> void:
 	if entries.is_empty():
 		return
 	var tw := create_tween().set_parallel(true)
-	tw.set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_CUBIC)
+	tw.set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_QUAD)
 	for e in entries:
 		var dist := absf((e.cell as Control).position.y - e.target.y)
 		var delay: float = e.get("delay", 0.0)
