@@ -9,6 +9,7 @@ const START_X := 29.0
 const START_Y := 29.0
 
 const CELL_SCENE: PackedScene = preload("res://Assets/Prefabs/GemCell.tscn")
+const FALL_STAGGER := 0.06  # seconds between each gem in a column, bottom to top
 
 @export var gem_resources: Array[GemData] = []
 var _board: BoardState
@@ -23,8 +24,6 @@ func _ready() -> void:
 	_animator = BoardAnimator.new()
 	add_child(_animator)
 	mouse_filter = MOUSE_FILTER_STOP
-	# Clip children so gems positioned above the field are invisible until they fall in
-	clip_children = CanvasItem.CLIP_CHILDREN_ONLY
 	_build_cells()
 
 func _build_cells() -> void:
@@ -131,14 +130,28 @@ func _resolve_matches(matches: Array[Vector2i]) -> void:
 		cell.visible = true  # clip_children hides gems above the field
 		cell.position = _cell_pos(-(total - idx), col)  # -total … -1 from top
 
-	# All gems — existing falling and new — animate together in one pass
-	var all_entries: Array = []
+	# Group all falling gems (existing + new) by column, sorted bottom-to-top for stagger
+	var by_col: Dictionary = {}  # col → Array of {cell, target_row, target}
 	for fall in falls:
 		var tp: Vector2i = fall.to
-		all_entries.append({"cell": _cells[tp.x][tp.y], "target": _cell_pos(tp.x, tp.y)})
+		var col: int = tp.y
+		if not by_col.has(col):
+			by_col[col] = []
+		by_col[col].append({"cell": _cells[tp.x][tp.y], "target": _cell_pos(tp.x, tp.y), "target_row": tp.x})
 	for s in spawns:
 		var pos: Vector2i = s.pos
-		all_entries.append({"cell": _cells[pos.x][pos.y], "target": _cell_pos(pos.x, pos.y)})
+		var col: int = pos.y
+		if not by_col.has(col):
+			by_col[col] = []
+		by_col[col].append({"cell": _cells[pos.x][pos.y], "target": _cell_pos(pos.x, pos.y), "target_row": pos.x})
+
+	var all_entries: Array = []
+	for col in by_col:
+		var gems: Array = by_col[col]
+		# Sort descending by target_row so the bottom gem gets delay 0
+		gems.sort_custom(func(a, b): return a.target_row > b.target_row)
+		for i in gems.size():
+			all_entries.append({"cell": gems[i].cell, "target": gems[i].target, "delay": i * FALL_STAGGER})
 
 	await _animator.animate_fall(all_entries)
 

@@ -32,13 +32,14 @@ func animate_destroy(cells: Array) -> void:
 		(cell as Control).scale = Vector2.ONE
 
 func animate_fall(entries: Array) -> void:
-	# entries: Array of {cell: Control, target: Vector2}
-	# All gems fall simultaneously; duration is proportional to distance.
+	# entries: Array of {cell: Control, target: Vector2, delay: float}
+	# Within each column gems are staggered bottom-to-top; duration ∝ distance.
 	if entries.is_empty():
 		return
 	var tw := create_tween().set_parallel(true)
 	tw.set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_CUBIC)
 	for e in entries:
 		var dist := absf((e.cell as Control).position.y - e.target.y)
-		tw.tween_property(e.cell, "position", e.target, dist / FALL_SPEED)
+		var delay: float = e.get("delay", 0.0)
+		tw.tween_property(e.cell, "position", e.target, dist / FALL_SPEED).set_delay(delay)
 	await tw.finished

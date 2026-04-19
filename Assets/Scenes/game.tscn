@@ -92,6 +92,7 @@ grow_vertical = 2
 texture = ExtResource("2_p7xq5")
 
 [node name="Gems" type="Control" parent="GameField" unique_id=1552780601]
+clip_children = 1
 layout_mode = 0
 offset_left = 20.0
 offset_top = 136.0
