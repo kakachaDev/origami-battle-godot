@@ -1,4 +1,4 @@
-[gd_resource type="GemData" load_steps=3 format=3 uid="uid://dgembnana001a"]
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://dgembnana001a"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/GemData.gd" id="1_script"]
 [ext_resource type="Texture2D" uid="uid://wxul8g6hsc2v" path="res://Assets/Sprites/Gems/Banana_base.png" id="2_base"]
