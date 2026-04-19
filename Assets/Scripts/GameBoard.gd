@@ -9,9 +9,6 @@ const START_X := 29.0
 const START_Y := 29.0
 
 const CELL_SCENE: PackedScene = preload("res://Assets/Prefabs/GemCell.tscn")
-const FALL_STAGGER := 0.07   # seconds between each gem in a fall cascade
-# Time for one cell step at spawn speed — gems follow each other exactly 1 step apart
-const SPAWN_STEP_DELAY := CELL_STEP / 900.0
 
 @export var gem_resources: Array[GemData] = []
 var _board: BoardState
@@ -26,6 +23,8 @@ func _ready() -> void:
 	_animator = BoardAnimator.new()
 	add_child(_animator)
 	mouse_filter = MOUSE_FILTER_STOP
+	# Clip children so gems positioned above the field are invisible until they fall in
+	clip_children = CanvasItem.CLIP_CHILDREN_ONLY
 	_build_cells()
 
 func _build_cells() -> void:
@@ -101,57 +100,47 @@ func _resolve_matches(matches: Array[Vector2i]) -> void:
 	await _animator.animate_destroy(pool)
 	_board.clear_matches(matches)
 
+	# Gravity and fill happen together before any animation
 	var falls := _board.apply_gravity()
 
-	# Update cell references (falls are bottom-up, safe to apply in order)
 	for fall in falls:
-		var fp: Vector2i = fall.from
-		var tp: Vector2i = fall.to
-		_cells[tp.x][tp.y] = _cells[fp.x][fp.y]
-		_cells[fp.x][fp.y] = null
-
-	# Build fall entries with per-column stagger (falls are bottom-up per column)
-	var col_fall_idx: Dictionary = {}
-	var fall_entries: Array = []
-	for fall in falls:
-		var tp: Vector2i = fall.to
-		var col: int = tp.y
-		var idx: int = col_fall_idx.get(col, 0)
-		col_fall_idx[col] = idx + 1
-		fall_entries.append({
-			"cell": _cells[tp.x][tp.y],
-			"target": _cell_pos(tp.x, tp.y),
-			"delay": idx * FALL_STAGGER,
-		})
-	await _animator.animate_fall(fall_entries)
+		_cells[fall.to.x][fall.to.y] = _cells[fall.from.x][fall.from.y]
+		_cells[fall.from.x][fall.from.y] = null
 
 	var spawns := _board.fill_empty()
 
-	# Count spawns per column; spawns are top-to-bottom, lowest empty row fills first
-	var col_totals: Dictionary = {}
+	# Stack new gems above the grid per column (topmost empty → highest above grid)
+	var col_counts: Dictionary = {}
 	for s in spawns:
 		var c: int = (s.pos as Vector2i).y
-		col_totals[c] = col_totals.get(c, 0) + 1
+		col_counts[c] = col_counts.get(c, 0) + 1
 	var col_idx: Dictionary = {}
 
-	var spawn_entries: Array = []
-	for i in spawns.size():
-		var s = spawns[i]
+	var pool_idx := 0
+	for s in spawns:
 		var pos: Vector2i = s.pos
 		var col: int = pos.y
-		var total: int = col_totals[col]
+		var total: int = col_counts[col]
 		var idx: int = col_idx.get(col, 0)
 		col_idx[col] = idx + 1
-		# Lower rows fill first; each gem appears exactly 1 step after the one below
-		var delay := (total - 1 - idx) * SPAWN_STEP_DELAY
-		var cell: GemCell = pool[i]
+		var cell: GemCell = pool[pool_idx]
+		pool_idx += 1
 		_cells[pos.x][pos.y] = cell
 		cell.gem_data = gem_resources[s.gem]
 		cell.scale = Vector2.ONE
-		cell.visible = false
-		cell.position = _cell_pos(-1, col)  # all start 1 row above grid
-		spawn_entries.append({"cell": cell, "target": _cell_pos(pos.x, pos.y), "delay": delay})
-	await _animator.animate_spawn(spawn_entries)
+		cell.visible = true  # clip_children hides gems above the field
+		cell.position = _cell_pos(-(total - idx), col)  # -total … -1 from top
+
+	# All gems — existing falling and new — animate together in one pass
+	var all_entries: Array = []
+	for fall in falls:
+		var tp: Vector2i = fall.to
+		all_entries.append({"cell": _cells[tp.x][tp.y], "target": _cell_pos(tp.x, tp.y)})
+	for s in spawns:
+		var pos: Vector2i = s.pos
+		all_entries.append({"cell": _cells[pos.x][pos.y], "target": _cell_pos(pos.x, pos.y)})
+
+	await _animator.animate_fall(all_entries)
 
 	var cascade := _board.find_matches()
 	if not cascade.is_empty():
