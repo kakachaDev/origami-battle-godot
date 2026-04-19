@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bya7n4tboj2ta"
-path="res://.godot/imported/Pink_bomb.png-94377e9ffdac35cff15dbaf3fc09ffa0.ctex"
+uid="uid://b731rybgrinmw"
+path="res://.godot/imported/Red_modified.png-3cb5b8a3384360e702bc1fe9c39f7f68.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/Gems/Pink_bomb.png"
-dest_files=["res://.godot/imported/Pink_bomb.png-94377e9ffdac35cff15dbaf3fc09ffa0.ctex"]
+source_file="res://Assets/Sprites/Gems/Red_modified.png"
+dest_files=["res://.godot/imported/Red_modified.png-3cb5b8a3384360e702bc1fe9c39f7f68.ctex"]
 
 [params]
 
