@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cur5e5o0768fx"
-path="res://.godot/imported/Bomb_LeftRight.png-94ee8a496cd8ff287a763be923a9e67b.ctex"
+uid="uid://cjl5jmo5tjm65"
+path="res://.godot/imported/Bomb_UpDown.png-44ae20594f1da3bcb7d6fc8aa22733e8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/Gems/Bomb_LeftRight.png"
-dest_files=["res://.godot/imported/Bomb_LeftRight.png-94ee8a496cd8ff287a763be923a9e67b.ctex"]
+source_file="res://Assets/Sprites/Modificators/Bomb_UpDown.png"
+dest_files=["res://.godot/imported/Bomb_UpDown.png-44ae20594f1da3bcb7d6fc8aa22733e8.ctex"]
 
 [params]
 

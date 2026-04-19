@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cw6addky70250"
-path="res://.godot/imported/Green_bomb.png-69a39c4656ab82bb5b8f899bcfedad96.ctex"
+uid="uid://7hnoscsen7i8"
+path="res://.godot/imported/Banana_modified.png-575acab9768b67f3f32f95d603057864.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/Gems/Green_bomb.png"
-dest_files=["res://.godot/imported/Green_bomb.png-69a39c4656ab82bb5b8f899bcfedad96.ctex"]
+source_file="res://Assets/Sprites/Gems/Banana_modified.png"
+dest_files=["res://.godot/imported/Banana_modified.png-575acab9768b67f3f32f95d603057864.ctex"]
 
 [params]
 

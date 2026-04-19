@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cjl5jmo5tjm65"
-path="res://.godot/imported/Bomb_UpDown.png-59aa8d9164dff922693df2bc61bb8b27.ctex"
+uid="uid://dik5gv8wn81uu"
+path="res://.godot/imported/Blue_modified.png-ca92cff763b91e8ccde96808e8dedf19.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/Gems/Bomb_UpDown.png"
-dest_files=["res://.godot/imported/Bomb_UpDown.png-59aa8d9164dff922693df2bc61bb8b27.ctex"]
+source_file="res://Assets/Sprites/Gems/Blue_modified.png"
+dest_files=["res://.godot/imported/Blue_modified.png-ca92cff763b91e8ccde96808e8dedf19.ctex"]
 
 [params]
 

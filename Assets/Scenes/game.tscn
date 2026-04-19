@@ -13,10 +13,8 @@
 [ext_resource type="FontFile" uid="uid://ccwwltsq0oe2h" path="res://Assets/Fonts/Original/Chicoree Em. Bold.otf" id="11_8lgte"]
 [ext_resource type="PackedScene" uid="uid://d1s64dis7nal5" path="res://Assets/Prefabs/PassiveStack.tscn" id="12_pssv1"]
 [ext_resource type="Texture2D" uid="uid://vkdn0oa364pa" path="res://Assets/Sprites/Hotbar/+SCORE.png" id="16_4cxsk"]
-[ext_resource type="Texture2D" uid="uid://c32opqsx2gnv6" path="res://Assets/Sprites/Skills/SkillIcons/Botle.png" id="19_dri85"]
-[ext_resource type="Script" uid="uid://b8245uf57ffhp" path="res://Assets/Scripts/SkillData.gd" id="20_ui87a"]
-[ext_resource type="Texture2D" uid="uid://dik5gv8wn81uu" path="res://Assets/Sprites/Gems/Blue_bomb.png" id="24_mcygk"]
-[ext_resource type="Texture2D" uid="uid://cur5e5o0768fx" path="res://Assets/Sprites/Gems/Bomb_LeftRight.png" id="25_1v65n"]
+[ext_resource type="Texture2D" uid="uid://dik5gv8wn81uu" path="res://Assets/Sprites/Gems/Blue_modified.png" id="24_mcygk"]
+[ext_resource type="Texture2D" uid="uid://cur5e5o0768fx" path="res://Assets/Sprites/Modificators/Bomb_LeftRight.png" id="25_1v65n"]
 [ext_resource type="Texture2D" uid="uid://wxul8g6hsc2v" path="res://Assets/Sprites/Gems/Banana_base.png" id="26_qudcs"]
 [ext_resource type="PackedScene" uid="uid://8nhbmbocunoe" path="res://Assets/Prefabs/ActiveSkillBase.tscn" id="27_absk1"]
 [ext_resource type="PackedScene" uid="uid://cscoreline001" path="res://Assets/Prefabs/ScoreLine.tscn" id="28_scln1"]
@@ -45,13 +43,6 @@ colors = PackedColorArray(0.9624755, 0, 0.42691815, 1, 0.16701901, 0.6551242, 0.
 gradient = SubResource("Gradient_qudcs")
 fill_from = Vector2(0.9427083, 0.9357639)
 fill_to = Vector2(0, 0)
-
-[sub_resource type="Resource" id="Resource_gvrie"]
-script = ExtResource("20_ui87a")
-skill_name = "asdasd"
-description = "sada"
-icon = ExtResource("19_dri85")
-metadata/_custom_type_script = "uid://b8245uf57ffhp"
 
 [node name="Game" type="Control" unique_id=1685284791]
 custom_minimum_size = Vector2(1080, 1920)
@@ -2512,12 +2503,18 @@ offset_bottom = 110.0
 pivot_offset_ratio = Vector2(0.5, 0.5)
 
 [node name="ActiveSkillBase" parent="HotBar/L_ActiveSkillSlots/Slot1" unique_id=693602546 instance=ExtResource("27_absk1")]
-modulate = Color(1, 1, 1, 1)
 layout_mode = 0
-disabled = false
-skill_data = SubResource("Resource_gvrie")
-rank = 2
-count = 3
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 110.0
+offset_bottom = 113.0
+grow_horizontal = 1
+grow_vertical = 1
 
 [node name="Slot2" type="Control" parent="HotBar/L_ActiveSkillSlots" unique_id=1333813652]
 anchors_preset = 0
@@ -2528,6 +2525,17 @@ pivot_offset_ratio = Vector2(0.5, 0.5)
 
 [node name="ActiveSkillBase" parent="HotBar/L_ActiveSkillSlots/Slot2" unique_id=1081464258 instance=ExtResource("27_absk1")]
 layout_mode = 0
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 110.0
+offset_bottom = 113.0
+grow_horizontal = 1
+grow_vertical = 1
 
 [node name="R_ActiveSkillSlots" type="Control" parent="HotBar" unique_id=654686569]
 layout_mode = 1
@@ -2550,11 +2558,19 @@ offset_bottom = 110.0
 pivot_offset_ratio = Vector2(0.5, 0.5)
 
 [node name="ActiveSkillBase" parent="HotBar/R_ActiveSkillSlots/Slot1" unique_id=821074160 instance=ExtResource("27_absk1")]
-modulate = Color(1, 1, 1, 1)
 layout_mode = 0
-disabled = false
-rank = 2
-count = 7
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 110.0
+offset_bottom = 113.0
+grow_horizontal = 1
+grow_vertical = 1
+disabled = true
 
 [node name="Slot2" type="Control" parent="HotBar/R_ActiveSkillSlots" unique_id=788304366]
 anchors_preset = 0
@@ -2563,8 +2579,16 @@ offset_bottom = 110.0
 pivot_offset_ratio = Vector2(0.5, 0.5)
 
 [node name="ActiveSkillBase" parent="HotBar/R_ActiveSkillSlots/Slot2" unique_id=2037937837 instance=ExtResource("27_absk1")]
-modulate = Color(1, 1, 1, 1)
 layout_mode = 0
-disabled = false
-rank = 3
-count = 6
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 110.0
+offset_bottom = 113.0
+grow_horizontal = 1
+grow_vertical = 1
+disabled = true
