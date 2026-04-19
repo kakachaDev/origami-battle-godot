@@ -9,6 +9,8 @@ const START_X := 29.0
 const START_Y := 29.0
 
 const CELL_SCENE: PackedScene = preload("res://Assets/Prefabs/GemCell.tscn")
+const FALL_STAGGER := 0.07   # seconds between each gem in a column cascade
+const SPAWN_STAGGER := 0.07
 
 @export var gem_resources: Array[GemData] = []
 var _board: BoardState
@@ -107,15 +109,24 @@ func _resolve_matches(matches: Array[Vector2i]) -> void:
 		_cells[tp.x][tp.y] = _cells[fp.x][fp.y]
 		_cells[fp.x][fp.y] = null
 
+	# Build fall entries with per-column stagger (falls are bottom-up per column)
+	var col_fall_idx: Dictionary = {}
 	var fall_entries: Array = []
 	for fall in falls:
 		var tp: Vector2i = fall.to
-		fall_entries.append({"cell": _cells[tp.x][tp.y], "target": _cell_pos(tp.x, tp.y)})
+		var col: int = tp.y
+		var idx: int = col_fall_idx.get(col, 0)
+		col_fall_idx[col] = idx + 1
+		fall_entries.append({
+			"cell": _cells[tp.x][tp.y],
+			"target": _cell_pos(tp.x, tp.y),
+			"delay": idx * FALL_STAGGER,
+		})
 	await _animator.animate_fall(fall_entries)
 
 	var spawns := _board.fill_empty()
 
-	# Count empties per column to stagger spawn start positions
+	# Count spawns per column; spawns are top-to-bottom, lowest empty row fills first
 	var col_totals: Dictionary = {}
 	for s in spawns:
 		var c: int = (s.pos as Vector2i).y
@@ -130,13 +141,15 @@ func _resolve_matches(matches: Array[Vector2i]) -> void:
 		var total: int = col_totals[col]
 		var idx: int = col_idx.get(col, 0)
 		col_idx[col] = idx + 1
-		var start_row := -(total - idx)  # stagger: row -total … -1
+		# Lower rows fill first: reverse the idx so row(max) → delay 0, row(0) → delay (total-1)*STAGGER
+		var delay := (total - 1 - idx) * SPAWN_STAGGER
 		var cell: GemCell = pool[i]
 		_cells[pos.x][pos.y] = cell
 		cell.gem_data = gem_resources[s.gem]
 		cell.scale = Vector2.ONE
-		cell.position = _cell_pos(start_row, col)
-		spawn_entries.append({"cell": cell, "target": _cell_pos(pos.x, pos.y)})
+		cell.visible = false
+		cell.position = _cell_pos(-1, col)  # all start 1 row above grid
+		spawn_entries.append({"cell": cell, "target": _cell_pos(pos.x, pos.y), "delay": delay})
 	await _animator.animate_spawn(spawn_entries)
 
 	var cascade := _board.find_matches()

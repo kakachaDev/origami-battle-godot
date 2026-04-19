@@ -1,8 +1,8 @@
 extends Node
 class_name BoardAnimator
 
-const SWAP_TIME := 0.18
-const RETURN_TIME := 0.15
+const SWAP_TIME := 0.30
+const RETURN_TIME := 0.20
 const DESTROY_TIME := 0.16
 const FALL_SPEED := 700.0   # px/s
 const SPAWN_SPEED := 800.0  # px/s
@@ -34,24 +34,26 @@ func animate_destroy(cells: Array) -> void:
 		(cell as Control).scale = Vector2.ONE
 
 func animate_fall(entries: Array) -> void:
-	# entries: Array of {cell: Control, target: Vector2}
+	# entries: Array of {cell: Control, target: Vector2, delay: float}
 	if entries.is_empty():
 		return
 	var tw := create_tween().set_parallel(true)
 	tw.set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_CUBIC)
 	for e in entries:
 		var dist := absf((e.cell as Control).position.y - e.target.y)
-		tw.tween_property(e.cell, "position", e.target, dist / FALL_SPEED)
+		var delay: float = e.get("delay", 0.0)
+		tw.tween_property(e.cell, "position", e.target, dist / FALL_SPEED).set_delay(delay)
 	await tw.finished
 
 func animate_spawn(entries: Array) -> void:
-	# entries: Array of {cell: Control, target: Vector2}
+	# entries: Array of {cell: Control, target: Vector2, delay: float}
 	if entries.is_empty():
 		return
 	var tw := create_tween().set_parallel(true)
 	tw.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
 	for e in entries:
-		(e.cell as Control).visible = true
+		var delay: float = e.get("delay", 0.0)
 		var dist := absf((e.cell as Control).position.y - e.target.y)
-		tw.tween_property(e.cell, "position", e.target, dist / SPAWN_SPEED)
+		tw.tween_callback(func(): (e.cell as Control).visible = true).set_delay(delay)
+		tw.tween_property(e.cell, "position", e.target, dist / SPAWN_SPEED).set_delay(delay)
 	await tw.finished
