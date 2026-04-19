@@ -1,4 +1,4 @@
-[gd_resource type="PassiveStackData" load_steps=3 format=3 uid="uid://dpassblue001a"]
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://dpassblue001a"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/PassiveStackData.gd" id="1_script"]
 [ext_resource type="Texture2D" uid="uid://cgannv0jo21ud" path="res://Assets/Sprites/Gems/Mini/Blue_mini_0.png" id="2_disabled"]

@@ -1,4 +1,4 @@
-[gd_resource type="PassiveStackData" load_steps=3 format=3 uid="uid://dpasspink001a"]
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://dpasspink001a"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/PassiveStackData.gd" id="1_script"]
 [ext_resource type="Texture2D" uid="uid://6454deab8kbi" path="res://Assets/Sprites/Gems/Mini/Pink_mini_0.png" id="2_disabled"]

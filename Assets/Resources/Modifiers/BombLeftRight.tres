@@ -1,4 +1,4 @@
-[gd_resource type="ModifierData" load_steps=2 format=3 uid="uid://dmodblr00001a"]
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://dmodblr00001a"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/ModifierData.gd" id="1_script"]
 [ext_resource type="Texture2D" uid="uid://cur5e5o0768fx" path="res://Assets/Sprites/Modificators/Bomb_LeftRight.png" id="2_sprite"]

@@ -1,4 +1,4 @@
-[gd_resource type="SkillData" load_steps=3 format=3 uid="uid://dskilflower1a"]
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://dskilflower1a"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/SkillData.gd" id="1_script"]
 [ext_resource type="Texture2D" uid="uid://gdxu5sbkn13r" path="res://Assets/Sprites/Skills/SkillIcons/Flower.png" id="2_icon"]
