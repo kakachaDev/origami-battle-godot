@@ -3,8 +3,7 @@ class_name BoardAnimator
 
 const SWAP_TIME := 0.25
 const DESTROY_TIME := 0.16
-const FALL_SPEED := 900.0   # px/s
-const SPAWN_SPEED := 900.0  # px/s
+const FALL_SPEED := 900.0  # px/s
 
 func animate_swap(cell_a: Control, cell_b: Control, pos_a: Vector2, pos_b: Vector2) -> void:
 	var tw := create_tween().set_parallel(true)
@@ -33,27 +32,13 @@ func animate_destroy(cells: Array) -> void:
 		(cell as Control).scale = Vector2.ONE
 
 func animate_fall(entries: Array) -> void:
-	# entries: Array of {cell: Control, target: Vector2, delay: float}
+	# entries: Array of {cell: Control, target: Vector2}
+	# All gems fall simultaneously; duration is proportional to distance.
 	if entries.is_empty():
 		return
 	var tw := create_tween().set_parallel(true)
 	tw.set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_CUBIC)
 	for e in entries:
 		var dist := absf((e.cell as Control).position.y - e.target.y)
-		var delay: float = e.get("delay", 0.0)
-		tw.tween_property(e.cell, "position", e.target, dist / FALL_SPEED).set_delay(delay)
-	await tw.finished
-
-func animate_spawn(entries: Array) -> void:
-	# entries: Array of {cell: Control, target: Vector2, delay: float}
-	# All cells start 1 row above grid; delay staggers them so they chase each other
-	if entries.is_empty():
-		return
-	var tw := create_tween().set_parallel(true)
-	tw.set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_CUBIC)
-	for e in entries:
-		var delay: float = e.get("delay", 0.0)
-		var dist := absf((e.cell as Control).position.y - e.target.y)
-		tw.tween_callback(func(): (e.cell as Control).visible = true).set_delay(delay)
-		tw.tween_property(e.cell, "position", e.target, dist / SPAWN_SPEED).set_delay(delay)
+		tw.tween_property(e.cell, "position", e.target, dist / FALL_SPEED)
 	await tw.finished
