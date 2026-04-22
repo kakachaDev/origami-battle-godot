@@ -19,6 +19,8 @@ var _cells: Array  # Array[Array[GemCell]]
 var _drag_from: Vector2i = Vector2i(-1, -1)
 var _busy := false
 
+signal move_completed(gems_destroyed: int)
+
 func _ready() -> void:
 	_board = BoardState.new()
 	_animator = BoardAnimator.new()
@@ -87,11 +89,12 @@ func _do_swap(pos_a: Vector2i, pos_b: Vector2i) -> void:
 	else:
 		_cells[pos_a.x][pos_a.y] = cell_b
 		_cells[pos_b.x][pos_b.y] = cell_a
-		await _resolve_matches(matches)
+		var total := await _resolve_matches(matches)
+		move_completed.emit(total)
 
 	_busy = false
 
-func _resolve_matches(matches: Array[Vector2i]) -> void:
+func _resolve_matches(matches: Array[Vector2i]) -> int:
 	var pool: Array[GemCell] = []
 	for pos in matches:
 		pool.append(_cells[pos.x][pos.y])
@@ -156,5 +159,7 @@ func _resolve_matches(matches: Array[Vector2i]) -> void:
 	await _animator.animate_fall(all_entries)
 
 	var cascade := _board.find_matches()
+	var cascade_count := 0
 	if not cascade.is_empty():
-		await _resolve_matches(cascade)
+		cascade_count = await _resolve_matches(cascade)
+	return matches.size() + cascade_count
