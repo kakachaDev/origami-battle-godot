@@ -42,16 +42,19 @@ func _on_move_completed(gems_by_type: Dictionary) -> void:
 	var total := 0
 	for c in gems_by_type.values():
 		total += c
+	var bonus_move := total > 3
 	if current_player == LEFT:
 		l_score += total
 		player_scored.emit(LEFT, total)
-		l_moves_left -= 1
+		if not bonus_move:
+			l_moves_left -= 1
 		if l_moves_left <= 0:
 			current_player = RIGHT
 	else:
 		r_score += total
 		player_scored.emit(RIGHT, total)
-		r_moves_left -= 1
+		if not bonus_move:
+			r_moves_left -= 1
 		if r_moves_left <= 0:
 			current_player = LEFT
 			current_round += 1
