@@ -76,15 +76,19 @@ func _spawn_flying_gem(from: Vector2, target: PassiveStack, data: PassiveStackDa
 	icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	icon.size = Vector2(48, 48)
 	get_parent().add_child(icon)
-	icon.global_position = from - icon.size * 0.5
 
-	var target_center := target.global_position + target.size * 0.5
+	var p0 := from - icon.size * 0.5
+	var p2 := target.global_position + target.size * 0.5 - icon.size * 0.5
+	var arc := clampf(p0.distance_to(p2) * 0.35, 120.0, 300.0)
+	var p1 := (p0 + p2) * 0.5 + Vector2(0.0, -arc)
+
+	icon.global_position = p0
 	var tween := create_tween()
-	tween.set_ease(Tween.EASE_IN_OUT)
-	tween.set_trans(Tween.TRANS_QUAD)
-	tween.tween_property(icon, "global_position", target_center - icon.size * 0.5, 0.4)
-	tween.parallel().tween_property(icon, "scale", Vector2(0.3, 0.3), 0.4)
-	tween.tween_property(icon, "scale", Vector2(0.0, 0.0), 0.08)
+	tween.tween_method(func(t: float) -> void:
+		var u := 1.0 - t
+		icon.global_position = u * u * p0 + 2.0 * u * t * p1 + t * t * p2
+	, 0.0, 1.0, 0.65)
+	tween.tween_property(icon, "scale", Vector2(0.0, 0.0), 0.07)
 	tween.tween_callback(func() -> void:
 		icon.queue_free()
 		_manager.charge_passive_one(player)
