@@ -31,6 +31,9 @@ func _ready() -> void:
 	_board.move_completed.connect(_on_move_completed)
 	l_passive_gem_type = randi() % 5
 	r_passive_gem_type = randi() % 5
+	call_deferred("_emit_initial_state")
+
+func _emit_initial_state() -> void:
 	passive_types_assigned.emit(l_passive_gem_type, r_passive_gem_type)
 	score_updated.emit(l_score, r_score)
 	turns_updated.emit(l_moves_left, r_moves_left, current_player, current_round)
