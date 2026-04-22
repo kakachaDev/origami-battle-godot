@@ -18,6 +18,12 @@
 [ext_resource type="PackedScene" uid="uid://cscoreline001" path="res://Assets/Prefabs/ScoreLine.tscn" id="28_scln1"]
 [ext_resource type="Script" uid="uid://cgameboard01a" path="res://Assets/Scripts/GameBoard.gd" id="30_gboard"]
 [ext_resource type="Script" uid="uid://cgamemgr01" path="res://Assets/Scripts/GameManager.gd" id="40_gamemgr"]
+[ext_resource type="Script" path="res://Assets/Scripts/PassiveStackData.gd" id="40_psdata"]
+[ext_resource type="Resource" uid="uid://dpassred0001a" path="res://Assets/Resources/PassiveStacks/Red.tres" id="41_psred"]
+[ext_resource type="Resource" uid="uid://dpassblue001a" path="res://Assets/Resources/PassiveStacks/Blue.tres" id="42_psblue"]
+[ext_resource type="Resource" uid="uid://dpassgreen01a" path="res://Assets/Resources/PassiveStacks/Green.tres" id="43_psgreen"]
+[ext_resource type="Resource" uid="uid://dpasspink001a" path="res://Assets/Resources/PassiveStacks/Pink.tres" id="44_pspink"]
+[ext_resource type="Resource" uid="uid://dpassbnana01a" path="res://Assets/Resources/PassiveStacks/Banana.tres" id="45_psbanana"]
 [ext_resource type="Resource" uid="uid://dgemred00001a" path="res://Assets/Resources/Gems/Red.tres" id="31_gemred"]
 [ext_resource type="Resource" uid="uid://dgemblue0001a" path="res://Assets/Resources/Gems/Blue.tres" id="32_gemblue"]
 [ext_resource type="Resource" uid="uid://dgemgreen001a" path="res://Assets/Resources/Gems/Green.tres" id="33_gemgreen"]
@@ -66,6 +72,7 @@ size_flags_vertical = 4
 
 [node name="GameManager" type="Node" parent="." unique_id=999888777]
 script = ExtResource("40_gamemgr")
+passive_stack_resources = Array[ExtResource("40_psdata")]([ExtResource("41_psred"), ExtResource("42_psblue"), ExtResource("43_psgreen"), ExtResource("44_pspink"), ExtResource("45_psbanana")])
 
 [node name="background" type="TextureRect" parent="." unique_id=1639237445]
 visible = false
@@ -418,8 +425,6 @@ offset_top = -26.041016
 offset_right = 128.15997
 offset_bottom = 25.958984
 grow_vertical = 0
-max_count = 3
-current_count = 3
 max_spacing = 16.0
 
 [node name="R_PassiveStack" parent="HotBar" unique_id=21262380 instance=ExtResource("12_pssv1")]
@@ -435,7 +440,6 @@ offset_right = 121.91992
 offset_bottom = 25.958984
 grow_horizontal = 0
 grow_vertical = 0
-current_count = 5
 
 [node name="L_AddScore" type="TextureRect" parent="HotBar" unique_id=272467169]
 layout_mode = 1

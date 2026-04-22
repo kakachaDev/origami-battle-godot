@@ -19,7 +19,7 @@ var _cells: Array  # Array[Array[GemCell]]
 var _drag_from: Vector2i = Vector2i(-1, -1)
 var _busy := false
 
-signal move_completed(gems_destroyed: int)
+signal move_completed(gems_by_type: Dictionary)
 
 func _ready() -> void:
 	_board = BoardState.new()
@@ -89,12 +89,17 @@ func _do_swap(pos_a: Vector2i, pos_b: Vector2i) -> void:
 	else:
 		_cells[pos_a.x][pos_a.y] = cell_b
 		_cells[pos_b.x][pos_b.y] = cell_a
-		var total := await _resolve_matches(matches)
-		move_completed.emit(total)
+		var type_counts := await _resolve_matches(matches)
+		move_completed.emit(type_counts)
 
 	_busy = false
 
-func _resolve_matches(matches: Array[Vector2i]) -> int:
+func _resolve_matches(matches: Array[Vector2i]) -> Dictionary:
+	var type_counts: Dictionary = {}
+	for pos in matches:
+		var t := _board.get_gem(pos.x, pos.y)
+		type_counts[t] = type_counts.get(t, 0) + 1
+
 	var pool: Array[GemCell] = []
 	for pos in matches:
 		pool.append(_cells[pos.x][pos.y])
@@ -159,7 +164,8 @@ func _resolve_matches(matches: Array[Vector2i]) -> int:
 	await _animator.animate_fall(all_entries)
 
 	var cascade := _board.find_matches()
-	var cascade_count := 0
 	if not cascade.is_empty():
-		cascade_count = await _resolve_matches(cascade)
-	return matches.size() + cascade_count
+		var cascade_counts := await _resolve_matches(cascade)
+		for k in cascade_counts:
+			type_counts[k] = type_counts.get(k, 0) + cascade_counts[k]
+	return type_counts
