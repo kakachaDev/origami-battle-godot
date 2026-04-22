@@ -20,6 +20,7 @@ var _drag_from: Vector2i = Vector2i(-1, -1)
 var _busy := false
 
 signal move_completed(gems_by_type: Dictionary)
+signal gems_about_to_destroy(gem_infos: Array)
 
 func _ready() -> void:
 	_board = BoardState.new()
@@ -96,9 +97,15 @@ func _do_swap(pos_a: Vector2i, pos_b: Vector2i) -> void:
 
 func _resolve_matches(matches: Array[Vector2i]) -> Dictionary:
 	var type_counts: Dictionary = {}
+	var gem_infos: Array = []
 	for pos in matches:
 		var t := _board.get_gem(pos.x, pos.y)
 		type_counts[t] = type_counts.get(t, 0) + 1
+		gem_infos.append({
+			"gem_type": t,
+			"world_pos": global_position + _cell_pos(pos.x, pos.y) + Vector2(CELL_SIZE * 0.5, CELL_SIZE * 0.5)
+		})
+	gems_about_to_destroy.emit(gem_infos)
 
 	var pool: Array[GemCell] = []
 	for pos in matches:
