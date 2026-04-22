@@ -14,11 +14,14 @@ config/name="Origami Battle"
 run/main_scene="uid://cxuu2uajmap7n"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 config/icon="uid://wxul8g6hsc2v"
+run/max_fps=60
 
 [display]
 
 window/size/viewport_width=1080
 window/size/viewport_height=1920
+window/size/viewport_width.web=540
+window/size/viewport_height.web=960
 window/stretch/mode="canvas_items"
 window/stretch/aspect="keep_height"
 
@@ -31,3 +34,5 @@ window/stretch/aspect="keep_height"
 rendering_device/driver.windows="d3d12"
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+2d/snap/snap_2d_transforms_to_pixel=true
+2d/snap/snap_2d_vertices_to_pixel=true
