@@ -23,7 +23,7 @@ window/size/viewport_height=1920
 window/size/viewport_width.web=540
 window/size/viewport_height.web=960
 window/stretch/mode="canvas_items"
-window/stretch/aspect="keep_height"
+window/stretch/aspect="expand"
 
 [physics]
 
