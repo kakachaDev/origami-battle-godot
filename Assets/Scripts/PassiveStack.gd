@@ -35,6 +35,7 @@ class_name PassiveStack
 
 var _slots: Array[Control] = []
 var _skip_update := false
+var _slot_tweens: Dictionary = {}  # slot index → Tween
 
 func _ready() -> void:
 	_rebuild()
@@ -132,7 +133,10 @@ func set_count_animated(new_count: int) -> void:
 		var fg := _slots[i].get_node("Fg") as TextureRect
 		if fg == null:
 			continue
+		if _slot_tweens.has(i) and is_instance_valid(_slot_tweens[i]):
+			_slot_tweens[i].kill()
 		var tween := create_tween()
+		_slot_tweens[i] = tween
 		if now:
 			fg.scale = Vector2.ZERO
 			tween.tween_property(fg, "scale", Vector2(1.2, 1.2), 0.12)
