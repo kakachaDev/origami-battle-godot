@@ -57,9 +57,9 @@ func _on_passive_types_assigned(l_gem_type: int, r_gem_type: int) -> void:
 
 func _on_passive_charge_updated(player: int, charge: int) -> void:
 	if player == GameManager.LEFT:
-		_l_passive.current_count = charge
+		_l_passive.set_count_animated(charge)
 	else:
-		_r_passive.current_count = charge
+		_r_passive.set_count_animated(charge)
 
 func _on_gems_about_to_destroy(gem_infos: Array) -> void:
 	for info in gem_infos:
@@ -78,16 +78,20 @@ func _spawn_flying_gem(from: Vector2, target: PassiveStack, data: PassiveStackDa
 	get_parent().add_child(icon)
 
 	var p0 := from - icon.size * 0.5
-	var p2 := target.global_position + target.size * 0.5 - icon.size * 0.5
-	var arc := clampf(p0.distance_to(p2) * 0.35, 120.0, 300.0)
-	var p1 := (p0 + p2) * 0.5 + Vector2(0.0, -arc)
+	var p3 := target.global_position + target.size * 0.5 - icon.size * 0.5
+	var dist := p0.distance_to(p3)
+	# сначала отлетает в сторону и вниз, потом кривая к пассивке
+	var away := -signf((p3 - p0).x)
+	if is_zero_approx(away): away = 1.0
+	var p1 := p0 + Vector2(away * clampf(dist * 0.35, 80.0, 220.0), clampf(dist * 0.3, 100.0, 260.0))
+	var p2 := p3 + Vector2(away * 50.0, -80.0)
 
 	icon.global_position = p0
 	var tween := create_tween()
 	tween.tween_method(func(t: float) -> void:
 		var u := 1.0 - t
-		icon.global_position = u * u * p0 + 2.0 * u * t * p1 + t * t * p2
-	, 0.0, 1.0, 0.65)
+		icon.global_position = u*u*u*p0 + 3.0*u*u*t*p1 + 3.0*u*t*t*p2 + t*t*t*p3
+	, 0.0, 1.0, 0.7)
 	tween.tween_property(icon, "scale", Vector2(0.0, 0.0), 0.07)
 	tween.tween_callback(func() -> void:
 		icon.queue_free()
