@@ -18,6 +18,7 @@
 [ext_resource type="PackedScene" uid="uid://cscoreline001" path="res://Assets/Prefabs/ScoreLine.tscn" id="28_scln1"]
 [ext_resource type="Script" uid="uid://cgameboard01a" path="res://Assets/Scripts/GameBoard.gd" id="30_gboard"]
 [ext_resource type="Script" uid="uid://cgamemgr01" path="res://Assets/Scripts/GameManager.gd" id="40_gamemgr"]
+[ext_resource type="Script" uid="uid://cgameui001" path="res://Assets/Scripts/GameUI.gd" id="41_gameui"]
 [ext_resource type="Script" path="res://Assets/Scripts/PassiveStackData.gd" id="40_psdata"]
 [ext_resource type="Resource" uid="uid://dpassred0001a" path="res://Assets/Resources/PassiveStacks/Red.tres" id="41_psred"]
 [ext_resource type="Resource" uid="uid://dpassblue001a" path="res://Assets/Resources/PassiveStacks/Blue.tres" id="42_psblue"]
@@ -72,6 +73,9 @@ size_flags_vertical = 4
 
 [node name="GameManager" type="Node" parent="." unique_id=999888777]
 script = ExtResource("40_gamemgr")
+
+[node name="GameUI" type="Node" parent="." unique_id=999888778]
+script = ExtResource("41_gameui")
 passive_stack_resources = Array[ExtResource("40_psdata")]([ExtResource("41_psred"), ExtResource("42_psblue"), ExtResource("43_psgreen"), ExtResource("44_pspink"), ExtResource("45_psbanana")])
 
 [node name="background" type="TextureRect" parent="." unique_id=1639237445]
