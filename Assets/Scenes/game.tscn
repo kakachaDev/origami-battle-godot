@@ -17,6 +17,7 @@
 [ext_resource type="PackedScene" uid="uid://8nhbmbocunoe" path="res://Assets/Prefabs/ActiveSkillBase.tscn" id="27_absk1"]
 [ext_resource type="PackedScene" uid="uid://cscoreline001" path="res://Assets/Prefabs/ScoreLine.tscn" id="28_scln1"]
 [ext_resource type="Script" uid="uid://cgameboard01a" path="res://Assets/Scripts/GameBoard.gd" id="30_gboard"]
+[ext_resource type="Script" uid="uid://cgamemgr01" path="res://Assets/Scripts/GameManager.gd" id="40_gamemgr"]
 [ext_resource type="Resource" uid="uid://dgemred00001a" path="res://Assets/Resources/Gems/Red.tres" id="31_gemred"]
 [ext_resource type="Resource" uid="uid://dgemblue0001a" path="res://Assets/Resources/Gems/Blue.tres" id="32_gemblue"]
 [ext_resource type="Resource" uid="uid://dgemgreen001a" path="res://Assets/Resources/Gems/Green.tres" id="33_gemgreen"]
@@ -62,6 +63,9 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+
+[node name="GameManager" type="Node" parent="." unique_id=999888777]
+script = ExtResource("40_gamemgr")
 
 [node name="background" type="TextureRect" parent="." unique_id=1639237445]
 visible = false
@@ -357,7 +361,7 @@ theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 24
 theme_override_fonts/font = ExtResource("11_8lgte")
 theme_override_font_sizes/font_size = 64
-text = "9999"
+text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -379,7 +383,7 @@ theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 24
 theme_override_fonts/font = ExtResource("11_8lgte")
 theme_override_font_sizes/font_size = 64
-text = "9999"
+text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -398,7 +402,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(0.12941177, 0.09411765, 0.05490196, 1)
 theme_override_font_sizes/font_size = 41
-text = "Round 3/4"
+text = "Round 1"
 horizontal_alignment = 1
 vertical_alignment = 1
 
