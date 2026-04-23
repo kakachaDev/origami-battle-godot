@@ -307,8 +307,9 @@ func expand_bomb_chain(initial: Array[Vector2i]) -> Array[Vector2i]:
 			new_positions = get_bomb_ud_positions(pos.y)
 		for np in new_positions:
 			if not to_destroy.has(np):
-				to_destroy[np] = true
-				frontier.append(np)
+				if grid[np.x][np.y] != APPLEBOMB_TYPE:
+					to_destroy[np] = true
+					frontier.append(np)
 	var result: Array[Vector2i] = []
 	for pos in to_destroy:
 		result.append(pos)

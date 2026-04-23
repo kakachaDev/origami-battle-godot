@@ -121,23 +121,25 @@ func _do_swap(pos_a: Vector2i, pos_b: Vector2i) -> void:
 		if is_apple_a and is_apple_b:
 			to_destroy = _board.get_all_positions()
 		elif is_apple_a and has_mod_b:
-			var mod_pos: Array[Vector2i] = _get_bomb_positions(pos_b, mod_b)
 			var type_pos := _board.get_all_positions_of_type(gem_b)
-			var combined: Dictionary = {}
-			for p in mod_pos: combined[p] = true
-			for p in type_pos: combined[p] = true
-			for p in combined: to_destroy.append(p)
+			for p in type_pos:
+				_board.set_modifier(p.x, p.y, mod_b)
+				_apply_cell_state(_cells[p.x][p.y], p)
+			to_destroy.append_array(type_pos)
+			to_destroy.append(pos_a)
 		elif is_apple_b and has_mod_a:
-			var mod_pos: Array[Vector2i] = _get_bomb_positions(pos_a, mod_a)
 			var type_pos := _board.get_all_positions_of_type(gem_a)
-			var combined: Dictionary = {}
-			for p in mod_pos: combined[p] = true
-			for p in type_pos: combined[p] = true
-			for p in combined: to_destroy.append(p)
+			for p in type_pos:
+				_board.set_modifier(p.x, p.y, mod_a)
+				_apply_cell_state(_cells[p.x][p.y], p)
+			to_destroy.append_array(type_pos)
+			to_destroy.append(pos_b)
 		elif is_apple_a:
 			to_destroy = _board.get_all_positions_of_type(gem_b)
+			to_destroy.append(pos_a)
 		elif is_apple_b:
 			to_destroy = _board.get_all_positions_of_type(gem_a)
+			to_destroy.append(pos_b)
 		else:
 			# has_mod_a and has_mod_b
 			var combined: Dictionary = {}
