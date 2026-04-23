@@ -24,6 +24,7 @@ signal player_scored(player: int, amount: int)
 signal turns_updated(l_moves: int, r_moves: int, player: int, round: int)
 signal passive_types_assigned(l_gem_type: int, r_gem_type: int)
 signal passive_charge_updated(player: int, charge: int)
+signal passive_fired(player: int)
 
 @onready var _board: GameBoard = $"../GameField/Gems"
 
@@ -68,9 +69,11 @@ func charge_passive_one(player: int) -> void:
 		l_passive_charge += 1
 		if l_passive_charge >= PASSIVE_CHARGE_MAX:
 			l_passive_charge -= PASSIVE_CHARGE_MAX
+			passive_fired.emit(LEFT)
 		passive_charge_updated.emit(LEFT, l_passive_charge)
 	else:
 		r_passive_charge += 1
 		if r_passive_charge >= PASSIVE_CHARGE_MAX:
 			r_passive_charge -= PASSIVE_CHARGE_MAX
+			passive_fired.emit(RIGHT)
 		passive_charge_updated.emit(RIGHT, r_passive_charge)

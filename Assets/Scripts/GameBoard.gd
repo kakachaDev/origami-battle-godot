@@ -209,10 +209,23 @@ func _expand_bomb_chain(initial: Array[Vector2i]) -> Array[Vector2i]:
 		result.append(pos)
 	return result
 
-func execute_effect(targets: Array[Vector2i]) -> void:
+func get_cell_world_center(row: int, col: int) -> Vector2:
+	return global_position + Vector2(START_X + col * CELL_STEP + CELL_SIZE * 0.5, START_Y + row * CELL_STEP + CELL_SIZE * 0.5)
+
+func execute_effect(effect: GemEffect, origin: Vector2i = Vector2i(-1, -1), other: Vector2i = Vector2i(-1, -1)) -> void:
+	if _busy:
+		await move_completed
+	_busy = true
+	effect.apply_to_board(_board, origin, other)
+	for row in BoardState.ROWS:
+		for col in BoardState.COLS:
+			if _cells[row][col] != null:
+				_apply_cell_state(_cells[row][col], Vector2i(row, col))
+	var targets := effect.get_targets(_board, origin, other)
 	if not targets.is_empty():
 		await _resolve_destruction(targets)
-		move_completed.emit({})
+	move_completed.emit({})
+	_busy = false
 
 # Shared destroy pipeline used by special swaps (no spawn logic).
 func _resolve_destruction(positions: Array[Vector2i]) -> Dictionary:

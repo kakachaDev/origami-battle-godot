@@ -2,6 +2,8 @@ extends Node
 class_name GameUI
 
 @export var passive_stack_resources: Array[PassiveStackData] = []
+@export var l_passive_effect: Resource  # GemEffect
+@export var r_passive_effect: Resource  # GemEffect
 
 @onready var _manager: GameManager = $"../GameManager"
 @onready var _board: GameBoard = $"../GameField/Gems"
@@ -22,6 +24,7 @@ func _ready() -> void:
 	_manager.turns_updated.connect(_on_turns_updated)
 	_manager.passive_types_assigned.connect(_on_passive_types_assigned)
 	_manager.passive_charge_updated.connect(_on_passive_charge_updated)
+	_manager.passive_fired.connect(_on_passive_fired)
 	_board.gems_about_to_destroy.connect(_on_gems_about_to_destroy)
 	_l_add_score.visible = false
 	_r_add_score.visible = false
@@ -96,6 +99,46 @@ func _spawn_flying_gem(from: Vector2, target: PassiveStack, data: PassiveStackDa
 	tween.tween_callback(func() -> void:
 		icon.queue_free()
 		_manager.charge_passive_one(player)
+	)
+
+func _on_passive_fired(player: int) -> void:
+	var effect := (l_passive_effect if player == GameManager.LEFT else r_passive_effect) as GemEffect
+	if not effect:
+		return
+	var passive_node := _l_passive if player == GameManager.LEFT else _r_passive
+	var data: PassiveStackData = passive_node.stack_data
+	if not data:
+		return
+	var center_row := BoardState.ROWS / 2
+	var center_col := BoardState.COLS / 2
+	var target_world := _board.get_cell_world_center(center_row, center_col)
+	_spawn_passive_to_board(passive_node, data, target_world, effect, Vector2i(center_row, center_col))
+
+func _spawn_passive_to_board(source: PassiveStack, data: PassiveStackData, target: Vector2, effect: GemEffect, origin: Vector2i) -> void:
+	var icon := TextureRect.new()
+	icon.texture = data.sprite_active
+	icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	icon.size = Vector2(48, 48)
+	get_parent().add_child(icon)
+
+	var p0 := source.global_position + source.size * 0.5 - icon.size * 0.5
+	var p3 := target - icon.size * 0.5
+	var dist := p0.distance_to(p3)
+	var away := signf((p3 - p0).x)
+	if is_zero_approx(away): away = 1.0
+	var p1 := p0 + Vector2(away * clampf(dist * 0.35, 80.0, 220.0), -clampf(dist * 0.3, 100.0, 260.0))
+	var p2 := p3 + Vector2(-away * 50.0, -80.0)
+
+	icon.global_position = p0
+	var tween := create_tween()
+	tween.tween_method(func(t: float) -> void:
+		var u := 1.0 - t
+		icon.global_position = u*u*u*p0 + 3.0*u*u*t*p1 + 3.0*u*t*t*p2 + t*t*t*p3
+	, 0.0, 1.0, 0.7)
+	tween.tween_property(icon, "scale", Vector2(0.0, 0.0), 0.07)
+	tween.tween_callback(func() -> void:
+		icon.queue_free()
+		_board.execute_effect(effect, origin, Vector2i(-1, -1))
 	)
 
 func _show_add_score(node: TextureRect, amount: int) -> void:
