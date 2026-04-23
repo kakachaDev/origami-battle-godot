@@ -121,6 +121,7 @@ func _do_swap(pos_a: Vector2i, pos_b: Vector2i) -> void:
 		if is_apple_a and is_apple_b:
 			to_destroy = _board.get_all_positions()
 		elif is_apple_a and has_mod_b:
+			# Applebomb + modifier: spread modifier to all gems of that type, then destroy
 			var type_pos := _board.get_all_positions_of_type(gem_b)
 			for p in type_pos:
 				_board.set_modifier(p.x, p.y, mod_b)
@@ -134,12 +135,12 @@ func _do_swap(pos_a: Vector2i, pos_b: Vector2i) -> void:
 				_apply_cell_state(_cells[p.x][p.y], p)
 			to_destroy.append_array(type_pos)
 			to_destroy.append(pos_b)
-		elif is_apple_a:
-			to_destroy = _board.get_all_positions_of_type(gem_b)
-			to_destroy.append(pos_a)
-		elif is_apple_b:
-			to_destroy = _board.get_all_positions_of_type(gem_a)
-			to_destroy.append(pos_b)
+		elif is_apple_a or is_apple_b:
+			var apple_pos := pos_a if is_apple_a else pos_b
+			var other_pos := pos_b if is_apple_a else pos_a
+			var effect := APPLEBOMB_RES.activation_effect as GemEffect
+			if effect:
+				to_destroy = effect.get_targets(_board, apple_pos, other_pos)
 		else:
 			# has_mod_a and has_mod_b
 			var combined: Dictionary = {}
@@ -147,7 +148,7 @@ func _do_swap(pos_a: Vector2i, pos_b: Vector2i) -> void:
 			for p in _get_bomb_positions(pos_b, mod_b): combined[p] = true
 			for p in combined: to_destroy.append(p)
 
-		var final_destroy := _board.expand_bomb_chain(to_destroy)
+		var final_destroy := _expand_bomb_chain(to_destroy)
 		var type_counts := await _resolve_destruction(final_destroy)
 		move_completed.emit(type_counts)
 	else:
@@ -163,12 +164,55 @@ func _do_swap(pos_a: Vector2i, pos_b: Vector2i) -> void:
 
 	_busy = false
 
+func _get_modifier_resource(mod: int) -> ModifierData:
+	match mod:
+		BoardState.MOD_BOMB_LR: return MOD_BOMB_LR_RES
+		BoardState.MOD_BOMB_UD: return MOD_BOMB_UD_RES
+	return null
+
 func _get_bomb_positions(pos: Vector2i, mod: int) -> Array[Vector2i]:
-	if mod == BoardState.MOD_BOMB_LR:
-		return _board.get_bomb_lr_positions(pos.x)
-	elif mod == BoardState.MOD_BOMB_UD:
-		return _board.get_bomb_ud_positions(pos.y)
+	var mod_res := _get_modifier_resource(mod)
+	if not mod_res:
+		return []
+	var effect := mod_res.effect as GemEffect
+	if effect:
+		return effect.get_targets(_board, pos, Vector2i(-1, -1))
 	return []
+
+func _expand_bomb_chain(initial: Array[Vector2i]) -> Array[Vector2i]:
+	var to_destroy: Dictionary = {}
+	var frontier: Array[Vector2i] = []
+	for pos in initial:
+		if not to_destroy.has(pos):
+			to_destroy[pos] = true
+			frontier.append(pos)
+	var i := 0
+	while i < frontier.size():
+		var pos: Vector2i = frontier[i]
+		i += 1
+		var mod: int = _board.get_modifier(pos.x, pos.y)
+		if mod == BoardState.MOD_NONE:
+			continue
+		var mod_res := _get_modifier_resource(mod)
+		if not mod_res:
+			continue
+		var effect := mod_res.effect as GemEffect
+		if not effect:
+			continue
+		var extras := effect.get_targets(_board, pos, Vector2i(-1, -1))
+		for np in extras:
+			if not to_destroy.has(np) and _board.get_gem(np.x, np.y) != BoardState.APPLEBOMB_TYPE:
+				to_destroy[np] = true
+				frontier.append(np)
+	var result: Array[Vector2i] = []
+	for pos in to_destroy:
+		result.append(pos)
+	return result
+
+func execute_effect(targets: Array[Vector2i]) -> void:
+	if not targets.is_empty():
+		await _resolve_destruction(targets)
+		move_completed.emit({})
 
 # Shared destroy pipeline used by special swaps (no spawn logic).
 func _resolve_destruction(positions: Array[Vector2i]) -> Dictionary:
@@ -229,7 +273,7 @@ func _resolve_matches(matches: Array[Vector2i]) -> Dictionary:
 		spawn_pos_set[sp] = true
 
 	# Expand bomb chains from matched positions
-	var final_destroy := _board.expand_bomb_chain(matches)
+	var final_destroy := _expand_bomb_chain(matches)
 
 	# Emit signal
 	var type_counts: Dictionary = {}

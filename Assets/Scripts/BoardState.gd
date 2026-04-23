@@ -286,31 +286,3 @@ func get_all_positions() -> Array[Vector2i]:
 			if grid[row][col] != -1:
 				result.append(Vector2i(row, col))
 	return result
-
-# Expands destroy set by following bomb chains. Call BEFORE clear_matches.
-func expand_bomb_chain(initial: Array[Vector2i]) -> Array[Vector2i]:
-	var to_destroy: Dictionary = {}
-	var frontier: Array[Vector2i] = []
-	for pos in initial:
-		if not to_destroy.has(pos):
-			to_destroy[pos] = true
-			frontier.append(pos)
-	var i := 0
-	while i < frontier.size():
-		var pos: Vector2i = frontier[i]
-		i += 1
-		var mod: int = modifier_grid[pos.x][pos.y]
-		var new_positions: Array[Vector2i] = []
-		if mod == MOD_BOMB_LR:
-			new_positions = get_bomb_lr_positions(pos.x)
-		elif mod == MOD_BOMB_UD:
-			new_positions = get_bomb_ud_positions(pos.y)
-		for np in new_positions:
-			if not to_destroy.has(np):
-				if grid[np.x][np.y] != APPLEBOMB_TYPE:
-					to_destroy[np] = true
-					frontier.append(np)
-	var result: Array[Vector2i] = []
-	for pos in to_destroy:
-		result.append(pos)
-	return result

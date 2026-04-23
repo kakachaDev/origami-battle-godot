@@ -7,3 +7,4 @@ class_name GemData
 @export var sprite_modified: Texture2D
 ## True for Applebomb (wildcard gem): has no _modified state, cannot have a modifier applied
 @export var is_multicolor: bool = false
+@export var activation_effect: Resource  # GemEffect

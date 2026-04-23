@@ -1,9 +1,11 @@
-[gd_resource type="Resource" load_steps=2 format=3 uid="uid://dmodbud00001a"]
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://dmodbud00001a"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/ModifierData.gd" id="1_script"]
 [ext_resource type="Texture2D" uid="uid://cjl5jmo5tjm65" path="res://Assets/Sprites/Modificators/Bomb_UpDown.png" id="2_sprite"]
+[ext_resource type="Resource" uid="uid://effdestcol0001" path="res://Assets/Resources/Effects/DestroyColumn.tres" id="3_effect"]
 
 [resource]
 script = ExtResource("1_script")
 modifier_name = "BombUpDown"
 sprite = ExtResource("2_sprite")
+effect = ExtResource("3_effect")
