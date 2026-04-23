@@ -146,11 +146,11 @@ func find_match_groups() -> Array:
 	for pos in pos_to_runs:
 		var indices: Array = pos_to_runs[pos]
 		if indices.size() > 1:
-			var root_a := indices[0]
+			var root_a: int = indices[0]
 			while parent[root_a] != root_a:
 				root_a = parent[root_a]
 			for i in range(1, indices.size()):
-				var root_b := indices[i]
+				var root_b: int = indices[i]
 				while parent[root_b] != root_b:
 					root_b = parent[root_b]
 				if root_a != root_b:
@@ -164,7 +164,7 @@ func find_match_groups() -> Array:
 
 	var root_to_runs: Dictionary = {}
 	for i in raw_runs.size():
-		var root := parent[i]
+		var root: int = parent[i]
 		if not root_to_runs.has(root):
 			root_to_runs[root] = []
 		root_to_runs[root].append(i)
@@ -219,7 +219,7 @@ func find_match_groups() -> Array:
 						longest_run = raw_runs[ri].positions
 				spawn_pos = longest_run[longest_run.size() / 2]
 		elif total == 4:
-			var run := raw_runs[run_indices[0]]
+			var run: Dictionary = raw_runs[run_indices[0]]
 			spawn_pos = run.positions[run.positions.size() / 2]
 			spawn_type = SPAWN_BOMB_LR if run.dir == "H" else SPAWN_BOMB_UD
 
@@ -299,7 +299,7 @@ func expand_bomb_chain(initial: Array[Vector2i]) -> Array[Vector2i]:
 	while i < frontier.size():
 		var pos: Vector2i = frontier[i]
 		i += 1
-		var mod := modifier_grid[pos.x][pos.y]
+		var mod: int = modifier_grid[pos.x][pos.y]
 		var new_positions: Array[Vector2i] = []
 		if mod == MOD_BOMB_LR:
 			new_positions = get_bomb_lr_positions(pos.x)
