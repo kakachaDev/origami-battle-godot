@@ -79,8 +79,6 @@ script = ExtResource("40_gamemgr")
 [node name="GameUI" type="Node" parent="." unique_id=999888778]
 script = ExtResource("41_gameui")
 passive_stack_resources = Array[ExtResource("40_psdata")]([ExtResource("41_psred"), ExtResource("42_psblue"), ExtResource("43_psgreen"), ExtResource("44_pspink"), ExtResource("45_psbanana")])
-l_passive_effect = ExtResource("50_eff3x3")
-r_passive_effect = ExtResource("51_effmod")
 
 [node name="background" type="TextureRect" parent="." unique_id=1639237445]
 visible = false
@@ -123,6 +121,8 @@ offset_bottom = 1180.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_ttsg4")
 script = ExtResource("30_gboard")
 gem_resources = Array[ExtResource("4_gvrie")]([ExtResource("31_gemred"), ExtResource("32_gemblue"), ExtResource("33_gemgreen"), ExtResource("34_gempink"), ExtResource("35_gembanana")])
+l_passive_effect = ExtResource("50_eff3x3")
+r_passive_effect = ExtResource("51_effmod")
 
 [node name="TopMenu" type="Control" parent="." unique_id=1172136226]
 layout_mode = 1

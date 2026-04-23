@@ -24,20 +24,29 @@ signal player_scored(player: int, amount: int)
 signal turns_updated(l_moves: int, r_moves: int, player: int, round: int)
 signal passive_types_assigned(l_gem_type: int, r_gem_type: int)
 signal passive_charge_updated(player: int, charge: int)
-signal passive_fired(player: int)
 
 @onready var _board: GameBoard = $"../GameField/Gems"
 
 func _ready() -> void:
 	_board.move_completed.connect(_on_move_completed)
+	_board.passive_charged.connect(_on_passive_charged)
 	l_passive_gem_type = randi() % 5
 	r_passive_gem_type = randi() % 5
 	call_deferred("_emit_initial_state")
 
 func _emit_initial_state() -> void:
+	_board.configure_passive(l_passive_gem_type, r_passive_gem_type)
+	_board.set_current_player(current_player)
 	passive_types_assigned.emit(l_passive_gem_type, r_passive_gem_type)
 	score_updated.emit(l_score, r_score)
 	turns_updated.emit(l_moves_left, r_moves_left, current_player, current_round)
+
+func _on_passive_charged(player: int, charge: int, _world_pos: Vector2) -> void:
+	if player == LEFT:
+		l_passive_charge = charge
+	else:
+		r_passive_charge = charge
+	passive_charge_updated.emit(player, charge)
 
 func _on_move_completed(gems_by_type: Dictionary) -> void:
 	var total := 0
@@ -63,17 +72,4 @@ func _on_move_completed(gems_by_type: Dictionary) -> void:
 			r_moves_left = MOVES_PER_TURN
 	score_updated.emit(l_score, r_score)
 	turns_updated.emit(l_moves_left, r_moves_left, current_player, current_round)
-
-func charge_passive_one(player: int) -> void:
-	if player == LEFT:
-		l_passive_charge += 1
-		if l_passive_charge >= PASSIVE_CHARGE_MAX:
-			l_passive_charge -= PASSIVE_CHARGE_MAX
-			passive_fired.emit(LEFT)
-		passive_charge_updated.emit(LEFT, l_passive_charge)
-	else:
-		r_passive_charge += 1
-		if r_passive_charge >= PASSIVE_CHARGE_MAX:
-			r_passive_charge -= PASSIVE_CHARGE_MAX
-			passive_fired.emit(RIGHT)
-		passive_charge_updated.emit(RIGHT, r_passive_charge)
+	_board.set_current_player(current_player)
