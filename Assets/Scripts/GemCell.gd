@@ -41,3 +41,8 @@ func _update_modifier() -> void:
 	else:
 		mod_node.visible = true
 		mod_node.texture = modifier_data.sprite
+		var tex_size := modifier_data.sprite.get_size()
+		mod_node.offset_left   = -tex_size.x * 0.5
+		mod_node.offset_right  =  tex_size.x * 0.5
+		mod_node.offset_top    = -tex_size.y * 0.5
+		mod_node.offset_bottom =  tex_size.y * 0.5
