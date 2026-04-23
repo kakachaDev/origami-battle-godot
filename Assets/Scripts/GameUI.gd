@@ -18,6 +18,9 @@ class_name GameUI
 @onready var _l_passive: PassiveStack = $"../HotBar/L_PassiveStack"
 @onready var _r_passive: PassiveStack = $"../HotBar/R_PassiveStack"
 
+# Suppresses passive charging during passive effect execution to avoid wrong-player charging.
+var _in_passive_effect := false
+
 func _ready() -> void:
 	_manager.score_updated.connect(_on_score_updated)
 	_manager.player_scored.connect(_on_player_scored)
@@ -26,6 +29,7 @@ func _ready() -> void:
 	_manager.passive_charge_updated.connect(_on_passive_charge_updated)
 	_manager.passive_fired.connect(_on_passive_fired)
 	_board.gems_about_to_destroy.connect(_on_gems_about_to_destroy)
+	_board.effect_completed.connect(_on_effect_completed)
 	_l_add_score.visible = false
 	_r_add_score.visible = false
 
@@ -65,15 +69,20 @@ func _on_passive_charge_updated(player: int, charge: int) -> void:
 		_r_passive.set_count_animated(charge)
 
 func _on_gems_about_to_destroy(gem_infos: Array) -> void:
+	if _in_passive_effect:
+		return
+	var player := _manager.current_player
 	for info in gem_infos:
 		var gem_type: int = info["gem_type"]
 		var world_pos: Vector2 = info["world_pos"]
-		if _manager.current_player == GameManager.LEFT and gem_type == _manager.l_passive_gem_type:
-			_spawn_flying_gem(world_pos, _l_passive, passive_stack_resources[gem_type], GameManager.LEFT)
-		elif _manager.current_player == GameManager.RIGHT and gem_type == _manager.r_passive_gem_type:
-			_spawn_flying_gem(world_pos, _r_passive, passive_stack_resources[gem_type], GameManager.RIGHT)
+		if player == GameManager.LEFT and gem_type == _manager.l_passive_gem_type:
+			_manager.charge_passive_one(GameManager.LEFT)
+			_spawn_flying_gem(world_pos, _l_passive, passive_stack_resources[gem_type])
+		elif player == GameManager.RIGHT and gem_type == _manager.r_passive_gem_type:
+			_manager.charge_passive_one(GameManager.RIGHT)
+			_spawn_flying_gem(world_pos, _r_passive, passive_stack_resources[gem_type])
 
-func _spawn_flying_gem(from: Vector2, target: PassiveStack, data: PassiveStackData, player: int) -> void:
+func _spawn_flying_gem(from: Vector2, target: PassiveStack, data: PassiveStackData) -> void:
 	var icon := TextureRect.new()
 	icon.texture = data.sprite_active
 	icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
@@ -83,7 +92,6 @@ func _spawn_flying_gem(from: Vector2, target: PassiveStack, data: PassiveStackDa
 	var p0 := from - icon.size * 0.5
 	var p3 := target.global_position + target.size * 0.5 - icon.size * 0.5
 	var dist := p0.distance_to(p3)
-	# сначала отлетает в сторону и вниз, потом кривая к пассивке
 	var away := -signf((p3 - p0).x)
 	if is_zero_approx(away): away = 1.0
 	var p1 := p0 + Vector2(away * clampf(dist * 0.35, 80.0, 220.0), clampf(dist * 0.3, 100.0, 260.0))
@@ -96,10 +104,7 @@ func _spawn_flying_gem(from: Vector2, target: PassiveStack, data: PassiveStackDa
 		icon.global_position = u*u*u*p0 + 3.0*u*u*t*p1 + 3.0*u*t*t*p2 + t*t*t*p3
 	, 0.0, 1.0, 0.7)
 	tween.tween_property(icon, "scale", Vector2(0.0, 0.0), 0.07)
-	tween.tween_callback(func() -> void:
-		icon.queue_free()
-		_manager.charge_passive_one(player)
-	)
+	tween.tween_callback(func() -> void: icon.queue_free())
 
 func _on_passive_fired(player: int) -> void:
 	var effect := (l_passive_effect if player == GameManager.LEFT else r_passive_effect) as GemEffect
@@ -138,8 +143,12 @@ func _spawn_passive_to_board(source: PassiveStack, data: PassiveStackData, targe
 	tween.tween_property(icon, "scale", Vector2(0.0, 0.0), 0.07)
 	tween.tween_callback(func() -> void:
 		icon.queue_free()
+		_in_passive_effect = true
 		_board.execute_effect(effect, origin, Vector2i(-1, -1))
 	)
+
+func _on_effect_completed() -> void:
+	_in_passive_effect = false
 
 func _show_add_score(node: TextureRect, amount: int) -> void:
 	var label := node.get_node("Count") as Label

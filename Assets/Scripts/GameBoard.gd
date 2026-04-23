@@ -25,6 +25,7 @@ var _busy := false
 
 signal move_completed(gems_by_type: Dictionary)
 signal gems_about_to_destroy(gem_infos: Array)
+signal effect_completed()
 
 func _ready() -> void:
 	_board = BoardState.new()
@@ -224,8 +225,8 @@ func execute_effect(effect: GemEffect, origin: Vector2i = Vector2i(-1, -1), othe
 	var targets := effect.get_targets(_board, origin, other)
 	if not targets.is_empty():
 		await _resolve_destruction(targets)
-	move_completed.emit({})
 	_busy = false
+	effect_completed.emit()
 
 # Shared destroy pipeline used by special swaps (no spawn logic).
 func _resolve_destruction(positions: Array[Vector2i]) -> Dictionary:
