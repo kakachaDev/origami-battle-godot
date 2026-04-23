@@ -244,11 +244,30 @@ func _simulate_wave(initial: Array[Vector2i], spawn_hosts: Dictionary, from_pass
 		var info = spawn_hosts[pos]
 		_board.place_gem(pos.x, pos.y, info.gem_type, info.mod)
 
-	# 7. Passive charge events (after destroy in queue)
+	# 7. Gravity
+	var falls := _board.apply_gravity()
+
+	# 8. Track where spawn hosts land after gravity
+	var spawn_final: Dictionary = {}
+	for pos in spawn_hosts:
+		spawn_final[pos] = pos
+	for fall in falls:
+		var from: Vector2i = fall.from
+		if spawn_final.has(from):
+			spawn_final[from] = fall.to
+
+	# 9. Fill empty
+	var new_gems := _board.fill_empty()
+
+	# 10. Fall event
+	_event_queue.append({"t": "fall", "falls": falls, "new_gems": new_gems,
+		"spawn_final": spawn_final, "spawn_hosts": spawn_hosts.duplicate()})
+
+	# 11. Passive charge events (after gems have fallen)
 	for ev in pending_charge_events:
 		_event_queue.append(ev)
 
-	# 8. Passive fire
+	# 12. Passive fire
 	if fired_player != -1:
 		var effect := (l_passive_effect if fired_player == 0 else r_passive_effect) as GemEffect
 		if effect:
@@ -258,7 +277,7 @@ func _simulate_wave(initial: Array[Vector2i], spawn_hosts: Dictionary, from_pass
 				_event_queue.append({"t": "passive_fire", "player": fired_player, "icon_targets": icon_targets})
 				var raw_passive := effect.get_targets(_board, center, Vector2i(-1, -1))
 				if not raw_passive.is_empty():
-					# Destruction effect: separate wave after the icon lands
+					# Destruction effect: destroy passive targets, then their own fall
 					var passive_destroy := _expand_bomb_chain(raw_passive)
 					var passive_infos: Array = []
 					for pos in passive_destroy:
@@ -269,32 +288,17 @@ func _simulate_wave(initial: Array[Vector2i], spawn_hosts: Dictionary, from_pass
 					_event_queue.append({"t": "destroy", "positions": passive_destroy.duplicate(),
 						"gem_infos": passive_infos, "spawn_hosts": {}})
 					_board.clear_matches(passive_destroy)
+					var p_falls := _board.apply_gravity()
+					var p_new := _board.fill_empty()
+					_event_queue.append({"t": "fall", "falls": p_falls, "new_gems": p_new,
+						"spawn_final": {}, "spawn_hosts": {}})
 				else:
-					# Modifier effect: apply mods to board now, emit modifier_set on landing
+					# Modifier effect: apply mods after icon lands (modifier_set events)
 					for icon_pos in icon_targets:
 						if _board.get_gem(icon_pos.x, icon_pos.y) != -1:
 							var mod := randi() % 2
 							_board.set_modifier(icon_pos.x, icon_pos.y, mod)
 							_event_queue.append({"t": "modifier_set", "pos": icon_pos, "mod": mod})
-
-	# 9. Gravity
-	var falls := _board.apply_gravity()
-
-	# 10. Track where spawn hosts land after gravity
-	var spawn_final: Dictionary = {}
-	for pos in spawn_hosts:
-		spawn_final[pos] = pos
-	for fall in falls:
-		var from: Vector2i = fall.from
-		if spawn_final.has(from):
-			spawn_final[from] = fall.to
-
-	# 11. Fill empty
-	var new_gems := _board.fill_empty()
-
-	# 12. Fall event
-	_event_queue.append({"t": "fall", "falls": falls, "new_gems": new_gems,
-		"spawn_final": spawn_final, "spawn_hosts": spawn_hosts.duplicate()})
 
 	# 13. Cascade
 	var cascade := _board.find_matches()
