@@ -72,7 +72,7 @@ func _on_passive_fire_requested(player: int, icon_targets: Array) -> void:
 	var passive_node := _l_passive if player == GameManager.LEFT else _r_passive
 	var data: PassiveStackData = passive_node.stack_data
 	if not data or icon_targets.is_empty():
-		_board.passive_fire_completed.emit()
+		_board.passive_fire_completed.emit.call_deferred()
 		return
 	var pending := [icon_targets.size()]
 	for target_pos in icon_targets:
