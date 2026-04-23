@@ -2,6 +2,9 @@
 class_name EffectDestroy3x3Center
 extends GemEffect
 
+func get_icon_targets(_board: BoardState, _origin: Vector2i) -> Array[Vector2i]:
+	return [Vector2i(BoardState.ROWS / 2, BoardState.COLS / 2)]
+
 func get_targets(board: BoardState, _origin: Vector2i, _other: Vector2i) -> Array[Vector2i]:
 	var center := Vector2i(BoardState.ROWS / 2, BoardState.COLS / 2)
 	var result: Array[Vector2i] = []

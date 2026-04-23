@@ -18,8 +18,9 @@ class_name GameUI
 @onready var _l_passive: PassiveStack = $"../HotBar/L_PassiveStack"
 @onready var _r_passive: PassiveStack = $"../HotBar/R_PassiveStack"
 
-# Suppresses passive charging during passive effect execution to avoid wrong-player charging.
-var _in_passive_effect := false
+# True while a passive effect is animating or executing — prevents double-fire
+# and suppresses passive charging from gems destroyed by the effect itself.
+var _passive_effect_active := false
 
 func _ready() -> void:
 	_manager.score_updated.connect(_on_score_updated)
@@ -69,7 +70,8 @@ func _on_passive_charge_updated(player: int, charge: int) -> void:
 		_r_passive.set_count_animated(charge)
 
 func _on_gems_about_to_destroy(gem_infos: Array) -> void:
-	if _in_passive_effect:
+	# Suppress passive charging while a passive effect is executing (avoid wrong-player charge).
+	if _passive_effect_active:
 		return
 	var player := _manager.current_player
 	for info in gem_infos:
@@ -107,19 +109,50 @@ func _spawn_flying_gem(from: Vector2, target: PassiveStack, data: PassiveStackDa
 	tween.tween_callback(func() -> void: icon.queue_free())
 
 func _on_passive_fired(player: int) -> void:
+	# Prevent double-fire: if an effect is already in flight, ignore this signal.
+	if _passive_effect_active:
+		return
+	_passive_effect_active = true
+
 	var effect := (l_passive_effect if player == GameManager.LEFT else r_passive_effect) as GemEffect
 	if not effect:
+		_passive_effect_active = false
 		return
 	var passive_node := _l_passive if player == GameManager.LEFT else _r_passive
 	var data: PassiveStackData = passive_node.stack_data
 	if not data:
+		_passive_effect_active = false
 		return
-	var center_row := BoardState.ROWS / 2
-	var center_col := BoardState.COLS / 2
-	var target_world := _board.get_cell_world_center(center_row, center_col)
-	_spawn_passive_to_board(passive_node, data, target_world, effect, Vector2i(center_row, center_col))
 
-func _spawn_passive_to_board(source: PassiveStack, data: PassiveStackData, target: Vector2, effect: GemEffect, origin: Vector2i) -> void:
+	var center := Vector2i(BoardState.ROWS / 2, BoardState.COLS / 2)
+	var icon_targets := effect.get_icon_targets(_board.board_state, center)
+
+	if icon_targets.is_empty():
+		_passive_effect_active = false
+		return
+
+	# pending[0] counts icons still in flight; resets flag when all land (for modifier effects).
+	var pending := [icon_targets.size()]
+	var is_modifier_effect := effect is EffectApplyRandomModifiers
+
+	for target_pos in icon_targets:
+		var target_world := _board.get_cell_world_center(target_pos.x, target_pos.y)
+		var pos_copy := target_pos
+		_spawn_passive_icon(passive_node, data, target_world, func():
+			_on_passive_icon_landed(effect, pos_copy, pending, is_modifier_effect)
+		)
+
+func _on_passive_icon_landed(effect: GemEffect, target_pos: Vector2i, pending: Array, is_modifier: bool) -> void:
+	pending[0] -= 1
+	if is_modifier:
+		_board.apply_modifier_to_cell(target_pos, randi() % 2)
+		if pending[0] == 0:
+			_passive_effect_active = false
+	else:
+		# Single-icon destruction effect — execute_effect resets flag via effect_completed.
+		_board.execute_effect(effect, target_pos, Vector2i(-1, -1))
+
+func _spawn_passive_icon(source: PassiveStack, data: PassiveStackData, target: Vector2, on_land: Callable) -> void:
 	var icon := TextureRect.new()
 	icon.texture = data.sprite_active
 	icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
@@ -143,12 +176,11 @@ func _spawn_passive_to_board(source: PassiveStack, data: PassiveStackData, targe
 	tween.tween_property(icon, "scale", Vector2(0.0, 0.0), 0.07)
 	tween.tween_callback(func() -> void:
 		icon.queue_free()
-		_in_passive_effect = true
-		_board.execute_effect(effect, origin, Vector2i(-1, -1))
+		on_land.call()
 	)
 
 func _on_effect_completed() -> void:
-	_in_passive_effect = false
+	_passive_effect_active = false
 
 func _show_add_score(node: TextureRect, amount: int) -> void:
 	var label := node.get_node("Count") as Label

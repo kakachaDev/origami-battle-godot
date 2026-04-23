@@ -176,9 +176,13 @@ func _get_bomb_positions(pos: Vector2i, mod: int) -> Array[Vector2i]:
 	if not mod_res:
 		return []
 	var effect := mod_res.effect as GemEffect
-	if effect:
-		return effect.get_targets(_board, pos, Vector2i(-1, -1))
-	return []
+	if not effect:
+		return []
+	var result: Array[Vector2i] = []
+	for p in effect.get_targets(_board, pos, Vector2i(-1, -1)):
+		if _board.get_gem(p.x, p.y) != BoardState.APPLEBOMB_TYPE:
+			result.append(p)
+	return result
 
 func _expand_bomb_chain(initial: Array[Vector2i]) -> Array[Vector2i]:
 	var to_destroy: Dictionary = {}
@@ -213,6 +217,17 @@ func _expand_bomb_chain(initial: Array[Vector2i]) -> Array[Vector2i]:
 func get_cell_world_center(row: int, col: int) -> Vector2:
 	return global_position + Vector2(START_X + col * CELL_STEP + CELL_SIZE * 0.5, START_Y + row * CELL_STEP + CELL_SIZE * 0.5)
 
+var board_state: BoardState:
+	get:
+		return _board
+
+func apply_modifier_to_cell(pos: Vector2i, mod: int) -> void:
+	if _board.get_gem(pos.x, pos.y) == -1:
+		return
+	_board.set_modifier(pos.x, pos.y, mod)
+	if _cells[pos.x][pos.y] != null:
+		_apply_cell_state(_cells[pos.x][pos.y], pos)
+
 func execute_effect(effect: GemEffect, origin: Vector2i = Vector2i(-1, -1), other: Vector2i = Vector2i(-1, -1)) -> void:
 	if _busy:
 		await move_completed
@@ -222,8 +237,9 @@ func execute_effect(effect: GemEffect, origin: Vector2i = Vector2i(-1, -1), othe
 		for col in BoardState.COLS:
 			if _cells[row][col] != null:
 				_apply_cell_state(_cells[row][col], Vector2i(row, col))
-	var targets := effect.get_targets(_board, origin, other)
-	if not targets.is_empty():
+	var raw_targets := effect.get_targets(_board, origin, other)
+	if not raw_targets.is_empty():
+		var targets := _expand_bomb_chain(raw_targets)
 		await _resolve_destruction(targets)
 	_busy = false
 	effect_completed.emit()
