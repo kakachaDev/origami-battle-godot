@@ -10,3 +10,8 @@ func get_targets(board: BoardState, origin: Vector2i, other: Vector2i) -> Array[
 # Called before get_targets — for non-destructive effects (e.g. assigning modifiers).
 func apply_to_board(board: BoardState, origin: Vector2i, other: Vector2i) -> void:
 	pass
+
+# Returns board positions that passive-fire icons should fly to.
+# Default: one icon flies to origin (used by destruction effects).
+func get_icon_targets(board: BoardState, origin: Vector2i) -> Array[Vector2i]:
+	return [origin]
