@@ -147,14 +147,14 @@ func _simulate_swap(pos_a: Vector2i, pos_b: Vector2i) -> void:
 			var type_pos := _board.get_all_positions_of_type(gem_b)
 			for p in type_pos:
 				_board.set_modifier(p.x, p.y, mod_b)
-				_event_queue.append({"t": "modifier_set", "pos": p, "mod": mod_b})
+				_event_queue.append({"t": "modifier_set", "pos": p, "mod": mod_b, "gem": gem_b})
 			to_destroy.append_array(type_pos)
 			to_destroy.append(pos_a)
 		elif is_apple_b and has_mod_a:
 			var type_pos := _board.get_all_positions_of_type(gem_a)
 			for p in type_pos:
 				_board.set_modifier(p.x, p.y, mod_a)
-				_event_queue.append({"t": "modifier_set", "pos": p, "mod": mod_a})
+				_event_queue.append({"t": "modifier_set", "pos": p, "mod": mod_a, "gem": gem_a})
 			to_destroy.append_array(type_pos)
 			to_destroy.append(pos_b)
 		elif is_apple_a or is_apple_b:
@@ -295,10 +295,11 @@ func _simulate_wave(initial: Array[Vector2i], spawn_hosts: Dictionary, from_pass
 				else:
 					# Modifier effect: apply mods after icon lands (modifier_set events)
 					for icon_pos in icon_targets:
-						if _board.get_gem(icon_pos.x, icon_pos.y) != -1:
+						var icon_gem := _board.get_gem(icon_pos.x, icon_pos.y)
+						if icon_gem != -1:
 							var mod := randi() % 2
 							_board.set_modifier(icon_pos.x, icon_pos.y, mod)
-							_event_queue.append({"t": "modifier_set", "pos": icon_pos, "mod": mod})
+							_event_queue.append({"t": "modifier_set", "pos": icon_pos, "mod": mod, "gem": icon_gem})
 
 	# 13. Cascade
 	var cascade := _board.find_matches()
@@ -373,8 +374,12 @@ func _play_event_queue() -> Dictionary:
 
 			"modifier_set":
 				var pos: Vector2i = event.pos
-				if _cells[pos.x][pos.y] != null:
-					_apply_cell_state(_cells[pos.x][pos.y], pos)
+				var cell: GemCell = _cells[pos.x][pos.y]
+				if cell != null:
+					var gt: int = event.gem
+					if gt >= 0 and gt < gem_resources.size():
+						cell.gem_data = gem_resources[gt]
+						cell.modifier_data = _get_modifier_resource(event.mod)
 
 			"fall":
 				# Update _cells pointers for falling gems
