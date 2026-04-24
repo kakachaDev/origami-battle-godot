@@ -48,11 +48,11 @@ func _on_passive_charged(player: int, charge: int, _world_pos: Vector2) -> void:
 		r_passive_charge = charge
 	passive_charge_updated.emit(player, charge)
 
-func _on_move_completed(gems_by_type: Dictionary) -> void:
+func _on_move_completed(gems_by_type: Dictionary, match_count: int) -> void:
 	var total := 0
 	for c in gems_by_type.values():
 		total += c
-	var bonus_move := total > 3
+	var bonus_move := match_count >= 3
 	if current_player == LEFT:
 		l_score += total
 		player_scored.emit(LEFT, total)

@@ -34,8 +34,9 @@ var _l_passive_charge: int = 0
 var _r_passive_charge: int = 0
 
 var _event_queue: Array = []
+var _move_match_count: int = 0
 
-signal move_completed(gems_by_type: Dictionary)
+signal move_completed(gems_by_type: Dictionary, match_count: int)
 signal passive_charged(player: int, charge: int, source_world_pos: Vector2)
 signal passive_fire_requested(player: int, icon_targets: Array)
 signal passive_fire_completed
@@ -112,6 +113,7 @@ func _do_swap(pos_a: Vector2i, pos_b: Vector2i) -> void:
 	_board.swap(pos_a, pos_b)
 
 	_event_queue.clear()
+	_move_match_count = 0
 	_simulate_swap(pos_a, pos_b)
 
 	if _event_queue.is_empty():
@@ -124,7 +126,7 @@ func _do_swap(pos_a: Vector2i, pos_b: Vector2i) -> void:
 	_cells[pos_b.x][pos_b.y] = cell_a
 
 	var gems_by_type := await _play_event_queue()
-	move_completed.emit(gems_by_type)
+	move_completed.emit(gems_by_type, _move_match_count)
 	_busy = false
 
 # ── Simulation (synchronous) ──────────────────────────────────────────────────
@@ -173,6 +175,7 @@ func _simulate_swap(pos_a: Vector2i, pos_b: Vector2i) -> void:
 		var groups := _board.find_match_groups()
 		if groups.is_empty():
 			return
+		_move_match_count += groups.size()
 		var spawn_hosts: Dictionary = {}
 		var all_matches: Array[Vector2i] = []
 		for group in groups:
@@ -306,6 +309,7 @@ func _simulate_wave(initial: Array[Vector2i], spawn_hosts: Dictionary, from_pass
 	if cascade.is_empty():
 		return
 	var cascade_groups := _board.find_match_groups()
+	_move_match_count += cascade_groups.size()
 	var cascade_spawn: Dictionary = {}
 	var cascade_all: Array[Vector2i] = []
 	for group in cascade_groups:
