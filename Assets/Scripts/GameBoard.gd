@@ -388,10 +388,22 @@ func _play_event_queue() -> Dictionary:
 				for orig_pos in event.spawn_final:
 					var final_pos: Vector2i = event.spawn_final[orig_pos]
 					var cell: GemCell = _cells[final_pos.x][final_pos.y]
-					if cell != null:
-						_apply_cell_state(cell, final_pos)
-						cell.scale = Vector2.ONE
-						cell.visible = true
+					if cell == null:
+						continue
+					var host_info = event.spawn_hosts.get(orig_pos)
+					if host_info:
+						var gt: int = host_info.gem_type
+						if gt == BoardState.APPLEBOMB_TYPE:
+							cell.gem_data = APPLEBOMB_RES
+							cell.modifier_data = null
+						elif gt >= 0 and gt < gem_resources.size():
+							cell.gem_data = gem_resources[gt]
+							match host_info.mod:
+								BoardState.MOD_BOMB_LR: cell.modifier_data = MOD_BOMB_LR_RES
+								BoardState.MOD_BOMB_UD: cell.modifier_data = MOD_BOMB_UD_RES
+								_: cell.modifier_data = null
+					cell.scale = Vector2.ONE
+					cell.visible = true
 
 				# Assign pool cells to new gem positions and place above grid
 				var new_gems: Array = event.new_gems
