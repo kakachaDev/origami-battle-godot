@@ -411,7 +411,8 @@ func _play_event_queue() -> Dictionary:
 						var cell: GemCell = pool[pool_used]
 						pool_used += 1
 						_cells[pos.x][pos.y] = cell
-						_apply_cell_state(cell, pos)
+						cell.gem_data = gem_resources[s.gem]
+						cell.modifier_data = null
 						cell.scale = Vector2.ONE
 						cell.visible = true
 						cell.position = _cell_pos(-(total - idx), col)
