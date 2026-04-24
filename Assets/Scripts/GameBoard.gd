@@ -365,8 +365,11 @@ func _play_event_queue() -> Dictionary:
 				passive_charged.emit(event.player, event.charge, event.source_world_pos)
 
 			"passive_fire":
+				var _fire_done := false
+				passive_fire_completed.connect(func(): _fire_done = true, CONNECT_ONE_SHOT)
 				passive_fire_requested.emit(event.player, event.icon_targets)
-				await passive_fire_completed
+				if not _fire_done:
+					await passive_fire_completed
 
 			"modifier_set":
 				var pos: Vector2i = event.pos
