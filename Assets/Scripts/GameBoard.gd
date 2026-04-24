@@ -232,10 +232,9 @@ func _simulate_wave(initial: Array[Vector2i], spawn_hosts: Dictionary, from_pass
 			gem_infos.append({"gem_type": t, "pos": pos,
 				"world_pos": get_cell_world_center(pos.x, pos.y)})
 
-	# 4. Destroy event (passive_charges emitted at animation start so icons fly immediately)
+	# 4. Destroy event
 	_event_queue.append({"t": "destroy", "positions": to_destroy.duplicate(),
-		"gem_infos": gem_infos, "spawn_hosts": spawn_hosts.duplicate(),
-		"passive_charges": pending_charge_events.duplicate()})
+		"gem_infos": gem_infos, "spawn_hosts": spawn_hosts.duplicate()})
 
 	# 5. Clear board (all destroyed positions, including spawn host slots)
 	_board.clear_matches(to_destroy)
@@ -260,11 +259,15 @@ func _simulate_wave(initial: Array[Vector2i], spawn_hosts: Dictionary, from_pass
 	# 9. Fill empty
 	var new_gems := _board.fill_empty()
 
-	# 10. Fall event
+	# 10. Passive charge events — emitted after destroy completes, before fall starts
+	for ev in pending_charge_events:
+		_event_queue.append(ev)
+
+	# 11. Fall event
 	_event_queue.append({"t": "fall", "falls": falls, "new_gems": new_gems,
 		"spawn_final": spawn_final, "spawn_hosts": spawn_hosts.duplicate()})
 
-	# 11. Passive fire (after fall)
+	# 12. Passive fire (after fall)
 	if fired_player != -1:
 		var effect := (l_passive_effect if fired_player == 0 else r_passive_effect) as GemEffect
 		if effect:
@@ -338,9 +341,6 @@ func _play_event_queue() -> Dictionary:
 					var gt: int = info.gem_type
 					gems_by_type[gt] = gems_by_type.get(gt, 0) + 1
 
-				for ev in event.get("passive_charges", []):
-					passive_charged.emit(ev.player, ev.charge, ev.source_world_pos)
-
 				var regular_cells: Array[GemCell] = []
 				var spawn_host_cells: Array[GemCell] = []
 				for pos in event.positions:
@@ -361,6 +361,9 @@ func _play_event_queue() -> Dictionary:
 					for cell in spawn_host_cells:
 						tw.tween_property(cell as Control, "scale", Vector2.ZERO, BoardAnimator.DESTROY_TIME)
 					await tw.finished
+
+			"passive_charge":
+				passive_charged.emit(event.player, event.charge, event.source_world_pos)
 
 			"passive_fire":
 				var _fire_done := false
