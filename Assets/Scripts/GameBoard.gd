@@ -36,10 +36,16 @@ var _r_passive_charge: int = 0
 var _event_queue: Array = []
 var _move_match_count: int = 0
 
+var _skill_targeting := false
+var _pending_skill_effect: SkillEffect = null
+var _pending_skill_rank := 1
+
 signal move_completed(gems_by_type: Dictionary, match_count: int)
 signal passive_charged(player: int, charge: int, source_world_pos: Vector2)
 signal passive_fire_requested(player: int, icon_targets: Array)
 signal passive_fire_completed
+signal skill_used(gems_by_type: Dictionary, match_count: int)
+signal skill_targeting_changed(is_targeting: bool)
 
 # ── Public API ────────────────────────────────────────────────────────────────
 
@@ -47,12 +53,33 @@ var board_state: BoardState:
 	get:
 		return _board
 
+var is_busy: bool:
+	get:
+		return _busy
+
 func configure_passive(l_type: int, r_type: int) -> void:
 	_l_passive_gem_type = l_type
 	_r_passive_gem_type = r_type
 
 func set_current_player(player: int) -> void:
 	_current_player = player
+
+func activate_skill(effect: SkillEffect, rank: int) -> void:
+	if _busy:
+		return
+	if effect.activation_type == SkillEffect.ActivationType.INSTANT:
+		_busy = true
+		_execute_skill(effect, Vector2i(-1, -1), rank)
+	else:
+		_skill_targeting = true
+		_pending_skill_effect = effect
+		_pending_skill_rank = rank
+		skill_targeting_changed.emit(true)
+
+func cancel_skill_targeting() -> void:
+	_skill_targeting = false
+	_pending_skill_effect = null
+	skill_targeting_changed.emit(false)
 
 func get_cell_world_center(row: int, col: int) -> Vector2:
 	return global_position + Vector2(START_X + col * CELL_STEP + CELL_SIZE * 0.5, START_Y + row * CELL_STEP + CELL_SIZE * 0.5)
@@ -88,7 +115,14 @@ func _gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		var mb := event as InputEventMouseButton
 		if mb.button_index == MOUSE_BUTTON_LEFT:
-			_drag_from = _cell_at(mb.position) if mb.pressed else Vector2i(-1, -1)
+			if _skill_targeting and mb.pressed:
+				var pos := _cell_at(mb.position)
+				if pos != Vector2i(-1, -1):
+					_skill_targeting = false
+					_busy = true
+					_execute_skill(_pending_skill_effect, pos, _pending_skill_rank)
+			elif not _skill_targeting:
+				_drag_from = _cell_at(mb.position) if mb.pressed else Vector2i(-1, -1)
 	elif event is InputEventMouseMotion:
 		if _drag_from == Vector2i(-1, -1):
 			return
@@ -469,6 +503,28 @@ func _play_event_queue() -> Dictionary:
 					await _animator.animate_fall(all_entries)
 
 	return gems_by_type
+
+# ── Skill Execution ───────────────────────────────────────────────────────────
+
+func _execute_skill(effect: SkillEffect, origin: Vector2i, rank: int) -> void:
+	_event_queue.clear()
+	_move_match_count = 0
+
+	for s in effect.get_modifier_spreads(_board, origin, rank):
+		_board.set_modifier(s.pos.x, s.pos.y, s.mod)
+		_event_queue.append({"t": "modifier_set", "pos": s.pos, "mod": s.mod, "gem": s.gem})
+
+	var targets: Array[Vector2i] = effect.get_targets(_board, origin, rank)
+	if not targets.is_empty():
+		_simulate_wave(targets, {}, false)
+		var gems_by_type := await _play_event_queue()
+		skill_used.emit(gems_by_type, _move_match_count)
+	elif not _event_queue.is_empty():
+		await _play_event_queue()
+
+	_busy = false
+	_skill_targeting = false
+	skill_targeting_changed.emit(false)
 
 # ── Helpers ───────────────────────────────────────────────────────────────────
 

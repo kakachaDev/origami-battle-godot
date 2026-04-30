@@ -30,6 +30,7 @@ signal passive_charge_updated(player: int, charge: int)
 func _ready() -> void:
 	_board.move_completed.connect(_on_move_completed)
 	_board.passive_charged.connect(_on_passive_charged)
+	_board.skill_used.connect(_on_skill_used)
 	l_passive_gem_type = randi() % 5
 	r_passive_gem_type = randi() % 5
 	call_deferred("_emit_initial_state")
@@ -47,6 +48,18 @@ func _on_passive_charged(player: int, charge: int, _world_pos: Vector2) -> void:
 	else:
 		r_passive_charge = charge
 	passive_charge_updated.emit(player, charge)
+
+func _on_skill_used(gems_by_type: Dictionary, _match_count: int) -> void:
+	var total := 0
+	for c in gems_by_type.values():
+		total += c
+	if current_player == LEFT:
+		l_score += total
+		player_scored.emit(LEFT, total)
+	else:
+		r_score += total
+		player_scored.emit(RIGHT, total)
+	score_updated.emit(l_score, r_score)
 
 func _on_move_completed(gems_by_type: Dictionary, match_count: int) -> void:
 	var total := 0

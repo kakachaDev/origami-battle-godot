@@ -1,6 +1,9 @@
 extends Node
 class_name GameUI
 
+const _SKILL_DESTROY_TYPE: SkillData = preload("res://Assets/Resources/Skills/DestroyType.tres")
+const _SKILL_DESTROY_LINES: SkillData = preload("res://Assets/Resources/Skills/DestroyLines.tres")
+
 @export var passive_stack_resources: Array[PassiveStackData] = []
 
 @onready var _manager: GameManager = $"../GameManager"
@@ -15,6 +18,13 @@ class_name GameUI
 @onready var _r_add_score: TextureRect = $"../HotBar/R_AddScore"
 @onready var _l_passive: PassiveStack = $"../HotBar/L_PassiveStack"
 @onready var _r_passive: PassiveStack = $"../HotBar/R_PassiveStack"
+@onready var _l_skill1: ActiveSkillBase = $"../HotBar/L_ActiveSkillSlots/Slot1/ActiveSkillBase"
+@onready var _l_skill2: ActiveSkillBase = $"../HotBar/L_ActiveSkillSlots/Slot2/ActiveSkillBase"
+@onready var _r_skill1: ActiveSkillBase = $"../HotBar/R_ActiveSkillSlots/Slot1/ActiveSkillBase"
+@onready var _r_slot2: Control = $"../HotBar/R_ActiveSkillSlots/Slot2"
+
+var _current_player: int = GameManager.LEFT
+var _selected_skill: ActiveSkillBase = null
 
 func _ready() -> void:
 	_manager.score_updated.connect(_on_score_updated)
@@ -24,8 +34,25 @@ func _ready() -> void:
 	_manager.passive_charge_updated.connect(_on_passive_charge_updated)
 	_board.passive_charged.connect(_on_passive_charged)
 	_board.passive_fire_requested.connect(_on_passive_fire_requested)
+	_board.skill_targeting_changed.connect(_on_skill_targeting_changed)
 	_l_add_score.visible = false
 	_r_add_score.visible = false
+
+	_r_slot2.visible = false
+
+	_l_skill1.skill_data = _SKILL_DESTROY_TYPE
+	_l_skill1.rank = 2
+	_l_skill1.count = 1
+	_l_skill2.skill_data = _SKILL_DESTROY_LINES
+	_l_skill2.rank = 1
+	_l_skill2.count = 1
+	_r_skill1.skill_data = _SKILL_DESTROY_LINES
+	_r_skill1.rank = 2
+	_r_skill1.count = 1
+
+	_l_skill1.pressed.connect(func(): _on_skill_pressed(_l_skill1, GameManager.LEFT))
+	_l_skill2.pressed.connect(func(): _on_skill_pressed(_l_skill2, GameManager.LEFT))
+	_r_skill1.pressed.connect(func(): _on_skill_pressed(_r_skill1, GameManager.RIGHT))
 
 func _on_score_updated(l_score: int, r_score: int) -> void:
 	_l_score.text = str(l_score)
@@ -41,6 +68,7 @@ func _on_player_scored(player: int, amount: int) -> void:
 func _on_turns_updated(l_moves: int, r_moves: int, player: int, round: int) -> void:
 	_l_turns.text = str(l_moves)
 	_r_turns.text = str(r_moves)
+	_current_player = player
 	if _manager.total_rounds > 0:
 		_turn_label.text = "Round %d/%d" % [round, _manager.total_rounds]
 	else:
@@ -82,6 +110,31 @@ func _on_passive_fire_requested(player: int, icon_targets: Array) -> void:
 			if pending[0] == 0:
 				_board.passive_fire_completed.emit()
 		)
+
+func _on_skill_pressed(button: ActiveSkillBase, player: int) -> void:
+	if _board.is_busy or player != _current_player:
+		button.button_pressed = false
+		return
+	var effect := button.skill_data.skill_effect as SkillEffect if button.skill_data else null
+	if effect == null:
+		button.button_pressed = false
+		return
+	if _selected_skill == button:
+		_selected_skill = null
+		button.button_pressed = false
+		_board.cancel_skill_targeting()
+		return
+	if _selected_skill != null:
+		_selected_skill.button_pressed = false
+		_board.cancel_skill_targeting()
+	_selected_skill = button
+	button.button_pressed = true
+	_board.activate_skill(effect, button.rank)
+
+func _on_skill_targeting_changed(is_targeting: bool) -> void:
+	if not is_targeting and _selected_skill != null:
+		_selected_skill.button_pressed = false
+		_selected_skill = null
 
 func _spawn_flying_gem(from: Vector2, target: PassiveStack, data: PassiveStackData) -> void:
 	var icon := TextureRect.new()
