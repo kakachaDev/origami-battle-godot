@@ -1,7 +1,8 @@
-[gd_resource type="Resource" load_steps=3 format=3 uid="uid://dskilldestroylines"]
+[gd_resource type="Resource" load_steps=4 format=3 uid="uid://dskilldestroylines"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/SkillData.gd" id="1_skilldata"]
 [ext_resource type="Script" path="res://Assets/Scripts/Effects/SkillEffectDestroyLines.gd" id="2_effect"]
+[ext_resource type="Texture2D" path="res://Assets/Sprites/Skills/SkillIcons/Hammer40k.png" id="3_icon"]
 
 [sub_resource type="Resource" id="Resource_effect"]
 script = ExtResource("2_effect")
@@ -10,4 +11,5 @@ script = ExtResource("2_effect")
 script = ExtResource("1_skilldata")
 skill_name = "Destroy Lines"
 description = "Destroys 2/3/4 random rows or columns based on rank."
+icon = ExtResource("3_icon")
 skill_effect = SubResource("Resource_effect")
