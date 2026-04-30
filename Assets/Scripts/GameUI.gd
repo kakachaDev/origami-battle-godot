@@ -3,6 +3,7 @@ class_name GameUI
 
 const _SKILL_DESTROY_TYPE: SkillData = preload("res://Assets/Resources/Skills/DestroyType.tres")
 const _SKILL_DESTROY_LINES: SkillData = preload("res://Assets/Resources/Skills/DestroyLines.tres")
+const _SKILL_ACTIVATE_MODS: SkillData = preload("res://Assets/Resources/Skills/ActivateModifiers.tres")
 
 @export var passive_stack_resources: Array[PassiveStackData] = []
 
@@ -46,9 +47,11 @@ func _ready() -> void:
 	_l_skill2.skill_data = _SKILL_DESTROY_LINES
 	_l_skill2.rank = 1
 	_l_skill2.count = 1
-	_r_skill1.skill_data = _SKILL_DESTROY_LINES
-	_r_skill1.rank = 2
+	_r_skill1.skill_data = _SKILL_ACTIVATE_MODS
+	_r_skill1.rank = 1
 	_r_skill1.count = 1
+
+	_update_skill_button_interaction()
 
 	_l_skill1.pressed.connect(func(): _on_skill_pressed(_l_skill1, GameManager.LEFT))
 	_l_skill2.pressed.connect(func(): _on_skill_pressed(_l_skill2, GameManager.LEFT))
@@ -69,6 +72,7 @@ func _on_turns_updated(l_moves: int, r_moves: int, player: int, round: int) -> v
 	_l_turns.text = str(l_moves)
 	_r_turns.text = str(r_moves)
 	_current_player = player
+	_update_skill_button_interaction()
 	if _manager.total_rounds > 0:
 		_turn_label.text = "Round %d/%d" % [round, _manager.total_rounds]
 	else:
@@ -111,13 +115,17 @@ func _on_passive_fire_requested(player: int, icon_targets: Array) -> void:
 				_board.passive_fire_completed.emit()
 		)
 
+func _update_skill_button_interaction() -> void:
+	var l_active := _current_player == GameManager.LEFT
+	_l_skill1.mouse_filter = Control.MOUSE_FILTER_STOP if l_active else Control.MOUSE_FILTER_IGNORE
+	_l_skill2.mouse_filter = Control.MOUSE_FILTER_STOP if l_active else Control.MOUSE_FILTER_IGNORE
+	_r_skill1.mouse_filter = Control.MOUSE_FILTER_STOP if not l_active else Control.MOUSE_FILTER_IGNORE
+
 func _on_skill_pressed(button: ActiveSkillBase, player: int) -> void:
 	if _board.is_busy or player != _current_player:
-		button.button_pressed = false
 		return
 	var effect := button.skill_data.skill_effect as SkillEffect if button.skill_data else null
 	if effect == null:
-		button.button_pressed = false
 		return
 	if _selected_skill == button:
 		_selected_skill = null

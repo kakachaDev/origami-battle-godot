@@ -507,6 +507,9 @@ func _play_event_queue() -> Dictionary:
 # ── Skill Execution ───────────────────────────────────────────────────────────
 
 func _execute_skill(effect: SkillEffect, origin: Vector2i, rank: int) -> void:
+	_skill_targeting = false
+	skill_targeting_changed.emit(false)
+
 	_event_queue.clear()
 	_move_match_count = 0
 
@@ -523,8 +526,6 @@ func _execute_skill(effect: SkillEffect, origin: Vector2i, rank: int) -> void:
 		await _play_event_queue()
 
 	_busy = false
-	_skill_targeting = false
-	skill_targeting_changed.emit(false)
 
 # ── Helpers ───────────────────────────────────────────────────────────────────
 
