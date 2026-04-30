@@ -1,0 +1,14 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://dskilldestroytype"]
+
+[ext_resource type="Script" path="res://Assets/Scripts/SkillData.gd" id="1_skilldata"]
+[ext_resource type="Script" path="res://Assets/Scripts/Effects/SkillEffectDestroyType.gd" id="2_effect"]
+
+[sub_resource type="Resource" id="Resource_effect"]
+script = ExtResource("2_effect")
+activation_type = 1
+
+[resource]
+script = ExtResource("1_skilldata")
+skill_name = "Destroy Type"
+description = "Destroys all gems of the selected type. Rank 2: spreads modifier first. Rank 3: Applebomb destroys all."
+skill_effect = SubResource("Resource_effect")
