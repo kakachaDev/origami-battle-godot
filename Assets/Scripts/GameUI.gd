@@ -26,6 +26,7 @@ const _SKILL_ACTIVATE_MODS: SkillData = preload("res://Assets/Resources/Skills/A
 
 var _current_player: int = GameManager.LEFT
 var _selected_skill: ActiveSkillBase = null
+var _pending_skill_button: ActiveSkillBase = null
 
 var _l_score_val: int = 0
 var _r_score_val: int = 0
@@ -44,6 +45,7 @@ func _ready() -> void:
 	_board.passive_charged.connect(_on_passive_charged)
 	_board.passive_fire_requested.connect(_on_passive_fire_requested)
 	_board.skill_targeting_changed.connect(_on_skill_targeting_changed)
+	_board.skill_used.connect(_on_skill_used)
 	_l_add_score.visible = false
 	_r_add_score.visible = false
 
@@ -156,12 +158,25 @@ func _on_passive_fire_requested(player: int, icon_targets: Array) -> void:
 
 func _update_skill_button_interaction() -> void:
 	var l_active := _current_player == GameManager.LEFT
+	# Cancel any active targeting when turn changes
+	if _selected_skill != null:
+		_selected_skill.button_pressed = false
+		_board.cancel_skill_targeting()
+		_selected_skill = null
+		_pending_skill_button = null
+	# Force-unpress inactive player's buttons
+	if not l_active:
+		_l_skill1.button_pressed = false
+		_l_skill2.button_pressed = false
+	else:
+		_r_skill1.button_pressed = false
 	_l_skill1.mouse_filter = Control.MOUSE_FILTER_STOP if l_active else Control.MOUSE_FILTER_IGNORE
 	_l_skill2.mouse_filter = Control.MOUSE_FILTER_STOP if l_active else Control.MOUSE_FILTER_IGNORE
 	_r_skill1.mouse_filter = Control.MOUSE_FILTER_STOP if not l_active else Control.MOUSE_FILTER_IGNORE
 
 func _on_skill_pressed(button: ActiveSkillBase, player: int) -> void:
 	if _board.is_busy or player != _current_player:
+		button.button_pressed = false
 		return
 	var effect := button.skill_data.skill_effect as SkillEffect if button.skill_data else null
 	if effect == null:
@@ -176,12 +191,18 @@ func _on_skill_pressed(button: ActiveSkillBase, player: int) -> void:
 		_board.cancel_skill_targeting()
 	_selected_skill = button
 	button.button_pressed = true
+	_pending_skill_button = button
 	_board.activate_skill(effect, button.rank)
 
 func _on_skill_targeting_changed(is_targeting: bool) -> void:
 	if not is_targeting and _selected_skill != null:
 		_selected_skill.button_pressed = false
 		_selected_skill = null
+
+func _on_skill_used(_gems_by_type: Dictionary, _match_count: int) -> void:
+	if _pending_skill_button != null:
+		_pending_skill_button.count -= 1
+		_pending_skill_button = null
 
 func _spawn_flying_gem(from: Vector2, target: PassiveStack, data: PassiveStackData) -> void:
 	var icon := TextureRect.new()
