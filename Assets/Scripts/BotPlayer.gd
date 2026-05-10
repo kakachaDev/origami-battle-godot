@@ -8,6 +8,8 @@ const BotDataRes = preload("res://Assets/Scripts/BotData.gd")
 @onready var _manager: GameManager = $"../GameManager"
 @onready var _board: GameBoard = $"../Bottom/GameField/Gems"
 
+signal bot_skill_used(skill_index: int, remaining: int)
+
 var _skill_counts: Array = []
 
 func _ready() -> void:
@@ -60,6 +62,7 @@ func _try_use_skill() -> void:
 			return
 
 	_skill_counts[idx] -= 1
+	bot_skill_used.emit(idx, _skill_counts[idx])
 	_board.bot_execute_skill(effect, rank, target)
 
 	while _board.is_busy:

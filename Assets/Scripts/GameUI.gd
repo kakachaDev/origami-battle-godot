@@ -3,7 +3,6 @@ class_name GameUI
 
 const _SKILL_DESTROY_TYPE: SkillData = preload("res://Assets/Resources/Skills/DestroyType.tres")
 const _SKILL_DESTROY_LINES: SkillData = preload("res://Assets/Resources/Skills/DestroyLines.tres")
-const _SKILL_ACTIVATE_MODS: SkillData = preload("res://Assets/Resources/Skills/ActivateModifiers.tres")
 
 @export var passive_stack_resources: Array[PassiveStackData] = []
 
@@ -22,6 +21,7 @@ const _SKILL_ACTIVATE_MODS: SkillData = preload("res://Assets/Resources/Skills/A
 @onready var _l_skill1: ActiveSkillBase = $"../Bottom/HotBar/L_ActiveSkillSlots/Slot1/ActiveSkillBase"
 @onready var _l_skill2: ActiveSkillBase = $"../Bottom/HotBar/L_ActiveSkillSlots/Slot2/ActiveSkillBase"
 @onready var _r_skill1: ActiveSkillBase = $"../Bottom/HotBar/R_ActiveSkillSlots/Slot1/ActiveSkillBase"
+@onready var _r_skill2: ActiveSkillBase = $"../Bottom/HotBar/R_ActiveSkillSlots/Slot2/ActiveSkillBase"
 @onready var _r_slot2: Control = $"../Bottom/HotBar/R_ActiveSkillSlots/Slot2"
 @onready var _top_node: Control = $"../Top"
 @onready var _bottom_node: Control = $"../Bottom"
@@ -32,6 +32,7 @@ const _SKILL_ACTIVATE_MODS: SkillData = preload("res://Assets/Resources/Skills/A
 @onready var _popup_enemy_label: RichTextLabel = $"../RoundPopups/EnemyTurn/RichTextLabel"
 @onready var _popup_your_label: RichTextLabel = $"../RoundPopups/YourTurn/RichTextLabel"
 
+var _bot_player  # BotPlayer node, untyped to avoid parse-time class resolution
 var _current_player: int = GameManager.LEFT
 var _selected_skill: ActiveSkillBase = null
 var _pending_skill_button: ActiveSkillBase = null
@@ -80,15 +81,44 @@ func _ready() -> void:
 	_l_skill2.skill_data = _SKILL_DESTROY_LINES
 	_l_skill2.rank = 1
 	_l_skill2.count = 1
-	_r_skill1.skill_data = _SKILL_ACTIVATE_MODS
-	_r_skill1.rank = 1
-	_r_skill1.count = 1
+
+	_bot_player = get_node_or_null("../BotPlayer")
+	if _bot_player != null:
+		_bot_player.bot_skill_used.connect(_on_bot_skill_used)
+	_setup_bot_skills()
 
 	_update_skill_button_interaction()
 
 	_l_skill1.pressed.connect(func(): _on_skill_pressed(_l_skill1, GameManager.LEFT))
 	_l_skill2.pressed.connect(func(): _on_skill_pressed(_l_skill2, GameManager.LEFT))
-	_r_skill1.pressed.connect(func(): _on_skill_pressed(_r_skill1, GameManager.RIGHT))
+
+func _setup_bot_skills() -> void:
+	if _bot_player == null:
+		return
+	var bd = _bot_player.bot_data
+	if bd == null:
+		return
+	var skills: Array = bd.active_skills
+	var ranks: Array = bd.active_skill_ranks
+	var counts: Array = bd.active_skill_counts
+
+	if skills.size() > 0 and skills[0] != null:
+		_r_skill1.skill_data = skills[0]
+		_r_skill1.rank = ranks[0] if ranks.size() > 0 else 1
+		_r_skill1.count = counts[0] if counts.size() > 0 else 0
+
+	var has_slot2 := skills.size() > 1 and skills[1] != null
+	_r_slot2.visible = has_slot2
+	if has_slot2:
+		_r_skill2.skill_data = skills[1]
+		_r_skill2.rank = ranks[1] if ranks.size() > 1 else 1
+		_r_skill2.count = counts[1] if counts.size() > 1 else 0
+
+func _on_bot_skill_used(idx: int, remaining: int) -> void:
+	if idx == 0:
+		_r_skill1.count = remaining
+	elif idx == 1:
+		_r_skill2.count = remaining
 
 func _on_score_updated(l_score: int, r_score: int) -> void:
 	var l_delta := l_score - _l_score_val
@@ -231,6 +261,7 @@ func _lock_skill_buttons() -> void:
 	_l_skill1.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_l_skill2.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_r_skill1.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_r_skill2.mouse_filter = Control.MOUSE_FILTER_IGNORE
 
 func _update_skill_button_interaction() -> void:
 	var l_active := _current_player == GameManager.LEFT
@@ -244,11 +275,11 @@ func _update_skill_button_interaction() -> void:
 	if not l_active:
 		_l_skill1.button_pressed = false
 		_l_skill2.button_pressed = false
-	else:
-		_r_skill1.button_pressed = false
 	_l_skill1.mouse_filter = Control.MOUSE_FILTER_STOP if l_active else Control.MOUSE_FILTER_IGNORE
 	_l_skill2.mouse_filter = Control.MOUSE_FILTER_STOP if l_active else Control.MOUSE_FILTER_IGNORE
-	_r_skill1.mouse_filter = Control.MOUSE_FILTER_STOP if not l_active else Control.MOUSE_FILTER_IGNORE
+	# Right slots belong to the bot — never interactive for the player
+	_r_skill1.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_r_skill2.mouse_filter = Control.MOUSE_FILTER_IGNORE
 
 func _on_skill_pressed(button: ActiveSkillBase, player: int) -> void:
 	if _board.is_busy or player != _current_player:
