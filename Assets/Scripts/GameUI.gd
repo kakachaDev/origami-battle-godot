@@ -29,6 +29,10 @@ var _selected_skill: ActiveSkillBase = null
 
 var _l_score_val: int = 0
 var _r_score_val: int = 0
+var _l_score_tween_h: Array = [null]
+var _r_score_tween_h: Array = [null]
+var _l_score_punch_h: Array = [null]
+var _r_score_punch_h: Array = [null]
 var _l_add_score_tween_h: Array = [null]
 var _r_add_score_tween_h: Array = [null]
 
@@ -67,12 +71,10 @@ func _on_score_updated(l_score: int, r_score: int) -> void:
 	_l_score_val = l_score
 	_r_score_val = r_score
 
-	_l_score.text = str(l_score)
-	_r_score.text = str(r_score)
 	if l_delta != 0:
-		_punch_scale(_l_score)
+		_animate_score_label(_l_score, l_score - l_delta, l_score, _l_score_tween_h, _l_score_punch_h)
 	if r_delta != 0:
-		_punch_scale(_r_score)
+		_animate_score_label(_r_score, r_score - r_delta, r_score, _r_score_tween_h, _r_score_punch_h)
 	_score_line.value = clampf(float(l_score - r_score), -100.0, 100.0)
 
 	if l_delta > 0:
@@ -80,11 +82,29 @@ func _on_score_updated(l_score: int, r_score: int) -> void:
 	if r_delta > 0:
 		_show_add_score(_r_add_score, r_delta, 25.0)
 
-func _punch_scale(label: Label) -> void:
+func _animate_score_label(label: Label, from: int, to: int, tween_holder: Array, punch_holder: Array) -> void:
+	if tween_holder[0]:
+		tween_holder[0].kill()
+	var tw := create_tween()
+	tween_holder[0] = tw
+	var last_val := [from]
+	tw.tween_method(func(v: float) -> void:
+		var current := roundi(v)
+		label.text = str(current)
+		if current != last_val[0]:
+			last_val[0] = current
+			_punch_scale(label, punch_holder)
+	, float(from), float(to), 0.5).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+
+func _punch_scale(label: Label, punch_holder: Array) -> void:
+	if punch_holder[0]:
+		punch_holder[0].kill()
+	label.scale = Vector2.ONE
 	var punch := create_tween()
-	punch.tween_property(label, "scale", Vector2(1.2, 1.2), 0.1) \
+	punch_holder[0] = punch
+	punch.tween_property(label, "scale", Vector2(1.15, 1.15), 0.07) \
 		.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
-	punch.tween_property(label, "scale", Vector2.ONE, 0.18) \
+	punch.tween_property(label, "scale", Vector2.ONE, 0.12) \
 		.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 
 func _on_turns_updated(l_moves: int, r_moves: int, player: int, round: int) -> void:
