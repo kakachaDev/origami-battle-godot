@@ -1,8 +1,8 @@
-[gd_resource type="Resource" load_steps=4 format=3 uid="uid://dskilldestroytype"]
+[gd_resource type="Resource" script_class="SkillData" format=3 uid="uid://cqjrq4p3ydc2e"]
 
-[ext_resource type="Script" path="res://Assets/Scripts/SkillData.gd" id="1_skilldata"]
-[ext_resource type="Script" path="res://Assets/Scripts/Effects/SkillEffectDestroyType.gd" id="2_effect"]
-[ext_resource type="Texture2D" path="res://Assets/Sprites/Skills/SkillIcons/Hand.png" id="3_icon"]
+[ext_resource type="Script" uid="uid://b8245uf57ffhp" path="res://Assets/Scripts/SkillData.gd" id="1_skilldata"]
+[ext_resource type="Script" uid="uid://d3tjv0os1xf78" path="res://Assets/Scripts/Effects/SkillEffectDestroyType.gd" id="2_effect"]
+[ext_resource type="Texture2D" uid="uid://dk1osimvxvc2i" path="res://Assets/Sprites/Skills/SkillIcons/Hand.png" id="3_icon"]
 
 [sub_resource type="Resource" id="Resource_effect"]
 script = ExtResource("2_effect")
