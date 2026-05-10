@@ -40,10 +40,12 @@ var _skill_targeting := false
 var _pending_skill_effect: SkillEffect = null
 var _pending_skill_rank := 1
 
+signal move_started
 signal move_completed(gems_by_type: Dictionary, match_count: int)
 signal passive_charged(player: int, charge: int, source_world_pos: Vector2)
 signal passive_fire_requested(player: int, icon_targets: Array)
 signal passive_fire_completed
+signal skill_executing
 signal skill_used(gems_by_type: Dictionary, match_count: int)
 signal skill_targeting_changed(is_targeting: bool)
 
@@ -137,6 +139,7 @@ func _gui_input(event: InputEvent) -> void:
 		_do_swap(from, target)
 
 func _do_swap(pos_a: Vector2i, pos_b: Vector2i) -> void:
+	move_started.emit()
 	_busy = true
 	var cell_a: GemCell = _cells[pos_a.x][pos_a.y]
 	var cell_b: GemCell = _cells[pos_b.x][pos_b.y]
@@ -509,6 +512,7 @@ func _play_event_queue() -> Dictionary:
 func _execute_skill(effect: SkillEffect, origin: Vector2i, rank: int) -> void:
 	_skill_targeting = false
 	skill_targeting_changed.emit(false)
+	skill_executing.emit()
 
 	_event_queue.clear()
 	_move_match_count = 0
