@@ -226,7 +226,7 @@ func _show_add_score(node: TextureRect, amount: int, start_angle_deg: float) -> 
 	node.pivot_offset = node.size * 0.5
 	node.rotation_degrees = start_angle_deg
 	node.modulate = Color(1.0, 1.0, 1.0, 0.0)
-	node.scale = Vector2.ONE
+	node.scale = Vector2.ZERO
 	node.visible = true
 
 	var tw := create_tween()
@@ -235,6 +235,8 @@ func _show_add_score(node: TextureRect, amount: int, start_angle_deg: float) -> 
 	tw.tween_property(node, "modulate:a", 1.0, 0.25) \
 		.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 	tw.parallel().tween_property(node, "rotation_degrees", 0.0, 0.4) \
+		.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	tw.parallel().tween_property(node, "scale", Vector2.ONE, 0.4) \
 		.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 	tw.parallel().tween_method(
 		func(v: float) -> void: label.text = "+%d" % roundi(v),
@@ -247,5 +249,7 @@ func _show_add_score(node: TextureRect, amount: int, start_angle_deg: float) -> 
 		.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
 	tw.parallel().tween_property(node, "rotation_degrees", start_angle_deg, 0.3) \
 		.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+	tw.parallel().tween_property(node, "scale", Vector2.ZERO, 0.3) \
+		.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN)
 
 	tw.tween_callback(func() -> void: node.visible = false)
