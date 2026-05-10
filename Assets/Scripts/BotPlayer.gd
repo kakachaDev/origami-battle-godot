@@ -38,14 +38,19 @@ func _pick_swap() -> Array:
 			if col + 1 < BoardState.COLS:
 				var a := Vector2i(row, col)
 				var b := Vector2i(row, col + 1)
-				swaps.append({"a": a, "b": b, "score": _evaluate_swap(state, a, b)})
+				var score := _evaluate_swap(state, a, b)
+				if score > 0:
+					swaps.append({"a": a, "b": b, "score": score})
 			if row + 1 < BoardState.ROWS:
 				var a := Vector2i(row, col)
 				var b := Vector2i(row + 1, col)
-				swaps.append({"a": a, "b": b, "score": _evaluate_swap(state, a, b)})
+				var score := _evaluate_swap(state, a, b)
+				if score > 0:
+					swaps.append({"a": a, "b": b, "score": score})
 
 	if swaps.is_empty():
-		return []
+		# Fallback: board has no matches available — swap any adjacent pair
+		return [Vector2i(0, 0), Vector2i(0, 1)]
 
 	swaps.sort_custom(func(x, y): return x.score > y.score)
 
