@@ -71,8 +71,13 @@ func configure_passive(l_type: int, r_type: int) -> void:
 func set_current_player(player: int) -> void:
 	_current_player = player
 
+func execute_bot_swap(from: Vector2i, to: Vector2i) -> void:
+	if is_busy or not _board.is_adjacent(from, to):
+		return
+	_do_swap(from, to)
+
 func activate_skill(effect: SkillEffect, rank: int) -> void:
-	if _busy:
+	if is_busy:
 		return
 	if effect.activation_type == SkillEffect.ActivationType.INSTANT:
 		_busy = true
@@ -117,7 +122,7 @@ func _build_cells() -> void:
 # ── Input ─────────────────────────────────────────────────────────────────────
 
 func _gui_input(event: InputEvent) -> void:
-	if _busy:
+	if is_busy:
 		return
 	if event is InputEventMouseButton:
 		var mb := event as InputEventMouseButton

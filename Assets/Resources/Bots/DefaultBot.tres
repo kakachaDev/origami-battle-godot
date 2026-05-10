@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="BotData" load_steps=2 format=3 uid="uid://dbotdefault01"]
+
+[ext_resource type="Script" uid="uid://dbotdata0001a" path="res://Assets/Scripts/BotData.gd" id="1_botdata"]
+
+[resource]
+script = ExtResource("1_botdata")
+bot_name = "Противник"
+passive_gem_type = 1
+active_skills = []
+difficulty = 0.5

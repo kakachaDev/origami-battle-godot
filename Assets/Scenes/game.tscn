@@ -36,6 +36,8 @@
 [ext_resource type="Resource" uid="uid://dpassbnana01a" path="res://Assets/Resources/PassiveStacks/Banana.tres" id="45_psbanana"]
 [ext_resource type="Resource" uid="uid://j0hsqwuev5aa" path="res://Assets/Resources/Effects/Destroy3x3Center.tres" id="50_eff3x3"]
 [ext_resource type="Resource" uid="uid://calehkvkc3iqi" path="res://Assets/Resources/Effects/ApplyRandomModifiers.tres" id="51_effmod"]
+[ext_resource type="Script" uid="uid://cbotplayergd1" path="res://Assets/Scripts/BotPlayer.gd" id="60_botplyr"]
+[ext_resource type="Resource" uid="uid://dbotdefault01" path="res://Assets/Resources/Bots/DefaultBot.tres" id="61_botres"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1umtg"]
 corner_radius_top_left = 1000
@@ -83,6 +85,10 @@ script = ExtResource("40_gamemgr")
 [node name="GameUI" type="Node" parent="." unique_id=999888778]
 script = ExtResource("41_gameui")
 passive_stack_resources = Array[ExtResource("40_psdata")]([ExtResource("41_psred"), ExtResource("42_psblue"), ExtResource("43_psgreen"), ExtResource("44_pspink"), ExtResource("45_psbanana")])
+
+[node name="BotPlayer" type="Node" parent="." unique_id=999888779]
+script = ExtResource("60_botplyr")
+bot_data = ExtResource("61_botres")
 
 [node name="background" type="TextureRect" parent="." unique_id=1639237445]
 visible = false
