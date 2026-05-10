@@ -45,6 +45,7 @@ signal move_completed(gems_by_type: Dictionary, match_count: int)
 signal passive_charged(player: int, charge: int, source_world_pos: Vector2)
 signal passive_fire_requested(player: int, icon_targets: Array)
 signal passive_fire_completed
+signal wave_destroyed(gems_by_type: Dictionary)
 signal skill_executing
 signal skill_used(gems_by_type: Dictionary, match_count: int)
 signal skill_targeting_changed(is_targeting: bool)
@@ -378,9 +379,11 @@ func _play_event_queue() -> Dictionary:
 	for event in _event_queue:
 		match event.t:
 			"destroy":
+				var wave_gems: Dictionary = {}
 				for info in event.gem_infos:
 					var gt: int = info.gem_type
 					gems_by_type[gt] = gems_by_type.get(gt, 0) + 1
+					wave_gems[gt] = wave_gems.get(gt, 0) + 1
 
 				var regular_cells: Array[GemCell] = []
 				var spawn_host_cells: Array[GemCell] = []
@@ -402,6 +405,7 @@ func _play_event_queue() -> Dictionary:
 					for cell in spawn_host_cells:
 						tw.tween_property(cell as Control, "scale", Vector2.ZERO, BoardAnimator.DESTROY_TIME)
 					await tw.finished
+				wave_destroyed.emit(wave_gems)
 
 			"passive_charge":
 				passive_charged.emit(event.player, event.charge, event.source_world_pos)
