@@ -16,6 +16,15 @@ const MOD_BOMB_LR_RES: ModifierData = preload("res://Assets/Resources/Modifiers/
 const MOD_BOMB_UD_RES: ModifierData = preload("res://Assets/Resources/Modifiers/BombUpDown.tres")
 const PASSIVE_CHARGE_MAX := 5
 
+const CHICOREE_FONT: Font = preload("res://Assets/Fonts/Original/Chicoree Em. Bold.otf")
+const _GEM_COLORS: Array = [
+	Color(1.0,  0.30, 0.30),  # Red
+	Color(0.35, 0.65, 1.0),   # Blue
+	Color(0.25, 0.90, 0.35),  # Green
+	Color(1.0,  0.40, 0.85),  # Pink
+	Color(1.0,  0.88, 0.12),  # Banana
+]
+
 @export var gem_resources: Array[GemData] = []
 @export var l_passive_effect: Resource  # GemEffect
 @export var r_passive_effect: Resource  # GemEffect
@@ -416,6 +425,7 @@ func _play_event_queue() -> Dictionary:
 					var gt: int = info.gem_type
 					gems_by_type[gt] = gems_by_type.get(gt, 0) + 1
 					wave_gems[gt] = wave_gems.get(gt, 0) + 1
+					_spawn_score_popup(info.world_pos - global_position, gt)
 
 				var regular_cells: Array[GemCell] = []
 				var spawn_host_cells: Array[GemCell] = []
@@ -613,6 +623,35 @@ func _get_bomb_positions(pos: Vector2i, mod: int) -> Array[Vector2i]:
 		if _board.get_gem(p.x, p.y) != BoardState.APPLEBOMB_TYPE:
 			result.append(p)
 	return result
+
+# ── Score popup ───────────────────────────────────────────────────────────────
+
+func _spawn_score_popup(local_pos: Vector2, gem_type: int) -> void:
+	var label := Label.new()
+	label.text = "+1"
+	label.add_theme_font_override("font", CHICOREE_FONT)
+	label.add_theme_font_size_override("font_size", 40)
+	label.add_theme_constant_override("outline_size", 8)
+	label.add_theme_color_override("font_outline_color", Color(0.0, 0.0, 0.0, 0.7))
+	var color: Color
+	if gem_type == BoardState.APPLEBOMB_TYPE or gem_type < 0 or gem_type >= _GEM_COLORS.size():
+		color = Color.WHITE
+	else:
+		color = _GEM_COLORS[gem_type]
+	label.add_theme_color_override("font_color", color)
+	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	label.custom_minimum_size = Vector2(80, 0)
+	label.mouse_filter = MOUSE_FILTER_IGNORE
+	label.modulate.a = 0.0
+	var start_y := local_pos.y - CELL_SIZE * 0.5
+	label.position = Vector2(local_pos.x - 40.0 + randf_range(-12.0, 12.0), start_y)
+	add_child(label)
+	var tw := create_tween().set_parallel(true)
+	tw.tween_property(label, "modulate:a", 1.0, 0.15)
+	tw.tween_property(label, "position:y", start_y - 72.0, 0.7).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	tw.tween_property(label, "modulate:a", 0.0, 0.25).set_delay(0.45)
+	await tw.finished
+	label.queue_free()
 
 # ── Hint system ───────────────────────────────────────────────────────────────
 
