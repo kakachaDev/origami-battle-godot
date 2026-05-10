@@ -13,4 +13,5 @@ active_skills = Array[ExtResource("2_skilldata")]([ExtResource("3_skill_lines"),
 active_skill_ranks = [1, 1]
 active_skill_counts = [1, 1]
 difficulty = 0.5
-skill_use_deficit_threshold = 10
+skill_use_deficit_threshold = 50
+skill_use_chance = 0.5

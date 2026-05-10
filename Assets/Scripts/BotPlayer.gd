@@ -72,6 +72,8 @@ func _choose_skill_index() -> int:
 	var deficit := _manager.l_score - _manager.r_score
 	if deficit < bot_data.skill_use_deficit_threshold:
 		return -1
+	if randf() > bot_data.skill_use_chance:
+		return -1
 
 	var state := _board.board_state
 	for i in bot_data.active_skills.size():
