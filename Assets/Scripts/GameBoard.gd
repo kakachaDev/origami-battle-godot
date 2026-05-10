@@ -630,7 +630,7 @@ func _spawn_score_popup(local_pos: Vector2, gem_type: int) -> void:
 	var label := Label.new()
 	label.text = "+1"
 	label.add_theme_font_override("font", CHICOREE_FONT)
-	label.add_theme_font_size_override("font_size", 40)
+	label.add_theme_font_size_override("font_size", 48)
 	label.add_theme_constant_override("outline_size", 8)
 	label.add_theme_color_override("font_outline_color", Color(0.0, 0.0, 0.0, 0.7))
 	var color: Color
@@ -642,15 +642,29 @@ func _spawn_score_popup(local_pos: Vector2, gem_type: int) -> void:
 	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	label.custom_minimum_size = Vector2(80, 0)
 	label.mouse_filter = MOUSE_FILTER_IGNORE
+	label.pivot_offset = Vector2(40, 28)
+	label.scale = Vector2.ZERO
+	label.rotation_degrees = -25.0
 	label.modulate.a = 0.0
-	var start_y := local_pos.y - CELL_SIZE * 0.5
+	var start_y := local_pos.y - CELL_SIZE * 0.5 - 10.0
 	label.position = Vector2(local_pos.x - 40.0 + randf_range(-12.0, 12.0), start_y)
 	add_child(label)
-	var tw := create_tween().set_parallel(true)
-	tw.tween_property(label, "modulate:a", 1.0, 0.15)
-	tw.tween_property(label, "position:y", start_y - 72.0, 0.7).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
-	tw.tween_property(label, "modulate:a", 0.0, 0.25).set_delay(0.45)
-	await tw.finished
+
+	var tw_in := create_tween().set_parallel(true)
+	tw_in.tween_property(label, "scale", Vector2.ONE, 0.45).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	tw_in.tween_property(label, "rotation_degrees", 0.0, 0.35).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	tw_in.tween_property(label, "modulate:a", 1.0, 0.2)
+	tw_in.tween_property(label, "position:y", start_y - 28.0, 0.55).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	await tw_in.finished
+
+	await get_tree().create_timer(0.25).timeout
+
+	var tw_out := create_tween().set_parallel(true)
+	tw_out.tween_property(label, "scale", Vector2.ZERO, 0.3).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN)
+	tw_out.tween_property(label, "rotation_degrees", -25.0, 0.3).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN)
+	tw_out.tween_property(label, "modulate:a", 0.0, 0.25)
+	await tw_out.finished
+
 	label.queue_free()
 
 # ── Hint system ───────────────────────────────────────────────────────────────
