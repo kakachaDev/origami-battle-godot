@@ -44,7 +44,9 @@ func _ready() -> void:
 	_manager.passive_charge_updated.connect(_on_passive_charge_updated)
 	_board.passive_charged.connect(_on_passive_charged)
 	_board.passive_fire_requested.connect(_on_passive_fire_requested)
+	_board.move_started.connect(_lock_skill_buttons)
 	_board.skill_targeting_changed.connect(_on_skill_targeting_changed)
+	_board.skill_executing.connect(_on_skill_executing)
 	_board.skill_used.connect(_on_skill_used)
 	_l_add_score.visible = false
 	_r_add_score.visible = false
@@ -156,6 +158,11 @@ func _on_passive_fire_requested(player: int, icon_targets: Array) -> void:
 				_board.passive_fire_completed.emit()
 		)
 
+func _lock_skill_buttons() -> void:
+	_l_skill1.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_l_skill2.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_r_skill1.mouse_filter = Control.MOUSE_FILTER_IGNORE
+
 func _update_skill_button_interaction() -> void:
 	var l_active := _current_player == GameManager.LEFT
 	# Cancel any active targeting when turn changes
@@ -199,10 +206,14 @@ func _on_skill_targeting_changed(is_targeting: bool) -> void:
 		_selected_skill.button_pressed = false
 		_selected_skill = null
 
-func _on_skill_used(_gems_by_type: Dictionary, _match_count: int) -> void:
+func _on_skill_executing() -> void:
 	if _pending_skill_button != null:
 		_pending_skill_button.count -= 1
 		_pending_skill_button = null
+	_lock_skill_buttons()
+
+func _on_skill_used(_gems_by_type: Dictionary, _match_count: int) -> void:
+	_update_skill_button_interaction()
 
 func _spawn_flying_gem(from: Vector2, target: PassiveStack, data: PassiveStackData) -> void:
 	var icon := TextureRect.new()
