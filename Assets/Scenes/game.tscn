@@ -1,15 +1,15 @@
 [gd_scene format=3 uid="uid://cxuu2uajmap7n"]
 
-[ext_resource type="Texture2D" uid="uid://bh18b1kmo8blk" path="res://Assets/Sprites/example.png" id="1_g77ca"]
 [ext_resource type="Texture2D" uid="uid://bu8dr8bohvsvn" path="res://Assets/Sprites/Background/Background.png" id="2_p7xq5"]
 [ext_resource type="Texture2D" uid="uid://d100yfoav47ci" path="res://Assets/Sprites/TopMenu/Rules.png" id="3_16r2i"]
-[ext_resource type="Script" path="res://Assets/Scripts/GemData.gd" id="4_gvrie"]
+[ext_resource type="Script" uid="uid://bc2rx1c0fqfpj" path="res://Assets/Scripts/GemData.gd" id="4_gvrie"]
 [ext_resource type="Texture2D" uid="uid://d3m7xirhjch60" path="res://Assets/Sprites/TopMenu/ABout.png" id="4_sqxpa"]
 [ext_resource type="Texture2D" uid="uid://cdec5qjamnwn0" path="res://Assets/Sprites/TopMenu/ESC.png" id="5_dri85"]
 [ext_resource type="Texture2D" uid="uid://l02qfx37tfx0" path="res://Assets/Sprites/Nickname_bar/NickAva_player.png" id="6_ui87a"]
 [ext_resource type="Texture2D" uid="uid://bxy5s38vjjyb7" path="res://Assets/Sprites/Hotbar/SCORE_BIRD_GREEN.png" id="7_gvrie"]
 [ext_resource type="Texture2D" uid="uid://djdbk5xgsjohw" path="res://Assets/Sprites/Nickname_bar/NickAva_enemy.png" id="8_ttsg4"]
 [ext_resource type="Texture2D" uid="uid://3tk14n41m3lg" path="res://Assets/Sprites/Hotbar/SCORE_BIRD_RED.png" id="9_kvw2h"]
+[ext_resource type="Texture2D" uid="uid://h2d6agrihdn7" path="res://Assets/Sprites/example3.png" id="9_xwg46"]
 [ext_resource type="Texture2D" uid="uid://cm70jpujus14k" path="res://Assets/Sprites/Hotbar/HOTBAR.png" id="10_dm1m1"]
 [ext_resource type="FontFile" uid="uid://ccwwltsq0oe2h" path="res://Assets/Fonts/Original/Chicoree Em. Bold.otf" id="11_8lgte"]
 [ext_resource type="PackedScene" uid="uid://d1s64dis7nal5" path="res://Assets/Prefabs/PassiveStack.tscn" id="12_pssv1"]
@@ -17,24 +17,25 @@
 [ext_resource type="PackedScene" uid="uid://8nhbmbocunoe" path="res://Assets/Prefabs/ActiveSkillBase.tscn" id="27_absk1"]
 [ext_resource type="PackedScene" uid="uid://cscoreline001" path="res://Assets/Prefabs/ScoreLine.tscn" id="28_scln1"]
 [ext_resource type="Script" uid="uid://cgameboard01a" path="res://Assets/Scripts/GameBoard.gd" id="30_gboard"]
-[ext_resource type="Script" uid="uid://cgamemgr01" path="res://Assets/Scripts/GameManager.gd" id="40_gamemgr"]
-[ext_resource type="Script" uid="uid://cgameui001" path="res://Assets/Scripts/GameUI.gd" id="41_gameui"]
-[ext_resource type="Script" path="res://Assets/Scripts/PassiveStackData.gd" id="40_psdata"]
+[ext_resource type="Resource" uid="uid://dgemred00001a" path="res://Assets/Resources/Gems/Red.tres" id="31_gemred"]
+[ext_resource type="Resource" uid="uid://dgemblue0001a" path="res://Assets/Resources/Gems/Blue.tres" id="32_gemblue"]
+[ext_resource type="Texture2D" uid="uid://cwhr0hvraomlb" path="res://Assets/Sprites/Round_popups/ENEMY_TRN.png" id="33_dp6af"]
+[ext_resource type="Resource" uid="uid://dgemgreen001a" path="res://Assets/Resources/Gems/Green.tres" id="33_gemgreen"]
+[ext_resource type="Resource" uid="uid://dgempink0001a" path="res://Assets/Resources/Gems/Pink.tres" id="34_gempink"]
+[ext_resource type="FontFile" uid="uid://c6lq4cpw4andf" path="res://Assets/Fonts/Original/Shonen (Namikus).otf" id="34_h0uwn"]
+[ext_resource type="Texture2D" uid="uid://c26qs5aiqeepf" path="res://Assets/Sprites/Round_popups/U_TRN.png" id="35_5cd0h"]
+[ext_resource type="Resource" uid="uid://dgembnana001a" path="res://Assets/Resources/Gems/Banana.tres" id="35_gembanana"]
+[ext_resource type="Texture2D" uid="uid://dkwoybv34om6l" path="res://Assets/Sprites/Round_popups/Final_TRN.png" id="36_v4kxs"]
+[ext_resource type="Script" uid="uid://b17gsh5yp3q2i" path="res://Assets/Scripts/GameManager.gd" id="40_gamemgr"]
+[ext_resource type="Script" uid="uid://cta0rlnwghjgs" path="res://Assets/Scripts/PassiveStackData.gd" id="40_psdata"]
+[ext_resource type="Script" uid="uid://5dvau75tidax" path="res://Assets/Scripts/GameUI.gd" id="41_gameui"]
 [ext_resource type="Resource" uid="uid://dpassred0001a" path="res://Assets/Resources/PassiveStacks/Red.tres" id="41_psred"]
 [ext_resource type="Resource" uid="uid://dpassblue001a" path="res://Assets/Resources/PassiveStacks/Blue.tres" id="42_psblue"]
 [ext_resource type="Resource" uid="uid://dpassgreen01a" path="res://Assets/Resources/PassiveStacks/Green.tres" id="43_psgreen"]
 [ext_resource type="Resource" uid="uid://dpasspink001a" path="res://Assets/Resources/PassiveStacks/Pink.tres" id="44_pspink"]
 [ext_resource type="Resource" uid="uid://dpassbnana01a" path="res://Assets/Resources/PassiveStacks/Banana.tres" id="45_psbanana"]
-[ext_resource type="Resource" uid="uid://dgemred00001a" path="res://Assets/Resources/Gems/Red.tres" id="31_gemred"]
-[ext_resource type="Resource" uid="uid://dgemblue0001a" path="res://Assets/Resources/Gems/Blue.tres" id="32_gemblue"]
-[ext_resource type="Resource" uid="uid://dgemgreen001a" path="res://Assets/Resources/Gems/Green.tres" id="33_gemgreen"]
-[ext_resource type="Resource" uid="uid://dgempink0001a" path="res://Assets/Resources/Gems/Pink.tres" id="34_gempink"]
-[ext_resource type="Resource" uid="uid://dgembnana001a" path="res://Assets/Resources/Gems/Banana.tres" id="35_gembanana"]
-[ext_resource type="Resource" uid="uid://effdest3x3001" path="res://Assets/Resources/Effects/Destroy3x3Center.tres" id="50_eff3x3"]
-[ext_resource type="Resource" uid="uid://effapplymod001" path="res://Assets/Resources/Effects/ApplyRandomModifiers.tres" id="51_effmod"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ttsg4"]
-bg_color = Color(1, 1, 1, 1)
+[ext_resource type="Resource" uid="uid://j0hsqwuev5aa" path="res://Assets/Resources/Effects/Destroy3x3Center.tres" id="50_eff3x3"]
+[ext_resource type="Resource" uid="uid://calehkvkc3iqi" path="res://Assets/Resources/Effects/ApplyRandomModifiers.tres" id="51_effmod"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1umtg"]
 corner_radius_top_left = 1000
@@ -60,6 +61,9 @@ colors = PackedColorArray(0.9624755, 0, 0.42691815, 1, 0.16701901, 0.6551242, 0.
 gradient = SubResource("Gradient_qudcs")
 fill_from = Vector2(0.9427083, 0.9357639)
 fill_to = Vector2(0, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ttsg4"]
+bg_color = Color(1, 1, 1, 1)
 
 [node name="Game" type="Control" unique_id=1685284791]
 custom_minimum_size = Vector2(1080, 1920)
@@ -94,37 +98,17 @@ offset_right = 540.0
 offset_bottom = 960.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("1_g77ca")
+texture = ExtResource("9_xwg46")
+stretch_mode = 4
 
-[node name="GameField" type="TextureRect" parent="." unique_id=154439486]
+[node name="Top" type="Control" parent="." unique_id=538889139]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -540.0
-offset_top = -297.0
-offset_right = 540.0
-offset_bottom = 959.0
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 417.0
 grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("2_p7xq5")
 
-[node name="Gems" type="Panel" parent="GameField" unique_id=2039575431]
-clip_children = 1
-layout_mode = 0
-offset_left = 20.0
-offset_top = 136.0
-offset_right = 1064.0
-offset_bottom = 1180.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_ttsg4")
-script = ExtResource("30_gboard")
-gem_resources = Array[ExtResource("4_gvrie")]([ExtResource("31_gemred"), ExtResource("32_gemblue"), ExtResource("33_gemgreen"), ExtResource("34_gempink"), ExtResource("35_gembanana")])
-l_passive_effect = ExtResource("50_eff3x3")
-r_passive_effect = ExtResource("51_effmod")
-
-[node name="TopMenu" type="Control" parent="." unique_id=1172136226]
+[node name="TopMenu" type="Control" parent="Top" unique_id=1172136226]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -134,7 +118,7 @@ offset_right = 540.0
 offset_bottom = 238.0
 grow_horizontal = 2
 
-[node name="RulesButton" type="TextureButton" parent="TopMenu" unique_id=1969329365]
+[node name="RulesButton" type="TextureButton" parent="Top/TopMenu" unique_id=1969329365]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -146,7 +130,7 @@ offset_bottom = 67.0
 grow_horizontal = 0
 texture_normal = ExtResource("3_16r2i")
 
-[node name="Text" type="Label" parent="TopMenu/RulesButton" unique_id=964276918]
+[node name="Text" type="Label" parent="Top/TopMenu/RulesButton" unique_id=964276918]
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
@@ -163,7 +147,7 @@ theme_override_font_sizes/font_size = 30
 text = "Правила"
 vertical_alignment = 1
 
-[node name="AboutButton" type="TextureButton" parent="TopMenu" unique_id=405883784]
+[node name="AboutButton" type="TextureButton" parent="Top/TopMenu" unique_id=405883784]
 layout_mode = 0
 offset_left = 30.0
 offset_top = 19.0
@@ -171,7 +155,7 @@ offset_right = 312.0
 offset_bottom = 79.0
 texture_normal = ExtResource("4_sqxpa")
 
-[node name="Text" type="Label" parent="TopMenu/AboutButton" unique_id=1237721459]
+[node name="Text" type="Label" parent="Top/TopMenu/AboutButton" unique_id=1237721459]
 layout_mode = 0
 offset_right = 225.0
 offset_bottom = 44.0
@@ -181,7 +165,7 @@ text = "Подробности"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="Exit" type="TextureButton" parent="TopMenu" unique_id=1109369118]
+[node name="Exit" type="TextureButton" parent="Top/TopMenu" unique_id=1109369118]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -193,7 +177,7 @@ offset_bottom = 71.0
 grow_horizontal = 0
 texture_normal = ExtResource("5_dri85")
 
-[node name="L_Badge" type="TextureRect" parent="TopMenu" unique_id=473003408]
+[node name="L_Badge" type="TextureRect" parent="Top/TopMenu" unique_id=473003408]
 layout_mode = 1
 offset_left = 2.0
 offset_top = 72.0
@@ -201,7 +185,7 @@ offset_right = 395.0
 offset_bottom = 216.0
 texture = ExtResource("6_ui87a")
 
-[node name="Nickname" type="Label" parent="TopMenu/L_Badge" unique_id=1042800549]
+[node name="Nickname" type="Label" parent="Top/TopMenu/L_Badge" unique_id=1042800549]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -217,7 +201,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 text_overrun_behavior = 5
 
-[node name="AvatarContainer" type="PanelContainer" parent="TopMenu/L_Badge" unique_id=1280061137]
+[node name="AvatarContainer" type="PanelContainer" parent="Top/TopMenu/L_Badge" unique_id=1280061137]
 clip_children = 1
 layout_mode = 1
 offset_left = 17.0
@@ -226,18 +210,18 @@ offset_right = 133.0
 offset_bottom = 135.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_1umtg")
 
-[node name="Avatar" type="TextureRect" parent="TopMenu/L_Badge/AvatarContainer" unique_id=1604637540]
+[node name="Avatar" type="TextureRect" parent="Top/TopMenu/L_Badge/AvatarContainer" unique_id=1604637540]
 layout_mode = 2
 texture = SubResource("GradientTexture2D_1v65n")
 expand_mode = 1
 stretch_mode = 4
 
-[node name="TempBird" type="TextureRect" parent="TopMenu/L_Badge/AvatarContainer" unique_id=307560938]
+[node name="TempBird" type="TextureRect" parent="Top/TopMenu/L_Badge/AvatarContainer" unique_id=307560938]
 layout_mode = 2
 texture = ExtResource("7_gvrie")
 stretch_mode = 3
 
-[node name="R_Badge" type="TextureRect" parent="TopMenu" unique_id=221044201]
+[node name="R_Badge" type="TextureRect" parent="Top/TopMenu" unique_id=221044201]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -249,7 +233,7 @@ offset_bottom = 217.0
 grow_horizontal = 0
 texture = ExtResource("8_ttsg4")
 
-[node name="Nickname" type="Label" parent="TopMenu/R_Badge" unique_id=1123038687]
+[node name="Nickname" type="Label" parent="Top/TopMenu/R_Badge" unique_id=1123038687]
 layout_mode = 1
 offset_left = 22.0
 offset_top = 20.0
@@ -261,7 +245,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 text_overrun_behavior = 5
 
-[node name="AvatarContainer" type="PanelContainer" parent="TopMenu/R_Badge" unique_id=758934215]
+[node name="AvatarContainer" type="PanelContainer" parent="Top/TopMenu/R_Badge" unique_id=758934215]
 clip_children = 1
 layout_mode = 1
 anchors_preset = 1
@@ -274,18 +258,28 @@ offset_bottom = 135.0
 grow_horizontal = 0
 theme_override_styles/panel = SubResource("StyleBoxFlat_1umtg")
 
-[node name="Avatar" type="TextureRect" parent="TopMenu/R_Badge/AvatarContainer" unique_id=1081477028]
+[node name="Avatar" type="TextureRect" parent="Top/TopMenu/R_Badge/AvatarContainer" unique_id=1081477028]
 layout_mode = 2
 texture = SubResource("GradientTexture2D_xwg46")
 expand_mode = 1
 stretch_mode = 4
 
-[node name="TempBird" type="TextureRect" parent="TopMenu/R_Badge/AvatarContainer" unique_id=88753108]
+[node name="TempBird" type="TextureRect" parent="Top/TopMenu/R_Badge/AvatarContainer" unique_id=88753108]
 layout_mode = 2
 texture = ExtResource("9_kvw2h")
 stretch_mode = 3
 
-[node name="HotBar" type="Control" parent="." unique_id=654440453]
+[node name="Bottom" type="Control" parent="." unique_id=797398863]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -1566.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="GameField" type="TextureRect" parent="Bottom" unique_id=154439486]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -293,13 +287,51 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -540.0
-offset_top = -567.0
+offset_top = -474.0
 offset_right = 540.0
-offset_bottom = -86.0
+offset_bottom = 782.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_p7xq5")
+
+[node name="Gems" type="Panel" parent="Bottom/GameField" unique_id=2039575431]
+clip_children = 1
+layout_mode = 0
+offset_left = 20.0
+offset_top = 136.0
+offset_right = 1064.0
+offset_bottom = 1180.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_ttsg4")
+script = ExtResource("30_gboard")
+gem_resources = Array[ExtResource("4_gvrie")]([ExtResource("31_gemred"), ExtResource("32_gemblue"), ExtResource("33_gemgreen"), ExtResource("34_gempink"), ExtResource("35_gembanana")])
+l_passive_effect = ExtResource("50_eff3x3")
+r_passive_effect = ExtResource("51_effmod")
+
+[node name="EnemyTurnFog" type="ColorRect" parent="Bottom/GameField" unique_id=1589699560]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.23529412)
+
+[node name="HotBar" type="Control" parent="Bottom" unique_id=654440453]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -540.0
+offset_top = -744.0
+offset_right = 540.0
+offset_bottom = -263.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Background" type="TextureRect" parent="HotBar" unique_id=2074245262]
+[node name="Background" type="TextureRect" parent="Bottom/HotBar" unique_id=2074245262]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
@@ -314,7 +346,7 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("10_dm1m1")
 
-[node name="L_Turns" type="Label" parent="HotBar" unique_id=1365366291]
+[node name="L_Turns" type="Label" parent="Bottom/HotBar" unique_id=1365366291]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.38900003
@@ -336,7 +368,7 @@ text = "2"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="R_Turns" type="Label" parent="HotBar" unique_id=1882618877]
+[node name="R_Turns" type="Label" parent="Bottom/HotBar" unique_id=1882618877]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.611
@@ -358,7 +390,7 @@ text = "2"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="L_Score" type="Label" parent="HotBar" unique_id=2062710071]
+[node name="L_Score" type="Label" parent="Bottom/HotBar" unique_id=2062710071]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.15
@@ -380,7 +412,7 @@ text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="R_Score" type="Label" parent="HotBar" unique_id=432791059]
+[node name="R_Score" type="Label" parent="Bottom/HotBar" unique_id=432791059]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.85300004
@@ -402,7 +434,7 @@ text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Turn" type="Label" parent="HotBar" unique_id=1203145098]
+[node name="Turn" type="Label" parent="Bottom/HotBar" unique_id=1203145098]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
@@ -421,7 +453,7 @@ text = "Round 1"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="L_PassiveStack" parent="HotBar" unique_id=1057296643 instance=ExtResource("12_pssv1")]
+[node name="L_PassiveStack" parent="Bottom/HotBar" unique_id=1057296643 instance=ExtResource("12_pssv1")]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.24800001
@@ -435,7 +467,7 @@ offset_bottom = 25.958984
 grow_vertical = 0
 max_spacing = 16.0
 
-[node name="R_PassiveStack" parent="HotBar" unique_id=21262380 instance=ExtResource("12_pssv1")]
+[node name="R_PassiveStack" parent="Bottom/HotBar" unique_id=21262380 instance=ExtResource("12_pssv1")]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.75100005
@@ -449,7 +481,7 @@ offset_bottom = 25.958984
 grow_horizontal = 0
 grow_vertical = 0
 
-[node name="L_AddScore" type="TextureRect" parent="HotBar" unique_id=272467169]
+[node name="L_AddScore" type="TextureRect" parent="Bottom/HotBar" unique_id=272467169]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.11100001
@@ -464,7 +496,7 @@ pivot_offset = Vector2(-34, -4)
 pivot_offset_ratio = Vector2(1, 1)
 texture = ExtResource("16_4cxsk")
 
-[node name="Count" type="Label" parent="HotBar/L_AddScore" unique_id=2034103402]
+[node name="Count" type="Label" parent="Bottom/HotBar/L_AddScore" unique_id=2034103402]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.15
@@ -488,7 +520,7 @@ text = "+999"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="R_AddScore" type="TextureRect" parent="HotBar" unique_id=23473445]
+[node name="R_AddScore" type="TextureRect" parent="Bottom/HotBar" unique_id=23473445]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.88900006
@@ -504,7 +536,7 @@ pivot_offset_ratio = Vector2(0, 1)
 texture = ExtResource("16_4cxsk")
 flip_h = true
 
-[node name="Count" type="Label" parent="HotBar/R_AddScore" unique_id=537234811]
+[node name="Count" type="Label" parent="Bottom/HotBar/R_AddScore" unique_id=537234811]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.15
@@ -528,7 +560,7 @@ text = "+999"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ScoreLine" parent="HotBar" unique_id=1055300626 instance=ExtResource("28_scln1")]
+[node name="ScoreLine" parent="Bottom/HotBar" unique_id=1055300626 instance=ExtResource("28_scln1")]
 layout_mode = 1
 anchor_left = 0.5
 anchor_top = 0.38900003
@@ -541,7 +573,7 @@ offset_bottom = 10.890991
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="L_ActiveSkillSlots" type="Control" parent="HotBar" unique_id=1380575174]
+[node name="L_ActiveSkillSlots" type="Control" parent="Bottom/HotBar" unique_id=1380575174]
 layout_mode = 1
 anchor_left = 0.15
 anchor_top = 0.55300003
@@ -553,14 +585,14 @@ offset_right = 114.0
 offset_bottom = 56.00699
 pivot_offset_ratio = Vector2(0.5, 0.5)
 
-[node name="Slot1" type="Control" parent="HotBar/L_ActiveSkillSlots" unique_id=246119150]
+[node name="Slot1" type="Control" parent="Bottom/HotBar/L_ActiveSkillSlots" unique_id=246119150]
 anchors_preset = 0
 offset_left = 1.0
 offset_right = 111.0
 offset_bottom = 110.0
 pivot_offset_ratio = Vector2(0.5, 0.5)
 
-[node name="ActiveSkillBase" parent="HotBar/L_ActiveSkillSlots/Slot1" unique_id=693602546 instance=ExtResource("27_absk1")]
+[node name="ActiveSkillBase" parent="Bottom/HotBar/L_ActiveSkillSlots/Slot1" unique_id=693602546 instance=ExtResource("27_absk1")]
 layout_mode = 0
 anchors_preset = 0
 anchor_left = 0.0
@@ -574,14 +606,14 @@ offset_bottom = 113.0
 grow_horizontal = 1
 grow_vertical = 1
 
-[node name="Slot2" type="Control" parent="HotBar/L_ActiveSkillSlots" unique_id=1333813652]
+[node name="Slot2" type="Control" parent="Bottom/HotBar/L_ActiveSkillSlots" unique_id=1333813652]
 anchors_preset = 0
 offset_left = 118.0
 offset_right = 228.0
 offset_bottom = 110.0
 pivot_offset_ratio = Vector2(0.5, 0.5)
 
-[node name="ActiveSkillBase" parent="HotBar/L_ActiveSkillSlots/Slot2" unique_id=1081464258 instance=ExtResource("27_absk1")]
+[node name="ActiveSkillBase" parent="Bottom/HotBar/L_ActiveSkillSlots/Slot2" unique_id=1081464258 instance=ExtResource("27_absk1")]
 layout_mode = 0
 anchors_preset = 0
 anchor_left = 0.0
@@ -595,7 +627,7 @@ offset_bottom = 113.0
 grow_horizontal = 1
 grow_vertical = 1
 
-[node name="R_ActiveSkillSlots" type="Control" parent="HotBar" unique_id=654686569]
+[node name="R_ActiveSkillSlots" type="Control" parent="Bottom/HotBar" unique_id=654686569]
 layout_mode = 1
 anchor_left = 0.84537035
 anchor_top = 0.55300003
@@ -608,14 +640,14 @@ offset_bottom = 55.00699
 pivot_offset_ratio = Vector2(0.5, 0.5)
 metadata/_edit_use_anchors_ = true
 
-[node name="Slot1" type="Control" parent="HotBar/R_ActiveSkillSlots" unique_id=407366434]
+[node name="Slot1" type="Control" parent="Bottom/HotBar/R_ActiveSkillSlots" unique_id=407366434]
 anchors_preset = 0
 offset_left = 118.0
 offset_right = 228.0
 offset_bottom = 110.0
 pivot_offset_ratio = Vector2(0.5, 0.5)
 
-[node name="ActiveSkillBase" parent="HotBar/R_ActiveSkillSlots/Slot1" unique_id=821074160 instance=ExtResource("27_absk1")]
+[node name="ActiveSkillBase" parent="Bottom/HotBar/R_ActiveSkillSlots/Slot1" unique_id=821074160 instance=ExtResource("27_absk1")]
 layout_mode = 0
 anchors_preset = 0
 anchor_left = 0.0
@@ -629,13 +661,13 @@ offset_bottom = 113.0
 grow_horizontal = 1
 grow_vertical = 1
 
-[node name="Slot2" type="Control" parent="HotBar/R_ActiveSkillSlots" unique_id=788304366]
+[node name="Slot2" type="Control" parent="Bottom/HotBar/R_ActiveSkillSlots" unique_id=788304366]
 anchors_preset = 0
 offset_right = 110.0
 offset_bottom = 110.0
 pivot_offset_ratio = Vector2(0.5, 0.5)
 
-[node name="ActiveSkillBase" parent="HotBar/R_ActiveSkillSlots/Slot2" unique_id=2037937837 instance=ExtResource("27_absk1")]
+[node name="ActiveSkillBase" parent="Bottom/HotBar/R_ActiveSkillSlots/Slot2" unique_id=2037937837 instance=ExtResource("27_absk1")]
 layout_mode = 0
 anchors_preset = 0
 anchor_left = 0.0
@@ -648,3 +680,109 @@ offset_right = 110.0
 offset_bottom = 113.0
 grow_horizontal = 1
 grow_vertical = 1
+
+[node name="RoundPopups" type="Control" parent="." unique_id=239510945]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 594.0
+grow_horizontal = 2
+
+[node name="EnemyTurn" type="TextureRect" parent="RoundPopups" unique_id=1833639946]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -397.0
+offset_top = -118.5
+offset_right = 437.0
+offset_bottom = 118.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("33_dp6af")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="RoundPopups/EnemyTurn" unique_id=2015752981]
+layout_mode = 0
+offset_left = 14.0
+offset_top = 61.5
+offset_right = 756.0
+offset_bottom = 218.5
+theme_override_constants/line_separation = 24
+theme_override_fonts/normal_font = ExtResource("34_h0uwn")
+theme_override_font_sizes/normal_font_size = 40
+bbcode_enabled = true
+text = "[color=gold]Ход 1[/color]
+ХОД ПРОТИВНИКА"
+fit_content = true
+scroll_active = false
+shortcut_keys_enabled = false
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="YourTurn" type="TextureRect" parent="RoundPopups" unique_id=2089556010]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -456.0
+offset_top = -118.5
+offset_right = 378.0
+offset_bottom = 118.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("35_5cd0h")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="RoundPopups/YourTurn" unique_id=486103348]
+layout_mode = 0
+offset_left = 82.0
+offset_top = 61.5
+offset_right = 825.0
+offset_bottom = 218.5
+theme_override_constants/line_separation = 24
+theme_override_fonts/normal_font = ExtResource("34_h0uwn")
+theme_override_font_sizes/normal_font_size = 40
+bbcode_enabled = true
+text = "[color=gold]Ход 1[/color]
+ВАШ ХОД"
+fit_content = true
+scroll_active = false
+shortcut_keys_enabled = false
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="FinalRound" type="TextureRect" parent="RoundPopups" unique_id=1674195754]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -456.0
+offset_top = -221.5
+offset_right = 436.0
+offset_bottom = 219.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("36_v4kxs")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="RoundPopups/FinalRound" unique_id=795597698]
+layout_mode = 0
+offset_left = 82.0
+offset_top = 61.5
+offset_right = 825.0
+offset_bottom = 432.5
+theme_override_constants/line_separation = 24
+theme_override_constants/outline_size = 32
+theme_override_fonts/normal_font = ExtResource("11_8lgte")
+theme_override_font_sizes/normal_font_size = 48
+bbcode_enabled = true
+text = "ФИНАЛЬНЫЙ РАУНД!"
+fit_content = true
+scroll_active = false
+shortcut_keys_enabled = false
+horizontal_alignment = 1
+vertical_alignment = 1
