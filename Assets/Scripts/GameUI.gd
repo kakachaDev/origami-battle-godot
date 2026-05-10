@@ -81,7 +81,6 @@ func _on_score_updated(l_score: int, r_score: int) -> void:
 		_show_add_score(_r_add_score, r_delta, 25.0)
 
 func _punch_scale(label: Label) -> void:
-	label.pivot_offset = label.size * 0.5
 	var punch := create_tween()
 	punch.tween_property(label, "scale", Vector2(1.2, 1.2), 0.1) \
 		.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
@@ -223,11 +222,6 @@ func _show_add_score(node: TextureRect, amount: int, start_angle_deg: float) -> 
 	var label := node.get_node("Count") as Label
 	label.text = "+0"
 
-	# Pivot at inner edge (toward screen center) so panels scale outward from center
-	if start_angle_deg < 0.0:  # left panel
-		node.pivot_offset = Vector2(node.size.x, node.size.y * 0.5)
-	else:  # right panel
-		node.pivot_offset = Vector2(0.0, node.size.y * 0.5)
 	node.rotation_degrees = start_angle_deg
 	node.modulate = Color(1.0, 1.0, 1.0, 0.0)
 	node.scale = Vector2.ZERO
