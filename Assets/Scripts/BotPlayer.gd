@@ -66,9 +66,24 @@ func _evaluate_swap(state: BoardState, pos_a: Vector2i, pos_b: Vector2i) -> int:
 	var tmp: int = grid[pos_a.x][pos_a.y]
 	grid[pos_a.x][pos_a.y] = grid[pos_b.x][pos_b.y]
 	grid[pos_b.x][pos_b.y] = tmp
-	return _count_matches(grid)
+	return _simulate_cascade(grid)
 
-func _count_matches(grid: Array) -> int:
+func _simulate_cascade(grid: Array) -> int:
+	var total := 0
+	var wave := 1
+	while wave <= 20:
+		var matches := _find_matches_sim(grid)
+		if matches.is_empty():
+			break
+		# later waves count for more — rewards deeper chains
+		total += matches.size() * wave
+		for pos in matches:
+			grid[pos.x][pos.y] = -1
+		_apply_gravity_sim(grid)
+		wave += 1
+	return total
+
+func _find_matches_sim(grid: Array) -> Array:
 	var hits: Dictionary = {}
 	for row in BoardState.ROWS:
 		var run := 0
@@ -88,4 +103,14 @@ func _count_matches(grid: Array) -> int:
 					for r in range(run, row):
 						hits[Vector2i(r, col)] = true
 				run = row
-	return hits.size()
+	return hits.keys()
+
+func _apply_gravity_sim(grid: Array) -> void:
+	for col in BoardState.COLS:
+		var empty := BoardState.ROWS - 1
+		for row in range(BoardState.ROWS - 1, -1, -1):
+			if grid[row][col] != -1:
+				if row != empty:
+					grid[empty][col] = grid[row][col]
+					grid[row][col] = -1
+				empty -= 1
