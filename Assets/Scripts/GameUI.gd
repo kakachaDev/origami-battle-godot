@@ -8,25 +8,34 @@ const _SKILL_ACTIVATE_MODS: SkillData = preload("res://Assets/Resources/Skills/A
 @export var passive_stack_resources: Array[PassiveStackData] = []
 
 @onready var _manager: GameManager = $"../GameManager"
-@onready var _board: GameBoard = $"../GameField/Gems"
-@onready var _l_turns: Label = $"../HotBar/L_Turns"
-@onready var _r_turns: Label = $"../HotBar/R_Turns"
-@onready var _l_score: Label = $"../HotBar/L_Score"
-@onready var _r_score: Label = $"../HotBar/R_Score"
-@onready var _turn_label: Label = $"../HotBar/Turn"
-@onready var _score_line: ScoreLine = $"../HotBar/ScoreLine"
-@onready var _l_add_score: TextureRect = $"../HotBar/L_AddScore"
-@onready var _r_add_score: TextureRect = $"../HotBar/R_AddScore"
-@onready var _l_passive: PassiveStack = $"../HotBar/L_PassiveStack"
-@onready var _r_passive: PassiveStack = $"../HotBar/R_PassiveStack"
-@onready var _l_skill1: ActiveSkillBase = $"../HotBar/L_ActiveSkillSlots/Slot1/ActiveSkillBase"
-@onready var _l_skill2: ActiveSkillBase = $"../HotBar/L_ActiveSkillSlots/Slot2/ActiveSkillBase"
-@onready var _r_skill1: ActiveSkillBase = $"../HotBar/R_ActiveSkillSlots/Slot1/ActiveSkillBase"
-@onready var _r_slot2: Control = $"../HotBar/R_ActiveSkillSlots/Slot2"
+@onready var _board: GameBoard = $"../Bottom/GameField/Gems"
+@onready var _l_turns: Label = $"../Bottom/HotBar/L_Turns"
+@onready var _r_turns: Label = $"../Bottom/HotBar/R_Turns"
+@onready var _l_score: Label = $"../Bottom/HotBar/L_Score"
+@onready var _r_score: Label = $"../Bottom/HotBar/R_Score"
+@onready var _turn_label: Label = $"../Bottom/HotBar/Turn"
+@onready var _score_line: ScoreLine = $"../Bottom/HotBar/ScoreLine"
+@onready var _l_add_score: TextureRect = $"../Bottom/HotBar/L_AddScore"
+@onready var _r_add_score: TextureRect = $"../Bottom/HotBar/R_AddScore"
+@onready var _l_passive: PassiveStack = $"../Bottom/HotBar/L_PassiveStack"
+@onready var _r_passive: PassiveStack = $"../Bottom/HotBar/R_PassiveStack"
+@onready var _l_skill1: ActiveSkillBase = $"../Bottom/HotBar/L_ActiveSkillSlots/Slot1/ActiveSkillBase"
+@onready var _l_skill2: ActiveSkillBase = $"../Bottom/HotBar/L_ActiveSkillSlots/Slot2/ActiveSkillBase"
+@onready var _r_skill1: ActiveSkillBase = $"../Bottom/HotBar/R_ActiveSkillSlots/Slot1/ActiveSkillBase"
+@onready var _r_slot2: Control = $"../Bottom/HotBar/R_ActiveSkillSlots/Slot2"
+@onready var _top_node: Control = $"../Top"
+@onready var _bottom_node: Control = $"../Bottom"
+@onready var _popup_enemy: TextureRect = $"../RoundPopups/EnemyTurn"
+@onready var _popup_your: TextureRect = $"../RoundPopups/YourTurn"
+@onready var _popup_final: TextureRect = $"../RoundPopups/FinalRound"
+@onready var _popup_enemy_label: RichTextLabel = $"../RoundPopups/EnemyTurn/RichTextLabel"
+@onready var _popup_your_label: RichTextLabel = $"../RoundPopups/YourTurn/RichTextLabel"
 
 var _current_player: int = GameManager.LEFT
 var _selected_skill: ActiveSkillBase = null
 var _pending_skill_button: ActiveSkillBase = null
+var _game_started := false
+var _popup_rest_y: Dictionary = {}
 
 var _l_score_val: int = 0
 var _r_score_val: int = 0
@@ -54,8 +63,13 @@ func _ready() -> void:
 	_board.skill_targeting_changed.connect(_on_skill_targeting_changed)
 	_board.skill_executing.connect(_on_skill_executing)
 	_board.skill_used.connect(_on_skill_used)
+	_manager.game_over.connect(_on_game_over)
+
 	_l_add_score.visible = false
 	_r_add_score.visible = false
+	_popup_enemy.visible = false
+	_popup_your.visible = false
+	_popup_final.visible = false
 
 	_r_slot2.visible = false
 
@@ -122,13 +136,16 @@ func _punch_scale(node: Control, punch_holder: Array) -> void:
 func _on_turns_updated(l_moves: int, r_moves: int, player: int, round: int) -> void:
 	_l_turns.text = str(l_moves)
 	_r_turns.text = str(r_moves)
+	_turn_label.text = "Ходы %d/%d" % [round, _manager.total_rounds]
+	_schedule_add_score_hide()
+
+	var player_changed := player != _current_player or not _game_started
 	_current_player = player
 	_update_skill_button_interaction()
-	if _manager.total_rounds > 0:
-		_turn_label.text = "Round %d/%d" % [round, _manager.total_rounds]
-	else:
-		_turn_label.text = "Round %d" % round
-	_schedule_add_score_hide()
+
+	if player_changed:
+		_game_started = true
+		_do_turn_popup(player, round)
 
 func _on_passive_types_assigned(l_gem_type: int, r_gem_type: int) -> void:
 	if passive_stack_resources.size() < 5:
@@ -373,3 +390,55 @@ func _hide_add_score(node: TextureRect, tween_holder: Array) -> void:
 	tw.parallel().tween_property(node, "scale", Vector2.ZERO, 0.3) \
 		.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN)
 	tw.tween_callback(func() -> void: node.visible = false)
+
+func _do_turn_popup(player: int, round: int) -> void:
+	_board.set_board_locked(true)
+	var round_text := "[color=gold]Ход %d[/color]" % round
+	_popup_enemy_label.text = round_text + "\nХОД ПРОТИВНИКА"
+	_popup_your_label.text = round_text + "\nВАШ ХОД"
+
+	if player == GameManager.LEFT and round == _manager.total_rounds:
+		await _show_and_hide_popup(_popup_final, 1.2)
+
+	var popup := _popup_enemy if player == GameManager.RIGHT else _popup_your
+	await _show_and_hide_popup(popup, 0.8)
+
+	_board.set_board_locked(false)
+
+func _show_and_hide_popup(popup: TextureRect, hold_time: float) -> void:
+	if not _popup_rest_y.has(popup):
+		_popup_rest_y[popup] = popup.position.y
+	var rest_y: float = _popup_rest_y[popup]
+
+	popup.position.y = rest_y - 700.0
+	popup.modulate.a = 1.0
+	popup.visible = true
+
+	var tw := create_tween()
+	tw.tween_property(popup, "position:y", rest_y, 0.5) \
+		.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	await tw.finished
+
+	await get_tree().create_timer(hold_time).timeout
+
+	tw = create_tween()
+	tw.tween_property(popup, "position:y", rest_y - 700.0, 0.35) \
+		.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+	tw.parallel().tween_property(popup, "modulate:a", 0.0, 0.35) \
+		.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+	await tw.finished
+
+	popup.visible = false
+	popup.modulate.a = 1.0
+
+func _on_game_over() -> void:
+	_board.set_board_locked(true)
+	var tw := create_tween()
+	tw.set_parallel(true)
+	tw.tween_property(_top_node, "position:y", -417.0, 0.6) \
+		.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+	tw.tween_property(_bottom_node, "position:y", 1920.0, 0.6) \
+		.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+	await tw.finished
+	await get_tree().create_timer(3.0).timeout
+	get_tree().reload_current_scene()
