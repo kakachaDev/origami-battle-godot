@@ -40,6 +40,8 @@ var _l_add_score_punch_h: Array = [null]
 var _r_add_score_punch_h: Array = [null]
 var _l_add_score_total: int = 0
 var _r_add_score_total: int = 0
+var _l_add_score_hide_h: Array = [null]
+var _r_add_score_hide_h: Array = [null]
 
 func _ready() -> void:
 	_manager.score_updated.connect(_on_score_updated)
@@ -48,7 +50,7 @@ func _ready() -> void:
 	_manager.passive_charge_updated.connect(_on_passive_charge_updated)
 	_board.passive_charged.connect(_on_passive_charged)
 	_board.passive_fire_requested.connect(_on_passive_fire_requested)
-	_board.move_started.connect(_lock_skill_buttons)
+	_board.move_started.connect(_on_move_started)
 	_board.skill_targeting_changed.connect(_on_skill_targeting_changed)
 	_board.skill_executing.connect(_on_skill_executing)
 	_board.skill_used.connect(_on_skill_used)
@@ -120,20 +122,13 @@ func _punch_scale(node: Control, punch_holder: Array) -> void:
 func _on_turns_updated(l_moves: int, r_moves: int, player: int, round: int) -> void:
 	_l_turns.text = str(l_moves)
 	_r_turns.text = str(r_moves)
-	if player != _current_player:
-		var prev := _current_player
-		if prev == GameManager.LEFT:
-			_hide_add_score(_l_add_score, _l_add_score_tween_h)
-			_l_add_score_total = 0
-		else:
-			_hide_add_score(_r_add_score, _r_add_score_tween_h)
-			_r_add_score_total = 0
 	_current_player = player
 	_update_skill_button_interaction()
 	if _manager.total_rounds > 0:
 		_turn_label.text = "Round %d/%d" % [round, _manager.total_rounds]
 	else:
 		_turn_label.text = "Round %d" % round
+	_schedule_add_score_hide()
 
 func _on_passive_types_assigned(l_gem_type: int, r_gem_type: int) -> void:
 	if passive_stack_resources.size() < 5:
@@ -171,6 +166,48 @@ func _on_passive_fire_requested(player: int, icon_targets: Array) -> void:
 			if pending[0] == 0:
 				_board.passive_fire_completed.emit()
 		)
+
+func _on_move_started() -> void:
+	_lock_skill_buttons()
+	_reset_add_score()
+
+func _reset_add_score() -> void:
+	if _l_add_score_hide_h[0]:
+		_l_add_score_hide_h[0].kill()
+		_l_add_score_hide_h[0] = null
+	if _r_add_score_hide_h[0]:
+		_r_add_score_hide_h[0].kill()
+		_r_add_score_hide_h[0] = null
+	if _l_add_score_tween_h[0]:
+		_l_add_score_tween_h[0].kill()
+		_l_add_score_tween_h[0] = null
+	if _r_add_score_tween_h[0]:
+		_r_add_score_tween_h[0].kill()
+		_r_add_score_tween_h[0] = null
+	_l_add_score.visible = false
+	_r_add_score.visible = false
+	_l_add_score_total = 0
+	_r_add_score_total = 0
+
+func _schedule_add_score_hide() -> void:
+	if _l_add_score_hide_h[0]:
+		_l_add_score_hide_h[0].kill()
+	var tw_l := create_tween()
+	_l_add_score_hide_h[0] = tw_l
+	tw_l.tween_interval(1.0)
+	tw_l.tween_callback(func() -> void:
+		_hide_add_score(_l_add_score, _l_add_score_tween_h)
+		_l_add_score_total = 0
+	)
+	if _r_add_score_hide_h[0]:
+		_r_add_score_hide_h[0].kill()
+	var tw_r := create_tween()
+	_r_add_score_hide_h[0] = tw_r
+	tw_r.tween_interval(1.0)
+	tw_r.tween_callback(func() -> void:
+		_hide_add_score(_r_add_score, _r_add_score_tween_h)
+		_r_add_score_total = 0
+	)
 
 func _lock_skill_buttons() -> void:
 	_l_skill1.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -225,9 +262,11 @@ func _on_skill_executing() -> void:
 		_pending_skill_button.count -= 1
 		_pending_skill_button = null
 	_lock_skill_buttons()
+	_reset_add_score()
 
 func _on_skill_used(_gems_by_type: Dictionary, _match_count: int) -> void:
 	_update_skill_button_interaction()
+	_schedule_add_score_hide()
 
 func _spawn_flying_gem(from: Vector2, target: PassiveStack, data: PassiveStackData) -> void:
 	var icon := TextureRect.new()
