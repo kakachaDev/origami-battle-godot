@@ -1,10 +1,16 @@
-[gd_resource type="Resource" script_class="BotData" load_steps=2 format=3 uid="uid://dbotdefault01"]
+[gd_resource type="Resource" script_class="BotData" load_steps=4 format=3 uid="uid://dbotdefault01"]
 
 [ext_resource type="Script" uid="uid://dbotdata0001a" path="res://Assets/Scripts/BotData.gd" id="1_botdata"]
+[ext_resource type="Script" uid="uid://b8245uf57ffhp" path="res://Assets/Scripts/SkillData.gd" id="2_skilldata"]
+[ext_resource type="Resource" uid="uid://dd7hqjsn8mmhq" path="res://Assets/Resources/Skills/DestroyLines.tres" id="3_skill_lines"]
+[ext_resource type="Resource" uid="uid://cqjrq4p3ydc2e" path="res://Assets/Resources/Skills/DestroyType.tres" id="4_skill_type"]
 
 [resource]
 script = ExtResource("1_botdata")
 bot_name = "Противник"
 passive_gem_type = 1
-active_skills = []
+active_skills = Array[ExtResource("2_skilldata")]([ExtResource("3_skill_lines"), ExtResource("4_skill_type")])
+active_skill_ranks = [1, 1]
+active_skill_counts = [1, 1]
 difficulty = 0.5
+skill_use_deficit_threshold = 10

@@ -76,6 +76,12 @@ func execute_bot_swap(from: Vector2i, to: Vector2i) -> void:
 		return
 	_do_swap(from, to)
 
+func bot_execute_skill(effect: SkillEffect, rank: int, target: Vector2i) -> void:
+	if is_busy or effect == null:
+		return
+	_busy = true
+	_execute_skill(effect, target, rank)
+
 func activate_skill(effect: SkillEffect, rank: int) -> void:
 	if is_busy:
 		return
