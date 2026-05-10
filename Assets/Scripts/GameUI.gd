@@ -29,14 +29,11 @@ var _selected_skill: ActiveSkillBase = null
 
 var _l_score_val: int = 0
 var _r_score_val: int = 0
-var _l_score_tween_h: Array = [null]
-var _r_score_tween_h: Array = [null]
 var _l_add_score_tween_h: Array = [null]
 var _r_add_score_tween_h: Array = [null]
 
 func _ready() -> void:
 	_manager.score_updated.connect(_on_score_updated)
-	_manager.player_scored.connect(_on_player_scored)
 	_manager.turns_updated.connect(_on_turns_updated)
 	_manager.passive_types_assigned.connect(_on_passive_types_assigned)
 	_manager.passive_charge_updated.connect(_on_passive_charge_updated)
@@ -65,33 +62,31 @@ func _ready() -> void:
 	_r_skill1.pressed.connect(func(): _on_skill_pressed(_r_skill1, GameManager.RIGHT))
 
 func _on_score_updated(l_score: int, r_score: int) -> void:
-	_animate_score_label(_l_score, _l_score_val, l_score, _l_score_tween_h)
+	var l_delta := l_score - _l_score_val
+	var r_delta := r_score - _r_score_val
 	_l_score_val = l_score
-	_animate_score_label(_r_score, _r_score_val, r_score, _r_score_tween_h)
 	_r_score_val = r_score
+
+	_l_score.text = str(l_score)
+	_r_score.text = str(r_score)
+	if l_delta != 0:
+		_punch_scale(_l_score)
+	if r_delta != 0:
+		_punch_scale(_r_score)
 	_score_line.value = clampf(float(l_score - r_score), -100.0, 100.0)
 
-func _animate_score_label(label: Label, from: int, to: int, tween_holder: Array) -> void:
-	if tween_holder[0]:
-		tween_holder[0].kill()
-	var tw := create_tween()
-	tween_holder[0] = tw
-	tw.tween_method(
-		func(v: float) -> void: label.text = str(roundi(v)),
-		float(from), float(to), 0.35
-	).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	if l_delta > 0:
+		_show_add_score(_l_add_score, l_delta, -25.0)
+	if r_delta > 0:
+		_show_add_score(_r_add_score, r_delta, 25.0)
+
+func _punch_scale(label: Label) -> void:
 	label.pivot_offset = label.size * 0.5
 	var punch := create_tween()
 	punch.tween_property(label, "scale", Vector2(1.2, 1.2), 0.1) \
 		.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 	punch.tween_property(label, "scale", Vector2.ONE, 0.18) \
 		.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-
-func _on_player_scored(player: int, amount: int) -> void:
-	if player == GameManager.LEFT:
-		_show_add_score(_l_add_score, amount, -25.0)
-	else:
-		_show_add_score(_r_add_score, amount, 25.0)
 
 func _on_turns_updated(l_moves: int, r_moves: int, player: int, round: int) -> void:
 	_l_turns.text = str(l_moves)
@@ -226,7 +221,7 @@ func _show_add_score(node: TextureRect, amount: int, start_angle_deg: float) -> 
 		tween_holder[0].kill()
 
 	var label := node.get_node("Count") as Label
-	label.text = "+%d" % amount
+	label.text = "+0"
 
 	node.pivot_offset = node.size * 0.5
 	node.rotation_degrees = start_angle_deg
@@ -241,12 +236,16 @@ func _show_add_score(node: TextureRect, amount: int, start_angle_deg: float) -> 
 		.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 	tw.parallel().tween_property(node, "rotation_degrees", 0.0, 0.4) \
 		.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	tw.parallel().tween_method(
+		func(v: float) -> void: label.text = "+%d" % roundi(v),
+		0.0, float(amount), 0.4
+	).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 
 	tw.tween_interval(0.35)
 
 	tw.tween_property(node, "modulate:a", 0.0, 0.3) \
 		.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
-	tw.parallel().tween_property(node, "rotation_degrees", -start_angle_deg, 0.3) \
+	tw.parallel().tween_property(node, "rotation_degrees", start_angle_deg, 0.3) \
 		.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
 
 	tw.tween_callback(func() -> void: node.visible = false)
