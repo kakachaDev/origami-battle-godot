@@ -26,6 +26,7 @@ var _cells: Array  # Array[Array[GemCell]]
 
 var _drag_from: Vector2i = Vector2i(-1, -1)
 var _busy := false
+var _locked_external := false
 
 var _current_player: int = 0
 var _l_passive_gem_type: int = -1
@@ -58,7 +59,10 @@ var board_state: BoardState:
 
 var is_busy: bool:
 	get:
-		return _busy
+		return _busy or _locked_external
+
+func set_board_locked(value: bool) -> void:
+	_locked_external = value
 
 func configure_passive(l_type: int, r_type: int) -> void:
 	_l_passive_gem_type = l_type

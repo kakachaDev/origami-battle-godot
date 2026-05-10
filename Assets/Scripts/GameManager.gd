@@ -6,7 +6,7 @@ const LEFT := 0
 const RIGHT := 1
 const PASSIVE_CHARGE_MAX := 5
 
-@export var total_rounds: int = 0
+@export var total_rounds: int = 4
 
 var current_round: int = 1
 var current_player: int = LEFT
@@ -24,8 +24,9 @@ signal player_scored(player: int, amount: int)
 signal turns_updated(l_moves: int, r_moves: int, player: int, round: int)
 signal passive_types_assigned(l_gem_type: int, r_gem_type: int)
 signal passive_charge_updated(player: int, charge: int)
+signal game_over
 
-@onready var _board: GameBoard = $"../GameField/Gems"
+@onready var _board: GameBoard = $"../Bottom/GameField/Gems"
 
 func _ready() -> void:
 	_board.move_completed.connect(_on_move_completed)
@@ -78,5 +79,8 @@ func _on_move_completed(_gems_by_type: Dictionary, match_count: int) -> void:
 			current_round += 1
 			l_moves_left = MOVES_PER_TURN
 			r_moves_left = MOVES_PER_TURN
+			if total_rounds > 0 and current_round > total_rounds:
+				game_over.emit()
+				return
 	turns_updated.emit(l_moves_left, r_moves_left, current_player, current_round)
 	_board.set_current_player(current_player)
