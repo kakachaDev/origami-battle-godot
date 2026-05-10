@@ -37,6 +37,11 @@ var _r_passive_charge: int = 0
 var _event_queue: Array = []
 var _move_match_count: int = 0
 
+var _hint_tweens: Dictionary = {}
+var _hint_timer: float = 1.5
+const _HINT_DELAY := 1.5
+const _HINT_INTERVAL := 3.0
+
 var _skill_targeting := false
 var _pending_skill_effect: SkillEffect = null
 var _pending_skill_rank := 1
@@ -110,6 +115,16 @@ func _ready() -> void:
 	add_child(_animator)
 	mouse_filter = MOUSE_FILTER_STOP
 	_build_cells()
+
+func _process(delta: float) -> void:
+	if _current_player != 0 or is_busy:
+		_hints_clear()
+		_hint_timer = _HINT_DELAY
+		return
+	_hint_timer -= delta
+	if _hint_timer <= 0.0:
+		_hint_timer = _HINT_INTERVAL
+		_hints_update()
 
 func _build_cells() -> void:
 	_cells = []
@@ -596,6 +611,56 @@ func _get_bomb_positions(pos: Vector2i, mod: int) -> Array[Vector2i]:
 		if _board.get_gem(p.x, p.y) != BoardState.APPLEBOMB_TYPE:
 			result.append(p)
 	return result
+
+# ── Hint system ───────────────────────────────────────────────────────────────
+
+func _hints_update() -> void:
+	_hints_clear()
+	var swap := _hint_pick_swap()
+	if swap.size() < 2:
+		return
+	_hint_wobble(_cells[swap[0].x][swap[0].y])
+	_hint_wobble(_cells[swap[1].x][swap[1].y])
+
+func _hints_clear() -> void:
+	for cell in _hint_tweens:
+		var tw = _hint_tweens[cell]
+		if tw:
+			tw.kill()
+		if is_instance_valid(cell):
+			(cell as GemCell).rotation_degrees = 0.0
+	_hint_tweens.clear()
+
+func _hint_wobble(cell: GemCell) -> void:
+	var tw := create_tween().set_loops()
+	tw.tween_property(cell, "rotation_degrees", 7.0, 0.2).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	tw.tween_property(cell, "rotation_degrees", -7.0, 0.4).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	tw.tween_property(cell, "rotation_degrees", 0.0, 0.2).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	_hint_tweens[cell] = tw
+
+func _hint_pick_swap() -> Array:
+	var valid: Array = []
+	for row in ROWS:
+		for col in COLS:
+			if col + 1 < COLS:
+				var a := Vector2i(row, col)
+				var b := Vector2i(row, col + 1)
+				if _hint_has_match(a, b):
+					valid.append([a, b])
+			if row + 1 < ROWS:
+				var a := Vector2i(row, col)
+				var b := Vector2i(row + 1, col)
+				if _hint_has_match(a, b):
+					valid.append([a, b])
+	if valid.is_empty():
+		return []
+	return valid[randi() % valid.size()]
+
+func _hint_has_match(pos_a: Vector2i, pos_b: Vector2i) -> bool:
+	_board.swap(pos_a, pos_b)
+	var has := not _board.find_matches().is_empty()
+	_board.swap(pos_a, pos_b)
+	return has
 
 func _expand_bomb_chain(initial: Array[Vector2i]) -> Array[Vector2i]:
 	var to_destroy: Dictionary = {}
