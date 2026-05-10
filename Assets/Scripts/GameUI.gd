@@ -25,6 +25,7 @@ const _SKILL_ACTIVATE_MODS: SkillData = preload("res://Assets/Resources/Skills/A
 @onready var _r_slot2: Control = $"../Bottom/HotBar/R_ActiveSkillSlots/Slot2"
 @onready var _top_node: Control = $"../Top"
 @onready var _bottom_node: Control = $"../Bottom"
+@onready var _enemy_fog: ColorRect = $"../Bottom/GameField/EnemyTurnFog"
 @onready var _popup_enemy: TextureRect = $"../RoundPopups/EnemyTurn"
 @onready var _popup_your: TextureRect = $"../RoundPopups/YourTurn"
 @onready var _popup_final: TextureRect = $"../RoundPopups/FinalRound"
@@ -404,6 +405,25 @@ func _do_turn_popup(player: int, round: int) -> void:
 	await _show_and_hide_popup(popup, 0.8)
 
 	_board.set_board_locked(false)
+	_fade_enemy_fog(player == GameManager.RIGHT)
+
+func _fade_enemy_fog(show: bool) -> void:
+	if show:
+		_enemy_fog.modulate.a = 0.0
+		_enemy_fog.mouse_filter = Control.MOUSE_FILTER_STOP
+		_enemy_fog.visible = true
+		var tw := create_tween()
+		tw.tween_property(_enemy_fog, "modulate:a", 1.0, 0.3) \
+			.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	else:
+		_enemy_fog.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		var tw := create_tween()
+		tw.tween_property(_enemy_fog, "modulate:a", 0.0, 0.3) \
+			.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+		tw.tween_callback(func() -> void:
+			_enemy_fog.visible = false
+			_enemy_fog.mouse_filter = Control.MOUSE_FILTER_STOP
+		)
 
 func _show_and_hide_popup(popup: TextureRect, hold_time: float) -> void:
 	if not _popup_rest_y.has(popup):
