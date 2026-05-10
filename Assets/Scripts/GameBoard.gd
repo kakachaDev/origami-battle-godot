@@ -38,9 +38,8 @@ var _event_queue: Array = []
 var _move_match_count: int = 0
 
 var _hint_tweens: Dictionary = {}
-var _hint_timer: float = 1.5
-const _HINT_DELAY := 1.5
-const _HINT_INTERVAL := 3.0
+var _hint_timer: float = 0.5
+const _HINT_DELAY := 0.5
 
 var _skill_targeting := false
 var _pending_skill_effect: SkillEffect = null
@@ -121,9 +120,10 @@ func _process(delta: float) -> void:
 		_hints_clear()
 		_hint_timer = _HINT_DELAY
 		return
+	if not _hint_tweens.is_empty():
+		return
 	_hint_timer -= delta
 	if _hint_timer <= 0.0:
-		_hint_timer = _HINT_INTERVAL
 		_hints_update()
 
 func _build_cells() -> void:
@@ -615,12 +615,12 @@ func _get_bomb_positions(pos: Vector2i, mod: int) -> Array[Vector2i]:
 # ── Hint system ───────────────────────────────────────────────────────────────
 
 func _hints_update() -> void:
-	_hints_clear()
-	var swap := _hint_pick_swap()
-	if swap.size() < 2:
+	var positions := _hint_calc_positions()
+	if positions.is_empty():
+		_hint_timer = _HINT_DELAY
 		return
-	_hint_wobble(_cells[swap[0].x][swap[0].y])
-	_hint_wobble(_cells[swap[1].x][swap[1].y])
+	for pos in positions:
+		_hint_pulse(_cells[pos.x][pos.y])
 
 func _hints_clear() -> void:
 	for cell in _hint_tweens:
@@ -628,39 +628,64 @@ func _hints_clear() -> void:
 		if tw:
 			tw.kill()
 		if is_instance_valid(cell):
-			(cell as GemCell).rotation_degrees = 0.0
+			(cell as GemCell).scale = Vector2.ONE
 	_hint_tweens.clear()
 
-func _hint_wobble(cell: GemCell) -> void:
+func _hint_pulse(cell: GemCell) -> void:
 	var tw := create_tween().set_loops()
-	tw.tween_property(cell, "rotation_degrees", 7.0, 0.2).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-	tw.tween_property(cell, "rotation_degrees", -7.0, 0.4).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-	tw.tween_property(cell, "rotation_degrees", 0.0, 0.2).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	tw.tween_property(cell, "scale", Vector2(1.15, 1.15), 0.35).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	tw.tween_property(cell, "scale", Vector2.ONE, 0.35).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 	_hint_tweens[cell] = tw
 
-func _hint_pick_swap() -> Array:
-	var valid: Array = []
+func _hint_calc_positions() -> Array:
+	var all_hints: Array = []
 	for row in ROWS:
 		for col in COLS:
 			if col + 1 < COLS:
-				var a := Vector2i(row, col)
-				var b := Vector2i(row, col + 1)
-				if _hint_has_match(a, b):
-					valid.append([a, b])
+				var p := _hint_swap_positions(Vector2i(row, col), Vector2i(row, col + 1))
+				if not p.is_empty():
+					all_hints.append(p)
 			if row + 1 < ROWS:
-				var a := Vector2i(row, col)
-				var b := Vector2i(row + 1, col)
-				if _hint_has_match(a, b):
-					valid.append([a, b])
-	if valid.is_empty():
+				var p := _hint_swap_positions(Vector2i(row, col), Vector2i(row + 1, col))
+				if not p.is_empty():
+					all_hints.append(p)
+	if all_hints.is_empty():
 		return []
-	return valid[randi() % valid.size()]
+	return all_hints[randi() % all_hints.size()]
 
-func _hint_has_match(pos_a: Vector2i, pos_b: Vector2i) -> bool:
+func _hint_swap_positions(pos_a: Vector2i, pos_b: Vector2i) -> Array:
 	_board.swap(pos_a, pos_b)
-	var has := not _board.find_matches().is_empty()
+	var matches: Array = _board.find_matches()
 	_board.swap(pos_a, pos_b)
-	return has
+	if matches.is_empty():
+		return []
+	# Figure out which gem is "the mover" (currently at pos_a or pos_b before swap)
+	# and which are "already there" (the rest of the match group).
+	var b_in := false
+	var a_in := false
+	for p in matches:
+		if p == pos_b:
+			b_in = true
+		if p == pos_a:
+			a_in = true
+	var highlight: Array = []
+	if b_in:
+		# gem at pos_a moves to pos_b; highlight mover + its future neighbours
+		highlight.append(pos_a)
+		for p in matches:
+			if p != pos_b:
+				highlight.append(p)
+	elif a_in:
+		# gem at pos_b moves to pos_a
+		highlight.append(pos_b)
+		for p in matches:
+			if p != pos_a:
+				highlight.append(p)
+	else:
+		highlight.append(pos_a)
+		for p in matches:
+			highlight.append(p)
+	return highlight
 
 func _expand_bomb_chain(initial: Array[Vector2i]) -> Array[Vector2i]:
 	var to_destroy: Dictionary = {}
