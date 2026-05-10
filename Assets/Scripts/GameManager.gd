@@ -29,6 +29,7 @@ signal passive_charge_updated(player: int, charge: int)
 
 func _ready() -> void:
 	_board.move_completed.connect(_on_move_completed)
+	_board.wave_destroyed.connect(_on_wave_destroyed)
 	_board.passive_charged.connect(_on_passive_charged)
 	_board.skill_used.connect(_on_skill_used)
 	l_passive_gem_type = randi() % 5
@@ -49,33 +50,27 @@ func _on_passive_charged(player: int, charge: int, _world_pos: Vector2) -> void:
 		r_passive_charge = charge
 	passive_charge_updated.emit(player, charge)
 
-func _on_skill_used(gems_by_type: Dictionary, _match_count: int) -> void:
+func _on_wave_destroyed(gems_by_type: Dictionary) -> void:
 	var total := 0
 	for c in gems_by_type.values():
 		total += c
 	if current_player == LEFT:
 		l_score += total
-		player_scored.emit(LEFT, total)
 	else:
 		r_score += total
-		player_scored.emit(RIGHT, total)
 	score_updated.emit(l_score, r_score)
 
-func _on_move_completed(gems_by_type: Dictionary, match_count: int) -> void:
-	var total := 0
-	for c in gems_by_type.values():
-		total += c
+func _on_skill_used(_gems_by_type: Dictionary, _match_count: int) -> void:
+	pass
+
+func _on_move_completed(_gems_by_type: Dictionary, match_count: int) -> void:
 	var bonus_move := match_count >= 3
 	if current_player == LEFT:
-		l_score += total
-		player_scored.emit(LEFT, total)
 		if not bonus_move:
 			l_moves_left -= 1
 		if l_moves_left <= 0:
 			current_player = RIGHT
 	else:
-		r_score += total
-		player_scored.emit(RIGHT, total)
 		if not bonus_move:
 			r_moves_left -= 1
 		if r_moves_left <= 0:
@@ -83,6 +78,5 @@ func _on_move_completed(gems_by_type: Dictionary, match_count: int) -> void:
 			current_round += 1
 			l_moves_left = MOVES_PER_TURN
 			r_moves_left = MOVES_PER_TURN
-	score_updated.emit(l_score, r_score)
 	turns_updated.emit(l_moves_left, r_moves_left, current_player, current_round)
 	_board.set_current_player(current_player)
