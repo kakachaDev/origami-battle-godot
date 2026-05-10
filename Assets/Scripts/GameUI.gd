@@ -223,7 +223,11 @@ func _show_add_score(node: TextureRect, amount: int, start_angle_deg: float) -> 
 	var label := node.get_node("Count") as Label
 	label.text = "+0"
 
-	node.pivot_offset = node.size * 0.5
+	# Pivot at inner edge (toward screen center) so panels scale outward from center
+	if start_angle_deg < 0.0:  # left panel
+		node.pivot_offset = Vector2(node.size.x, node.size.y * 0.5)
+	else:  # right panel
+		node.pivot_offset = Vector2(0.0, node.size.y * 0.5)
 	node.rotation_degrees = start_angle_deg
 	node.modulate = Color(1.0, 1.0, 1.0, 0.0)
 	node.scale = Vector2.ZERO
