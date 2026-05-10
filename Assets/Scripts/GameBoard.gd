@@ -114,9 +114,11 @@ func _ready() -> void:
 	add_child(_animator)
 	mouse_filter = MOUSE_FILTER_STOP
 	_build_cells()
+	move_started.connect(_hints_clear)
+	skill_executing.connect(_hints_clear)
 
 func _process(delta: float) -> void:
-	if _current_player != 0 or is_busy:
+	if _current_player != 0 or is_busy or _skill_targeting:
 		_hints_clear()
 		_hint_timer = _HINT_DELAY
 		return
@@ -620,7 +622,9 @@ func _hints_update() -> void:
 		_hint_timer = _HINT_DELAY
 		return
 	for pos in positions:
-		_hint_pulse(_cells[pos.x][pos.y])
+		var cell: GemCell = _cells[pos.x][pos.y]
+		if cell != null:
+			_hint_pulse(cell)
 
 func _hints_clear() -> void:
 	for cell in _hint_tweens:
@@ -651,39 +655,54 @@ func _hint_calc_positions() -> Array:
 					all_hints.append(p)
 	if all_hints.is_empty():
 		return []
-	return all_hints[randi() % all_hints.size()]
+	# Prefer the swap that highlights the most gems (largest single match group)
+	var max_size := 0
+	for h in all_hints:
+		if h.size() > max_size:
+			max_size = h.size()
+	var best: Array = []
+	for h in all_hints:
+		if h.size() == max_size:
+			best.append(h)
+	return best[randi() % best.size()]
 
 func _hint_swap_positions(pos_a: Vector2i, pos_b: Vector2i) -> Array:
 	_board.swap(pos_a, pos_b)
-	var matches: Array = _board.find_matches()
+	var groups: Array = _board.find_match_groups()
 	_board.swap(pos_a, pos_b)
-	if matches.is_empty():
+	if groups.is_empty():
 		return []
-	# Figure out which gem is "the mover" (currently at pos_a or pos_b before swap)
-	# and which are "already there" (the rest of the match group).
+	# Pick the single largest group that contains a swap destination (pos_a or pos_b
+	# after the swap), so double-matches of different fruit types are ignored.
+	var best_group = null
+	var best_size := 0
+	for group in groups:
+		for p in group.positions:
+			if (p == pos_a or p == pos_b) and group.positions.size() > best_size:
+				best_group = group
+				best_size = group.positions.size()
+				break
+	if best_group == null:
+		return []
+	# Identify mover (at current pos before swap) vs gems already in place
 	var b_in := false
 	var a_in := false
-	for p in matches:
-		if p == pos_b:
-			b_in = true
-		if p == pos_a:
-			a_in = true
+	for p in best_group.positions:
+		if p == pos_b: b_in = true
+		if p == pos_a: a_in = true
 	var highlight: Array = []
 	if b_in:
-		# gem at pos_a moves to pos_b; highlight mover + its future neighbours
 		highlight.append(pos_a)
-		for p in matches:
+		for p in best_group.positions:
 			if p != pos_b:
 				highlight.append(p)
 	elif a_in:
-		# gem at pos_b moves to pos_a
 		highlight.append(pos_b)
-		for p in matches:
+		for p in best_group.positions:
 			if p != pos_a:
 				highlight.append(p)
 	else:
-		highlight.append(pos_a)
-		for p in matches:
+		for p in best_group.positions:
 			highlight.append(p)
 	return highlight
 
